@@ -6,7 +6,7 @@ CREATE TABLE Horse (
   breed VARCHAR(100),
   color VARCHAR(50),
   date_birth DATE,
-  gender ENUM('macho', 'hembra'),
+  gender string('macho', 'hembra'),
   father_id INT,
   mother_id INT,
   caretaker_id INT,
@@ -90,7 +90,7 @@ CREATE TABLE CalendarEvent (
   description TEXT,
   event_date DATE,
   event_time TIME,
-  category ENUM('entrenamiento', 'veterinario', 'carrera', 'otro'),
+  category string('entrenamiento', 'veterinario', 'carrera', 'otro'),
   created_at DATETIME,
   updated_at DATETIME,
   FOREIGN KEY (horse_id) REFERENCES Horse(id)
@@ -102,7 +102,7 @@ CREATE TABLE User (
   name VARCHAR(100),
   email VARCHAR(100) UNIQUE,
   password VARCHAR(255),
-  role ENUM('admin', 'cuidador', 'veterinario'),
+  role string('admin', 'cuidador', 'veterinario'),
   created_at DATETIME,
   updated_at DATETIME
 );
@@ -112,7 +112,7 @@ CREATE TABLE Expense (
   id INT PRIMARY KEY AUTO_INCREMENT,
   horse_id INT,
   date DATE,
-  category ENUM('comida', 'veterinario', 'medicamento', 'cuidador', 'jockey', 'otro'),
+  category string('comida', 'veterinario', 'medicamento', 'cuidador', 'jockey', 'otro'),
   description TEXT,
   amount DECIMAL(10,2),
   created_at DATETIME,
