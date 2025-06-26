@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HorseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,3 +19,7 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse');
+Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse');
+

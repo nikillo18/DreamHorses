@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreHorseRequest;
 use App\Http\Requests\UpdateHorseRequest;
 use App\Models\Horse;
+use App\Models\Caretaker;
 
 class HorseController extends Controller
 {
@@ -13,7 +14,8 @@ class HorseController extends Controller
      */
     public function index()
     {
-        //
+        $horses = Horse::all();
+        return view('Horse.index', compact('horses'));
     }
 
     /**
@@ -21,15 +23,21 @@ class HorseController extends Controller
      */
     public function create()
     {
-        //
+        $caretakers = Caretaker::all();
+        return view('Horse.create', compact('caretakers'));
+
     }
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(StoreHorseRequest $request)
+
     {
-        //
+        $validatedData = $request->validated();
+        Horse::create($validatedData);
+        return redirect()->route('CreateHorse')->with('success', 'Horse created successfully');
     }
 
     /**
@@ -37,7 +45,7 @@ class HorseController extends Controller
      */
     public function show(Horse $horse)
     {
-        //
+        
     }
 
     /**

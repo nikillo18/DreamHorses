@@ -13,7 +13,7 @@ class HorsePolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -29,8 +29,9 @@ class HorsePolicy
      */
     public function create(User $user): bool
     {
-        return false;
-    }
+        // Assuming only authenticated users can create horses
+      return true;    
+}
 
     /**
      * Determine whether the user can update the model.
@@ -63,4 +64,5 @@ class HorsePolicy
     {
         return false;
     }
+    
 }
