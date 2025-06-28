@@ -40,4 +40,4 @@
                 <textarea class="textarea textarea-bordered h-24 w-full" name="comments" placeholder="comentarios">{{ $training->comments }}</textarea>
             </fieldset>
             <button type="submit" class="btn btn-primary">Actualizar</button>
-            <a href="{{ route('training.index') }}" class="btn btn
+           
