@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\UpdateRaceRequest;
+use App\Models\Horse;
 use App\Models\Race;
+
+use function Pest\Laravel\get;
 
 class RaceController extends Controller
 {
@@ -13,7 +16,9 @@ class RaceController extends Controller
      */
     public function index()
     {
-        //
+        $race = Race::with(['horse'])->get();
+
+        return view('race.index', compact('race'));
     }
 
     /**
@@ -21,7 +26,8 @@ class RaceController extends Controller
      */
     public function create()
     {
-        //
+        $horse = Horse::all();
+        return view('race.create', compact('horse'));
     }
 
     /**
@@ -29,7 +35,9 @@ class RaceController extends Controller
      */
     public function store(StoreRaceRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+        Race::create($validatedData);
+        return redirect()->route('race.index')->with('success', 'Carrera Creada con Exito ');
     }
 
     /**
@@ -45,7 +53,8 @@ class RaceController extends Controller
      */
     public function edit(Race $race)
     {
-        //
+        $horse = Horse::all();
+        return view('race.edit', compact('race', 'horse'));
     }
 
     /**
@@ -53,7 +62,9 @@ class RaceController extends Controller
      */
     public function update(UpdateRaceRequest $request, Race $race)
     {
-        //
+        $validatedData = $request->validated();
+        $race->update($validatedData);
+        return redirect()->route('race.index')->with('success', 'Carrera Actualizada con Exito');
     }
 
     /**
@@ -61,6 +72,7 @@ class RaceController extends Controller
      */
     public function destroy(Race $race)
     {
-        //
+        $race->delete();
+        return redirect()->route('race.index')->with('success', 'Carrera Eliminada con Exito');
     }
 }

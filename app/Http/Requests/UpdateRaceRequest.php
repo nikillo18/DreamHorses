@@ -11,7 +11,7 @@ class UpdateRaceRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class UpdateRaceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'horse_id' => 'required|exists:horses,id',
+            'date' => 'required|date',
+            'place' => 'required|integer|min:1',
+            'distance' => 'required|integer|min:0',
+            'description' => 'nullable|string',
+            'jockey' => 'required|string|max:255',
         ];
     }
 }
