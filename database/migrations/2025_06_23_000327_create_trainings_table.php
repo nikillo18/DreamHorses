@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->integer('distance');
             $table->integer('duration_minutes');
-            $table->text('comments')->nullable();
+            $table->string('comments')->nullable();
             $table->timestamps();
         });
     }

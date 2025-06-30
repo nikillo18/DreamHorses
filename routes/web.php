@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalendarEventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TrainingController;
@@ -32,4 +33,12 @@ Route::post('/race', [RaceController::class, 'store'])->name('race.store');
 Route::get('/race/{race}/edit', [RaceController::class, 'edit'])->name('race.edit');
 Route::put('/race/{race}', [RaceController::class, 'update'])->name('race.update');
 Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy');
+
+/* Calendar */
+Route::get('/calendar', [CalendarEventController::class, 'index'])->name('calendar.index');
+Route::get('/calendar/create', [CalendarEventController::class, 'create'])->name('calendar.create');
+Route::post('/calendar', [CalendarEventController::class, 'store'])->name('calendar.store');
+Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'edit'])->name('calendar.edit');
+Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update');
+Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy');
 require __DIR__ . '/auth.php';

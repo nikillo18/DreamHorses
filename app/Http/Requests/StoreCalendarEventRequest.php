@@ -11,7 +11,7 @@ class StoreCalendarEventRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreCalendarEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|string|max:255',
+            'horse_id' => 'required|exists:horses,id',
+            'event_date' => 'required|date',
+            'event_time' => 'required|date_format:H:i',
+            'category' => 'required|string|max:50',
+            'description' => 'nullable|string',
         ];
     }
 }

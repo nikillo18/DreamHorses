@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type_food');
             $table->decimal('quantity', 8, 2)->default(0.00);
             $table->time('time');
-            $table->text('notes');
+            $table->string('notes');
             $table->timestamps();
         });
     }
