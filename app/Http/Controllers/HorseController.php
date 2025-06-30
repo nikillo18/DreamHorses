@@ -35,9 +35,16 @@ class HorseController extends Controller
     public function store(StoreHorseRequest $request)
 
     {
-        $validatedData = $request->validated();
-        Horse::create($validatedData);
-        return redirect()->route('CreateHorse')->with('success', 'Horse created successfully');
+       $data = $request->validated();
+
+    // Si se subió una imagen, la guardamos
+    if ($request->hasFile('photo')) {
+        $data['photo_path'] = $request->file('photo')->store('horses', 'public');
+    }
+
+    Horse::create($data);
+
+    return redirect()->route('Horseindex')->with('success', 'Caballo creado correctamente');
     }
 
     /**
@@ -45,30 +52,48 @@ class HorseController extends Controller
      */
     public function show(Horse $horse)
     {
-        
+            return view('Horse.show', compact('horse'));
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Horse $horse)
-    {
-        //
+{
+       $caretakers = Caretaker::all();
+    return view('Horse.edit', compact('horse', 'caretakers'));
+}
+
+public function update(UpdateHorseRequest $request, Horse $horse)
+{
+{
+    $data = $request->validate([
+        'name' => 'required|string|max:100',
+        'breed' => 'required|string|max:100',
+        'color' => 'required|string|max:50',
+        'birth_date' => 'required|date',
+        'gender' => 'required|in:male,female',
+        'father_name' => 'nullable|string|max:100',
+        'mother_name' => 'nullable|string|max:100',
+        'caretaker_id' => 'required|exists:caretakers,id',
+        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+    ]);
+
+    if ($request->hasFile('photo')) {
+        $data['photo_path'] = $request->file('photo')->store('horses', 'public');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateHorseRequest $request, Horse $horse)
-    {
-        //
-    }
+    $horse->update($data);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Horse $horse)
-    {
-        //
-    }
+    return redirect()->route('horses.show', $horse->id)->with('success', 'Caballo actualizado correctamente');
+}
+
+}
+
+public function destroy(Horse $horse)
+{
+    $horse->delete();
+    return redirect()->route('Horseindex')->with('success', 'Caballo eliminado correctamente');
+}
 }

@@ -11,7 +11,7 @@ class Horse extends Model
 {
     /** @use HasFactory<\Database\Factories\HorseFactory> */
     use HasFactory;
-    protected $fiallble = [
+    protected $fillable = [
         'name',
         'breed',
         'color',
@@ -19,6 +19,7 @@ class Horse extends Model
         'gender',
         'father_name',
         'mother_name',
+        'photo_path',
         'caretaker_id'
     ];
     public function caretaker(): BelongsTo
