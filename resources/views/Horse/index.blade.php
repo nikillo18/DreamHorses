@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="p-6">
+    <div class="p-6" data-theme="forest">
         <h2 class="text-2xl font-bold text-green-400 mb-6 flex items-center gap-2">🐎 Listado de Caballos</h2>
 
         @if(session('success'))

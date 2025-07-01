@@ -18,5 +18,8 @@ export default {
         },
     },
 
-    plugins: [daisyui, forms],
+    plugins: [daisyui, forms],  
+    daisyui: {
+        themes: ["forest"],
+    },
 };
