@@ -30,7 +30,7 @@ class StoreHorseRequest extends FormRequest
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
         'caretaker_id' => 'required|exists:caretakers,id',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ];
     }
 }

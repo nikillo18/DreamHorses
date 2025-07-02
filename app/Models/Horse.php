@@ -57,4 +57,8 @@ class Horse extends Model
         return $this->hasMany(Expense::class);
     }
     
+public function photos()
+{
+    return $this->hasMany(HorsePhoto::class);
+}
 }

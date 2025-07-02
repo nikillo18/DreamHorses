@@ -13,9 +13,8 @@
                 <div class="card w-96 bg-gray-800 text-white border border-gray-700 shadow-md hover:shadow-lg transition">
                     <figure class="bg-gray-700">
                         <img
-                            src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://via.placeholder.com/300x200?text=Sin+foto' }}"
-                            alt="Caballo"
-                            class="w-full h-48 object-cover rounded-t-lg"
+                         src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://via.placeholder.com/300x200?text=Sin+foto') }}"
+                        class="w-full h-48 object-cover rounded-t-lg"
                         />
                     </figure>
                     <div class="card-body">
@@ -24,7 +23,7 @@
                         <div class="card-actions justify-end">
                             <a href="{{ route('horses.show', $horse->id) }}"
                                class="btn btn-sm bg-green-600 hover:bg-green-700 text-white font-semibold transition">
-                                👁️ Ver información
+                                 Ver información
                             </a>
                         </div>
                     </div>

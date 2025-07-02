@@ -35,16 +35,22 @@ class HorseController extends Controller
     public function store(StoreHorseRequest $request)
 
     {
-       $data = $request->validated();
+   $data = $request->validated();
 
-    // Si se subió una imagen, la guardamos
     if ($request->hasFile('photo')) {
         $data['photo_path'] = $request->file('photo')->store('horses', 'public');
     }
 
-    Horse::create($data);
+    $horse = Horse::create($data);
 
-    return redirect()->route('Horseindex')->with('success', 'Caballo creado correctamente');
+    if ($request->hasFile('photos')) {
+        foreach ($request->file('photos') as $image) {
+            $path = $image->store('horses', 'public');
+            $horse->photos()->create(['path' => $path]);
+        }
+    }
+
+    return redirect()->route('Horseindex')->with('success', 'Caballo creado correctamente con fotos.');
     }
 
     /**
@@ -77,20 +83,25 @@ public function update(UpdateHorseRequest $request, Horse $horse)
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
         'caretaker_id' => 'required|exists:caretakers,id',
-        'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    if ($request->hasFile('photo')) {
-        $data['photo_path'] = $request->file('photo')->store('horses', 'public');
-    }
-
+    // Actualizamos los datos del caballo
     $horse->update($data);
 
-    return redirect()->route('horses.show', $horse->id)->with('success', 'Caballo actualizado correctamente');
-}
+    // Si hay nuevas fotos, las subimos
+    if ($request->hasFile('photos')) {
+        foreach ($request->file('photos') as $image) {
+            $path = $image->store('horses', 'public');
+            $horse->photos()->create(['path' => $path]);
+        }
+    }
+
+    return redirect()->route('horses.show', $horse->id)
+                     ->with('success', 'Caballo actualizado correctamente');
 
 }
-
+}
 public function destroy(Horse $horse)
 {
     $horse->delete();

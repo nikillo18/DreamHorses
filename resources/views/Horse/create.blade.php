@@ -24,8 +24,9 @@
                 <input type="text" name="color" id="color" class="input input-bordered w-full bg-green-900 text-white placeholder:text-green-300" placeholder="Ej. Castaño" />
 
                 {{-- Foto --}}
-                <label for="photo" class="font-semibold text-green-100">Foto del Caballo</label>
-                <input type="file" name="photo" id="photo" class="file-input file-input-bordered w-full bg-green-900 text-white" />
+                <label for="photos" class="font-semibold text-green-100">Fotos del Caballo</label>
+                <input type="file" name="photos[]" id="photos" multiple accept="image/*"
+                class="file-input file-input-bordered w-full bg-green-900 text-white" />
 
                 {{-- Fecha de nacimiento --}}
                 <label for="birth_date" class="font-semibold text-green-100">Fecha de nacimiento</label>
@@ -59,7 +60,7 @@
                 {{-- Botón --}}
                 <div class="pt-4">
                     <button type="submit" class="btn w-full bg-lime-600 hover:bg-lime-700 text-white text-lg font-bold">
-                        ✅ Guardar Caballo
+                        Guardar Caballo
                     </button>
                 </div>
             </form>

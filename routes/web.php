@@ -3,6 +3,7 @@
 use App\Http\Controllers\HorseController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HorsePhotoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,6 +28,7 @@ Route::get('horses/{horse}', [HorseController::class, 'show'])->name('horses.sho
 Route::get('horses/{horse}/edit', [HorseController::class, 'edit'])->name('horses.edit');
 Route::put('horses/{horse}', [HorseController::class, 'update'])->name('horses.update');
 Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy');
+Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name('photos.destroy');
 
 
 

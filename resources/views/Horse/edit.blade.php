@@ -45,20 +45,34 @@
                 @endforeach
             </select>
 
-            {{-- Imagen actual --}}
-            <label class="text-green-300">📷 Foto actual:</label>
-            <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://via.placeholder.com/300x200?text=Sin+foto' }}"
-                 class="w-48 h-32 object-cover rounded" />
+            {{-- Fotos actuales --}}
+            <div class="space-y-2">
+                <label class="text-green-300 font-semibold">📸 Fotos actuales:</label>
+                @if ($horse->photos->count())
+                    <div class="grid grid-cols-2 gap-2">
+                        @foreach ($horse->photos as $photo)
+                            <img src="{{ asset('storage/' . $photo->path) }}"
+                                 class="w-full h-32 object-cover rounded border border-green-700" />
+                        @endforeach
+                    </div>
+                @else
+                    <p class="text-sm text-gray-400">Este caballo no tiene fotos guardadas.</p>
+                @endif
+            </div>
 
-            {{-- Nueva imagen --}}
-            <label class="text-green-300">Subir nueva foto:</label>
-            <input type="file" name="photo" accept="image/*"
-                   class="file-input file-input-bordered w-full bg-green-900 text-white" />
+
+            {{-- Subir nuevas fotos --}}
+            <div>
+                <label class="text-green-300 font-semibold"> Agregar nuevas fotos:</label>
+                <input type="file" name="photos[]" multiple accept="image/*"
+                       class="file-input file-input-bordered w-full bg-green-900 text-white" />
+            </div>
+            
 
             {{-- Botón --}}
             <button type="submit"
                     class="btn bg-green-600 hover:bg-green-700 text-white w-full text-lg font-bold">
-                 Actualizar Caballo
+                Actualizar Caballo
             </button>
         </form>
     </div>
