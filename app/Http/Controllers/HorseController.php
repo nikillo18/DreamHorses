@@ -6,6 +6,7 @@ use App\Http\Requests\StoreHorseRequest;
 use App\Http\Requests\UpdateHorseRequest;
 use App\Models\Horse;
 use App\Models\Caretaker;
+use Illuminate\Support\Facades\Storage;
 
 class HorseController extends Controller
 {
@@ -86,10 +87,15 @@ public function update(UpdateHorseRequest $request, Horse $horse)
         'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
     ]);
 
-    // Actualizamos los datos del caballo
     $horse->update($data);
 
-    // Si hay nuevas fotos, las subimos
+     if ($request->hasFile('photos')) {
+        foreach ($horse->photos as $photo) {
+            Storage::disk('public')->delete($photo->path);
+            $photo->delete();
+            }
+    
+
     if ($request->hasFile('photos')) {
         foreach ($request->file('photos') as $image) {
             $path = $image->store('horses', 'public');
@@ -100,6 +106,7 @@ public function update(UpdateHorseRequest $request, Horse $horse)
     return redirect()->route('horses.show', $horse->id)
                      ->with('success', 'Caballo actualizado correctamente');
 
+}
 }
 }
 public function destroy(Horse $horse)
