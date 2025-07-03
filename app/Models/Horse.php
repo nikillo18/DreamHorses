@@ -20,7 +20,8 @@ class Horse extends Model
         'father_name',
         'mother_name',
         'photo_path',
-        'caretaker_id'
+        'caretaker_id',
+        'number_microchip'
     ];
     public function caretaker(): BelongsTo
     {

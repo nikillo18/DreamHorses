@@ -7,36 +7,29 @@
             @csrf
             @method('PUT')
 
-            {{-- Nombre --}}
             <input type="text" name="name" value="{{ old('name', $horse->name) }}" placeholder="Nombre"
                    class="input input-bordered w-full bg-green-900 text-white placeholder:text-green-400" />
 
-            {{-- Raza --}}
             <input type="text" name="breed" value="{{ old('breed', $horse->breed) }}" placeholder="Raza"
                    class="input input-bordered w-full bg-green-900 text-white placeholder:text-green-400" />
 
-            {{-- Color --}}
             <input type="text" name="color" value="{{ old('color', $horse->color) }}" placeholder="Color"
                    class="input input-bordered w-full bg-green-900 text-white placeholder:text-green-400" />
 
-            {{-- Nacimiento --}}
             <input type="date" name="birth_date" value="{{ old('birth_date', $horse->birth_date) }}"
                    class="input input-bordered w-full bg-green-900 text-white" />
 
-            {{-- Género --}}
             <select name="gender" class="select select-bordered w-full bg-green-900 text-white">
                 <option value="male" {{ $horse->gender == 'male' ? 'selected' : '' }}>Macho</option>
                 <option value="female" {{ $horse->gender == 'female' ? 'selected' : '' }}>Hembra</option>
             </select>
 
-            {{-- Padre/Madre --}}
             <input type="text" name="father_name" value="{{ old('father_name', $horse->father_name) }}" placeholder="Padre"
                    class="input input-bordered w-full bg-green-900 text-white placeholder:text-green-400" />
 
             <input type="text" name="mother_name" value="{{ old('mother_name', $horse->mother_name) }}" placeholder="Madre"
                    class="input input-bordered w-full bg-green-900 text-white placeholder:text-green-400" />
 
-            {{-- Cuidador --}}
             <select name="caretaker_id" class="select select-bordered w-full bg-green-900 text-white">
                 @foreach($caretakers as $caretaker)
                     <option value="{{ $caretaker->id }}" {{ $horse->caretaker_id == $caretaker->id ? 'selected' : '' }}>
@@ -45,7 +38,6 @@
                 @endforeach
             </select>
 
-            {{-- Fotos actuales --}}
             <div class="space-y-2">
                 <label class="text-green-300 font-semibold">📸 Fotos actuales:</label>
                 @if ($horse->photos->count())
@@ -61,7 +53,6 @@
             </div>
 
 
-            {{-- Subir nuevas fotos --}}
             <div>
                 <label class="text-green-300 font-semibold"> Agregar nuevas fotos:</label>
                 <input type="file" name="photos[]" multiple accept="image/*"
@@ -69,7 +60,6 @@
             </div>
             
 
-            {{-- Botón --}}
             <button type="submit"
                     class="btn bg-green-600 hover:bg-green-700 text-white w-full text-lg font-bold">
                 Actualizar Caballo

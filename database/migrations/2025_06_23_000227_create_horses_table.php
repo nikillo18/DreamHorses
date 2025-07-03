@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('father_name');
             $table->string('mother_name');
             $table->string('photo_path')->nullable();
+            $table->string('number_microchip')->nullable();
             $table->foreignIdFor(Caretaker::class);
             $table->timestamps();
         });

@@ -31,6 +31,7 @@ class StoreHorseRequest extends FormRequest
         'mother_name' => 'nullable|string|max:100',
         'caretaker_id' => 'required|exists:caretakers,id',
         'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'number_microchip' => 'nullable|string|max:15',
     ];
     }
 }

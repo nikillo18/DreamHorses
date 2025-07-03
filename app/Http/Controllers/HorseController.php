@@ -74,29 +74,16 @@ class HorseController extends Controller
 
 public function update(UpdateHorseRequest $request, Horse $horse)
 {
-{
-    $data = $request->validate([
-        'name' => 'required|string|max:100',
-        'breed' => 'required|string|max:100',
-        'color' => 'required|string|max:50',
-        'birth_date' => 'required|date',
-        'gender' => 'required|in:male,female',
-        'father_name' => 'nullable|string|max:100',
-        'mother_name' => 'nullable|string|max:100',
-        'caretaker_id' => 'required|exists:caretakers,id',
-        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-    ]);
+    $data = $request->validated();
 
     $horse->update($data);
 
-     if ($request->hasFile('photos')) {
+    if ($request->hasFile('photos')) {
         foreach ($horse->photos as $photo) {
             Storage::disk('public')->delete($photo->path);
             $photo->delete();
-            }
-    
+        }
 
-    if ($request->hasFile('photos')) {
         foreach ($request->file('photos') as $image) {
             $path = $image->store('horses', 'public');
             $horse->photos()->create(['path' => $path]);
@@ -105,10 +92,8 @@ public function update(UpdateHorseRequest $request, Horse $horse)
 
     return redirect()->route('horses.show', $horse->id)
                      ->with('success', 'Caballo actualizado correctamente');
+}
 
-}
-}
-}
 public function destroy(Horse $horse)
 {
     $horse->delete();
