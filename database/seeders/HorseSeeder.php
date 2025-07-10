@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Horse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class HorseSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Horse::factory(10)->create();
     }
 }

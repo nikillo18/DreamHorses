@@ -1,17 +1,67 @@
 @vite('resources/css/app.css')
 <div class="drawer lg:drawer-open">
-  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-  <label for="my-drawer" class="btn btn-primary drawer-button">Panel de control</label>
-  <div class="drawer-content">
-    <!-- Page content here -->
-  </div>
-  <div class="drawer-side">
-    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-      <!-- Sidebar content here -->
-      <li><a href="{{ route('training.index') }}" class="btn btn-primary ml-2">Entrenamientos</a></li>
-      <li> <a href="{{route('race.index')}}" class="btn btn-secondary ml-2">Carreras</a></li>
-    </ul>
-    
-  </div>
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <label for="my-drawer" class="btn btn-primary drawer-button">Panel</label>
+    <div class="drawer-content">
+        <!-- Page content here -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($horses as $horse)
+                <div class="card bg-base-100 w-96 shadow-sm">
+                    <figure>
+                        <img src="" alt="Horse" />
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $horse->name }}</h2>
+                        <p>Raza: {{ $horse->breed }}</p>
+                        <p>Color: {{ $horse->color }}</p>
+                        <p>Fecha de nacimiento: {{ $horse->birth_date }}</p>
+                        <p>Cuidador: {{ $horse->caretaker->name }}</p>
+                        <div class="divider"></div>
+                        <h3 class="font-bold text-primary">Eventos próximos</h3>
+                        <ul class="list-disc ml-4">
+                            @foreach ($nextRaces->where('horse_id', $horse->id) as $race)
+                                <li>
+                                    <span class="badge badge-info">Carrera</span>
+                                    {{ \Carbon\Carbon::parse($race->date)->format('d/m/Y') }} - {{ $race->description }}
+                                </li>
+                            @endforeach
+                            @foreach ($nextVetVisits->where('horse_id', $horse->id) as $visit)
+                                <li>
+                                    <span class="badge badge-warning">Veterinario</span>
+                                    {{ \Carbon\Carbon::parse($visit->visit_date)->format('d/m/Y') }} -
+                                    {{ $visit->diagnosis }}
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="divider"></div>
+                        <h3 class="font-bold text-primary">Resumen de gastos</h3>
+                        <p>
+                            Total: <span class="badge badge-success">
+                                ${{ number_format($expenses[$horse->id]->total ?? 0, 2) }}
+                            </span>
+                        </p>
+                        <div class="divider"></div>
+                        <h3 class="font-bold text-error">Alertas</h3>
+                        <ul class="list-disc ml-4">
+                            @foreach ($alerts->where('horse_id', $horse->id) as $alert)
+                                <li>
+                                    Próxima visita: {{ \Carbon\Carbon::parse($alert->visit_date)->format('d/m/Y') }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+
+    <div class="drawer-side">
+        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+            <!-- Sidebar content here -->
+            <li><a href="{{ route('training.index') }}" class="btn btn-primary ml-2">Entrenamientos</a></li>
+            <li> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a></li>
+        </ul>
+
+    </div>
 </div>
