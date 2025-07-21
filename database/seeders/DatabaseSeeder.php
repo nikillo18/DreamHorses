@@ -22,5 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             CaretakerSeeder::class
         ]);
+        $this->call([
+            HorseSeeder::class
+        ]);
     }
 }

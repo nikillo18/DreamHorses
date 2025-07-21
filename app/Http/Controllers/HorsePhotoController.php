@@ -64,7 +64,7 @@ class HorsePhotoController extends Controller
     public function destroy(HorsePhoto $photo)
     {
         // Check if the photo exists
-        if (!$photo) {
+       /* if (!$photo) {
             return redirect()->back()->with('error', 'Photo not found.');
         }
 
@@ -76,5 +76,6 @@ class HorsePhotoController extends Controller
 
         return redirect()->route('Horseindex')->with('success', 'Photo deleted successfully.');
     }
-    
+        */
+}
 }
