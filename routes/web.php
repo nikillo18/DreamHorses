@@ -3,6 +3,8 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\VetVisitController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -24,3 +26,24 @@ Route::get('/training/{training}/edit', [TrainingController::class, 'edit'])->na
 Route::put('/training/{training}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/training/{training}', [TrainingController::class, 'destroy'])->name('training.destroy');
 require __DIR__ . '/auth.php';
+
+// Listar visitas
+Route::get('/vet-visits', [VetVisitController::class, 'index'])->name('vet-visits.index');
+
+// Mostrar formulario para crear una nueva visita
+Route::get('/vet-visits/create', [VetVisitController::class, 'create'])->name('vet-visits.create');
+
+// Guardar una nueva visita
+Route::post('/vet-visits', [VetVisitController::class, 'store'])->name('vet-visits.store');
+
+// Mostrar los detalles de una visita específica
+Route::get('/vet-visits/{vetVisit}', [VetVisitController::class, 'show'])->name('vet-visits.show');
+
+// Mostrar formulario para editar una visita
+Route::get('/vet-visits/{vetVisit}/edit', [VetVisitController::class, 'edit'])->name('vet-visits.edit');
+
+// Actualizar la visita
+Route::put('/vet-visits/{vetVisit}', [VetVisitController::class, 'update'])->name('vet-visits.update');
+
+// Eliminar la visita
+Route::delete('/vet-visits/{vetVisit}', [VetVisitController::class, 'destroy'])->name('vet-visits.destroy');
