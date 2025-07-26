@@ -7,7 +7,7 @@
             </div>
         @endif
 
-        <div class="card bg-gray-800 text-white border border-green-800 shadow-xl p-6">
+        <div class="card bg-gray-800 text-white border shadow-xl p-6">
             <div class="flex flex-col md:flex-row gap-6">
                 <div class="md:w-1/2">
                     @if ($horse->photos->count())
@@ -30,14 +30,14 @@
 
                 <div class="md:w-1/2 space-y-2">
                     <h2 class="text-2xl font-bold">🐴 {{ $horse->name }}</h2>
-                    <p><span class="text-green-400 font-semibold">Raza:</span> {{ $horse->breed }}</p>
-                    <p><span class="text-green-400 font-semibold">Color:</span> {{ $horse->color }}</p>
-                    <p><span class="text-green-400 font-semibold">Género:</span> {{ $horse->gender === 'male' ? 'Macho' : 'Hembra' }}</p>
-                    <p><span class="text-green-400 font-semibold">Número de Microchip:</span> {{ $horse->number_microchip }}</p>
-                    <p><span class="text-green-400 font-semibold">Nacimiento:</span> {{ $horse->birth_date }}</p>
-                    <p><span class="text-green-400 font-semibold">Padre:</span> {{ $horse->father_name }}</p>
-                    <p><span class="text-green-400 font-semibold">Madre:</span> {{ $horse->mother_name }}</p>
-                    <p><span class="text-green-400 font-semibold">Cuidador:</span> {{ $horse->caretaker->name ?? 'Sin cuidador' }}</p>
+                    <p><span class="text-blue-400 font-semibold">Raza:</span> {{ $horse->breed }}</p>
+                    <p><span class="text-blue-400 font-semibold">Color:</span> {{ $horse->color }}</p>
+                    <p><span class="text-blue-400 font-semibold">Género:</span> {{ $horse->gender === 'male' ? 'Macho' : 'Hembra' }}</p>
+                    <p><span class="text-blue-400 font-semibold">Número de Microchip:</span> {{ $horse->number_microchip }}</p>
+                    <p><span class="text-blue-400 font-semibold">Nacimiento:</span> {{ $horse->birth_date }}</p>
+                    <p><span class="text-blue-400 font-semibold">Padre:</span> {{ $horse->father_name }}</p>
+                    <p><span class="text-blue-400 font-semibold">Madre:</span> {{ $horse->mother_name }}</p>
+                    <p><span class="text-blue-400 font-semibold">Cuidador:</span> {{ $horse->caretaker->name ?? 'Sin cuidador' }}</p>
                 </div>
             </div>
         </div>
