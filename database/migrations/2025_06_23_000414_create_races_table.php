@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Horse::class);
             $table->string('place');
             $table->integer('distance')->default(0);
-            $table->integer('result');
+            $table->string('description')->nullable();
             $table->string('jockey');
             $table->timestamps();
         });

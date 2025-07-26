@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
+use App\Models\Horse;
 use App\Models\Training;
 
 class TrainingController extends Controller
@@ -13,7 +14,9 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        //
+        $training = Training::with(['horse'])->get();
+
+        return view('training.index', compact('training'));
     }
 
     /**
@@ -21,7 +24,8 @@ class TrainingController extends Controller
      */
     public function create()
     {
-        //
+        $horse = Horse::all();
+        return view('training.create', compact('horse'));
     }
 
     /**
@@ -29,7 +33,11 @@ class TrainingController extends Controller
      */
     public function store(StoreTrainingRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        Training::create($validatedData);
+
+        return redirect()->route('training.index')->with('success', 'Entrenamiento Creado con Exito');
     }
 
     /**
@@ -45,7 +53,9 @@ class TrainingController extends Controller
      */
     public function edit(Training $training)
     {
-        //
+
+        $horse = Horse::all();
+        return view('training.edit', compact('training', 'horse'));
     }
 
     /**
@@ -53,7 +63,11 @@ class TrainingController extends Controller
      */
     public function update(UpdateTrainingRequest $request, Training $training)
     {
-        //
+        $validatedData = $request->validated();
+
+        $training->update($validatedData);
+
+        return redirect()->route('training.index')->with('success', 'Entrenamiento Actualizado con Exito');
     }
 
     /**
@@ -61,6 +75,8 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-        //
+        $training->delete();
+
+        return redirect()->route('training.index')->with('success', 'Entrenamiento Eliminado con Exito');
     }
 }

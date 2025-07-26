@@ -11,7 +11,7 @@ class StoreTrainingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreTrainingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'horse_id' => 'required|exists:horses,id',
+            'date' => 'required|date',
+            'distance' => 'required|integer|min:0',
+            'duration_minutes' => 'required|integer|min:0',
+            'comments' => 'nullable|string',
         ];
     }
 }
