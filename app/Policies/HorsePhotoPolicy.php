@@ -2,24 +2,24 @@
 
 namespace App\Policies;
 
-use App\Models\Horse;
+use App\Models\HorsePhoto;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class HorsePolicy
+class HorsePhotoPolicy
 {
     /**
      * Determine whether the user can view any models.
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return false;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Horse $horse): bool
+    public function view(User $user, HorsePhoto $horsePhoto): bool
     {
         return false;
     }
@@ -29,30 +29,29 @@ class HorsePolicy
      */
     public function create(User $user): bool
     {
-        // Assuming only authenticated users can create horses
-      return true;    
-}
+        return false;
+    }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Horse $horse): bool
+    public function update(User $user, HorsePhoto $horsePhoto): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Horse $horse): bool
+    public function delete(User $user, HorsePhoto $horsePhoto): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Horse $horse): bool
+    public function restore(User $user, HorsePhoto $horsePhoto): bool
     {
         return false;
     }
@@ -60,9 +59,8 @@ class HorsePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Horse $horse): bool
+    public function forceDelete(User $user, HorsePhoto $horsePhoto): bool
     {
         return false;
     }
-    
 }

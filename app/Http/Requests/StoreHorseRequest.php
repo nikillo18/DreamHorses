@@ -11,7 +11,7 @@ class StoreHorseRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,8 +21,17 @@ class StoreHorseRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            //
-        ];
+       return [
+        'name' => 'required|string|max:100',
+        'breed' => 'required|string|max:100',
+        'color' => 'required|string|max:50',
+        'birth_date' => 'required|date',
+        'gender' => 'required|in:male,female',
+        'father_name' => 'nullable|string|max:100',
+        'mother_name' => 'nullable|string|max:100',
+        'caretaker_id' => 'required|exists:caretakers,id',
+        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'number_microchip' => 'nullable|string|max:15',
+    ];
     }
 }

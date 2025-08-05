@@ -11,7 +11,7 @@ class Horse extends Model
 {
     /** @use HasFactory<\Database\Factories\HorseFactory> */
     use HasFactory;
-    protected $fiallble = [
+    protected $fillable = [
         'name',
         'breed',
         'color',
@@ -19,7 +19,9 @@ class Horse extends Model
         'gender',
         'father_name',
         'mother_name',
-        'caretaker_id'
+        'photo_path',
+        'caretaker_id',
+        'number_microchip'
     ];
     public function caretaker(): BelongsTo
     {
@@ -55,4 +57,9 @@ class Horse extends Model
     {
         return $this->hasMany(Expense::class);
     }
+    
+public function photos()
+{
+    return $this->hasMany(HorsePhoto::class);
+}
 }

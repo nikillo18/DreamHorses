@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
 
+
         $this->call([
             CaretakerSeeder::class,
             HorseSeeder::class,
@@ -25,6 +26,8 @@ class DatabaseSeeder extends Seeder
             FoodSeeder::class,
             RaceSeeder::class,
             VetVisitSeeder::class,
+            HorseSeeder::class
+
         ]);
     }
 }
