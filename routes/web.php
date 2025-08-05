@@ -38,8 +38,6 @@ Route::get('/training/{training}/edit', [TrainingController::class, 'edit'])->na
 Route::put('/training/{training}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/training/{training}', [TrainingController::class, 'destroy'])->name('training.destroy');
 
- Horse
-require __DIR__.'/auth.php';
 
 Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse');
 Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse');
@@ -61,4 +59,4 @@ Route::get('/race/{race}/edit', [RaceController::class, 'edit'])->name('race.edi
 Route::put('/race/{race}', [RaceController::class, 'update'])->name('race.update');
 Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy');
 require __DIR__ . '/auth.php';
-main
+
