@@ -12,14 +12,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('trainings', function (Blueprint $table) {
+        Schema::create('horse_photos', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Horse::class);
-            $table->date('date');
-            $table->integer('distance');
-            $table->string('type_training');
-            $table->integer('duration_minutes');
-            $table->string('comments')->nullable();
+            $table->string('path');
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('trainings');
+        Schema::dropIfExists('horse_photos');
     }
 };

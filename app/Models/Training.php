@@ -10,7 +10,7 @@ class Training extends Model
 {
     /** @use HasFactory<\Database\Factories\TrainingFactory> */
     use HasFactory;
-    protected $fillable = ['horse_id', 'date', 'distance', 'duration_minutes', 'comments'];
+    protected $fillable = ['horse_id', 'date', 'distance', 'duration_minutes', 'type_training', 'comments'];
 
     public function horse(): BelongsTo
     {

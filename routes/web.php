@@ -1,17 +1,30 @@
 <?php
 
+use App\Http\Controllers\HorseController;
 use App\Http\Controllers\CalendarEventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TrainingController;
+use App\Models\Expense;
+use App\Models\Horse;
+use App\Models\Race;
+use App\Models\VetVisit;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HorsePhotoController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $horses = Horse::with('caretaker')->get();
+    $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
+    $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
+    $expenses = Expense::selectRaw('horse_id, SUM(amount) as total')
+        ->groupBy('horse_id')->get()->keyBy('horse_id');
+    $alerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get();
+
+    return view('dashboard', compact('horses', 'nextRaces', 'nextVetVisits', 'expenses', 'alerts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -25,6 +38,19 @@ Route::post('/training', [TrainingController::class, 'store'])->name('training.s
 Route::get('/training/{training}/edit', [TrainingController::class, 'edit'])->name('training.edit');
 Route::put('/training/{training}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/training/{training}', [TrainingController::class, 'destroy'])->name('training.destroy');
+
+
+Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse');
+Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse');
+Route::get('Horseindex', [HorseController::class, 'index'])->name('Horseindex');
+Route::get('horses/{horse}', [HorseController::class, 'show'])->name('horses.show');
+Route::get('horses/{horse}/edit', [HorseController::class, 'edit'])->name('horses.edit');
+Route::put('horses/{horse}', [HorseController::class, 'update'])->name('horses.update');
+Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy');
+Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name('photos.destroy');
+
+
+
 
 /* Race */
 Route::get('/race', [RaceController::class, 'index'])->name('race.index');
