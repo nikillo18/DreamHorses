@@ -9,7 +9,7 @@
                 <div class="card bg-base-100 w-96 shadow-sm">
                     <figure>
                         <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://images.unsplash.com/photo-1615989275591-9fdbfe661ec1?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}"
-                             class="w-full h-80 object-cover rounded" />
+                            class="w-full h-80 object-cover rounded" />
 
                     </figure>
                     <div class="card-body">
@@ -63,6 +63,7 @@
             <!-- Sidebar content here -->
             <li><a href="{{ route('training.index') }}" class="btn btn-primary ml-2">Entrenamientos</a></li>
             <li> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a></li>
+            <li><a href="{{ route('calendar.index') }}" class="btn btn-secondary ml-2">Calendario</a></li>
         </ul>
 
     </div>

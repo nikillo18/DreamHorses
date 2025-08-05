@@ -77,6 +77,7 @@
             <li><a href="{{ route('dashboard') }}" class="btn btn-secondary ml-2">Panel</a></li>
             <li><a href="{{ route('training.index') }}" class="btn btn-secondary ml-2">Entrenamientos</a></li>
             <li> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a></li>
+            <li><a href="{{ route('calendar.index') }}" class="btn btn-secondary ml-2">Calendario</a></li>
         </ul>
     </div>
 </div>
