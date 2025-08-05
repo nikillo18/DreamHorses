@@ -4,6 +4,10 @@ use App\Http\Controllers\HorseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TrainingController;
+use App\Models\Expense;
+use App\Models\Horse;
+use App\Models\Race;
+use App\Models\VetVisit;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HorsePhotoController;
 
@@ -12,7 +16,14 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $horses = Horse::with('caretaker')->get();
+    $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
+    $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
+    $expenses = Expense::selectRaw('horse_id, SUM(amount) as total')
+        ->groupBy('horse_id')->get()->keyBy('horse_id');
+    $alerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get();
+
+    return view('dashboard', compact('horses', 'nextRaces', 'nextVetVisits', 'expenses', 'alerts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
