@@ -29,11 +29,8 @@ class VetVisitController extends Controller
 
     public function edit(VetVisit $vetVisit)
     {
-        $horses = Horse::all();
-        return view('vetvisit.edit', [
-            'visit' => $vetVisit,
-            'horses' => $horses
-        ]);
+         $horses = Horse::all();
+    return view('vetvisit.edit', compact('vetVisit', 'horses'));
     }
 
     public function update(UpdateVetVisitRequest $request, VetVisit $vetVisit)
