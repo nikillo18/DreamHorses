@@ -59,7 +59,6 @@ Route::post('/race', [RaceController::class, 'store'])->name('race.store');
 Route::get('/race/{race}/edit', [RaceController::class, 'edit'])->name('race.edit');
 Route::put('/race/{race}', [RaceController::class, 'update'])->name('race.update');
 Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy');
-crud_expense
 
 /* Expense */
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
