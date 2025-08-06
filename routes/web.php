@@ -6,6 +6,8 @@ use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TrainingController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HorsePhotoController;
+use App\Http\Controllers\ExpenseController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,6 +48,16 @@ Route::post('/race', [RaceController::class, 'store'])->name('race.store');
 Route::get('/race/{race}/edit', [RaceController::class, 'edit'])->name('race.edit');
 Route::put('/race/{race}', [RaceController::class, 'update'])->name('race.update');
 Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy');
+
+/* Expense */
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
+Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
+Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+
 require __DIR__.'/auth.php';
 
 
