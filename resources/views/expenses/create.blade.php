@@ -23,7 +23,7 @@
             </div>
 
             <div>
-                <label for="category" class="block font-semibold mb-1 text-blue-300">📂 Categoría</label>
+                <label for="category" class="block font-semibold mb-1 text-blue-300">Categoría</label>
                 <input type="text" name="category" id="category" placeholder="Ej. Alimentación, Veterinaria, etc."
                        class="input input-bordered w-full bg-blue-950 text-white"
                        value="{{ old('category') }}">
