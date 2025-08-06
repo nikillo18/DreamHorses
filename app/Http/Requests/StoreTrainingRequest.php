@@ -26,6 +26,7 @@ class StoreTrainingRequest extends FormRequest
             'date' => 'required|date',
             'distance' => 'required|integer|min:0',
             'duration_minutes' => 'required|integer|min:0',
+            'type_training' => 'required|string|max:255',
             'comments' => 'nullable|string',
         ];
     }

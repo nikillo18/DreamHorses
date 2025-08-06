@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Horse;
+use App\Models\Training;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +16,16 @@ class TrainingFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Training::class;
     public function definition(): array
     {
         return [
-            //
+            'horse_id' => Horse::inRandomOrder()->first()->id,
+            'date' => $this->faker->date(),
+            'distance' => $this->faker->numberBetween(100, 500),
+            'type_training' => $this->faker->name(),
+            'duration_minutes' => $this->faker->numberBetween(10, 120),
+            'comments' => $this->faker->optional()->text(200),
         ];
     }
 }

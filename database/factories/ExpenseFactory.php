@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Expense;
+use App\Models\Horse;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -14,10 +16,15 @@ class ExpenseFactory extends Factory
      *
      * @return array<string, mixed>
      */
+    protected $model = Expense::class;
     public function definition(): array
     {
         return [
-            //
+            'date' => $this->faker->date(),
+            'category' => $this->faker->word(),
+            'description' => $this->faker->text(100),
+            'amount' => $this->faker->randomFloat(2, 0, 10000),
+            'horse_id' => Horse::inRandomOrder()->first()->id,
         ];
     }
 }
