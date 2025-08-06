@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\CalendarEvent;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class CalendarEventSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        CalendarEvent::factory(10)->create();
     }
 }

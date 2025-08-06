@@ -1,17 +1,71 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@vite('resources/css/app.css')
+<div class="drawer lg:drawer-open">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <label for="my-drawer" class="btn btn-primary drawer-button">Panel</label>
+    <div class="drawer-content">
+        <!-- Page content here -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($horses as $horse)
+                <div class="card bg-base-100 w-96 shadow-sm">
+                    <figure>
+                        <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://images.unsplash.com/photo-1615989275591-9fdbfe661ec1?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' }}"
+                             class="w-full h-80 object-cover rounded" />
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+                    </figure>
+                    <div class="card-body">
+                        <h2 class="card-title">{{ $horse->name }}</h2>
+                        <p>Raza: {{ $horse->breed }}</p>
+                        <p>Color: {{ $horse->color }}</p>
+                        <p>Fecha de nacimiento: {{ $horse->birth_date }}</p>
+                        <p>Cuidador: {{ $horse->caretaker->name }}</p>
+                        <div class="divider"></div>
+                        <h3 class="font-bold text-primary">Eventos próximos</h3>
+                        <ul class="list-disc ml-4">
+                            @foreach ($nextRaces->where('horse_id', $horse->id) as $race)
+                                <li>
+                                    <span class="badge badge-info">Carrera</span>
+                                    {{ \Carbon\Carbon::parse($race->date)->format('d/m/Y') }} - {{ $race->description }}
+                                </li>
+                            @endforeach
+                            @foreach ($nextVetVisits->where('horse_id', $horse->id) as $visit)
+                                <li>
+                                    <span class="badge badge-warning">Veterinario</span>
+                                    {{ \Carbon\Carbon::parse($visit->visit_date)->format('d/m/Y') }} -
+                                    {{ $visit->diagnosis }}
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="divider"></div>
+                        <h3 class="font-bold text-primary">Resumen de gastos</h3>
+                        <p>
+                            Total: <span class="badge badge-success">
+                                ${{ number_format($expenses[$horse->id]->total ?? 0, 2) }}
+                            </span>
+                        </p>
+                        <div class="divider"></div>
+                        <h3 class="font-bold text-error">Alertas</h3>
+                        <ul class="list-disc ml-4">
+                            @foreach ($alerts->where('horse_id', $horse->id) as $alert)
+                                <li>
+                                    Próxima visita: {{ \Carbon\Carbon::parse($alert->visit_date)->format('d/m/Y') }}
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     </div>
-</x-app-layout>
+
+    <div class="drawer-side">
+        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+        <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+            <!-- Sidebar content here -->
+            <li><a href="{{ route('training.index') }}" class="btn btn-primary ml-2">Entrenamientos</a></li>
+            <li> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a></li>
+            <li><a href="{{ route('expenses.index') }}" class="btn btn-info ml-2">Gastos</a></li>
+            <li><a href="{{ route('vet.index') }}" class="btn btn-warning ml-2">Veterinario</a></li>
+        </ul>
+
+    </div>
+</div>

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\VetVisit;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class VetVisitSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        VetVisit::factory(10)->create();
     }
 }
