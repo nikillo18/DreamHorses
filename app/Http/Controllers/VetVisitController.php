@@ -4,63 +4,44 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreVetVisitRequest;
 use App\Http\Requests\UpdateVetVisitRequest;
+use App\Models\Horse;
 use App\Models\VetVisit;
 
 class VetVisitController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $visits = VetVisit::with('horse')->latest()->get();
+        return view('vetvisit.index', compact('visits'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $horses = Horse::all(); // Para el select de caballos
+        return view('vetvisit.create', compact('horses'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreVetVisitRequest $request)
     {
-        //
+        VetVisit::create($request->validated());
+        return redirect()->route('vet-visits.index')->with('success', 'Visita veterinaria creada correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(VetVisit $vetVisit)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(VetVisit $vetVisit)
     {
-        //
+         $horses = Horse::all();
+    return view('vetvisit.edit', compact('vetVisit', 'horses'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateVetVisitRequest $request, VetVisit $vetVisit)
     {
-        //
+        $vetVisit->update($request->validated());
+        return redirect()->route('vet-visits.index')->with('success', 'Visita actualizada correctamente.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(VetVisit $vetVisit)
     {
-        //
+        $vetVisit->delete();
+        return redirect()->route('vet-visits.index')->with('success', 'Visita eliminada correctamente.');
     }
 }

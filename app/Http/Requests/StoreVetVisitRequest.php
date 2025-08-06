@@ -11,7 +11,7 @@ class StoreVetVisitRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreVetVisitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'horse_id'     => 'required|exists:horses,id',
+            'visit_date'   => 'required|date',
+            'vet_name'     => 'required|string|max:100',
+            'vet_phone'    => 'nullable|string|max:20',
+            'diagnosis'    => 'required|string',
+            'treatment'    => 'required|string',
+            'next_visit'   => 'nullable|date|after_or_equal:visit_date',
+
         ];
     }
 }

@@ -4,14 +4,14 @@ use App\Http\Controllers\HorseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\VetVisitController;
+use App\Http\Controllers\HorsePhotoController;
+use App\Http\Controllers\ExpenseController;
 use App\Models\Expense;
 use App\Models\Horse;
 use App\Models\Race;
 use App\Models\VetVisit;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HorsePhotoController;
-use App\Http\Controllers\ExpenseController;
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -42,7 +42,15 @@ Route::get('/training/{training}/edit', [TrainingController::class, 'edit'])->na
 Route::put('/training/{training}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/training/{training}', [TrainingController::class, 'destroy'])->name('training.destroy');
 
-/* Horse*/
+/* Vet Visits */
+Route::get('/vet-visits', [VetVisitController::class, 'index'])->name('vet-visits.index');
+Route::get('/vet-visits/create', [VetVisitController::class, 'create'])->name('vet-visits.create');
+Route::post('/vet-visits', [VetVisitController::class, 'store'])->name('vet-visits.store');
+Route::get('/vet-visits/{vetVisit}/edit', [VetVisitController::class, 'edit'])->name('vet-visits.edit');
+Route::put('/vet-visits/{vetVisit}', [VetVisitController::class, 'update'])->name('vet-visits.update');
+Route::delete('/vet-visits/{vetVisit}', [VetVisitController::class, 'destroy'])->name('vet-visits.destroy');
+
+/* Horse */
 Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse');
 Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse');
 Route::get('Horseindex', [HorseController::class, 'index'])->name('Horseindex');
@@ -70,6 +78,4 @@ Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('e
 Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 
 require __DIR__.'/auth.php';
-
-
 
