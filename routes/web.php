@@ -10,6 +10,8 @@ use App\Models\Race;
 use App\Models\VetVisit;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HorsePhotoController;
+use App\Http\Controllers\ExpenseController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+/* Training */
 Route::get('/training', [TrainingController::class, 'index'])->name('training.index');
 Route::get('/training/create', [TrainingController::class, 'create'])->name('training.create');
 Route::post('/training', [TrainingController::class, 'store'])->name('training.store');
@@ -38,7 +42,7 @@ Route::get('/training/{training}/edit', [TrainingController::class, 'edit'])->na
 Route::put('/training/{training}', [TrainingController::class, 'update'])->name('training.update');
 Route::delete('/training/{training}', [TrainingController::class, 'destroy'])->name('training.destroy');
 
-
+/* Horse*/
 Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse');
 Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse');
 Route::get('Horseindex', [HorseController::class, 'index'])->name('Horseindex');
@@ -48,9 +52,6 @@ Route::put('horses/{horse}', [HorseController::class, 'update'])->name('horses.u
 Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy');
 Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name('photos.destroy');
 
-
-
-
 /* Race */
 Route::get('/race', [RaceController::class, 'index'])->name('race.index');
 Route::get('/race/create', [RaceController::class, 'create'])->name('race.create');
@@ -58,5 +59,18 @@ Route::post('/race', [RaceController::class, 'store'])->name('race.store');
 Route::get('/race/{race}/edit', [RaceController::class, 'edit'])->name('race.edit');
 Route::put('/race/{race}', [RaceController::class, 'update'])->name('race.update');
 Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy');
-require __DIR__ . '/auth.php';
+crud_expense
+
+/* Expense */
+Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index');
+Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create');
+Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store');
+Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show');
+Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name('expenses.edit');
+Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
+Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
+
+require __DIR__.'/auth.php';
+
+
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
+use App\Models\Horse;
+use Illuminate\Http\Request;
 
 class ExpenseController extends Controller
 {
@@ -13,7 +15,9 @@ class ExpenseController extends Controller
      */
     public function index()
     {
-        //
+        // Logic to retrieve and return a list of expenses
+        $expenses = Expense::with('horse')->latest()->get();
+        return view('expenses.index', compact('expenses'));
     }
 
     /**
@@ -21,7 +25,8 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        //
+        $horses= Horse::all();
+        return view('expenses.create', compact('horses'));
     }
 
     /**
@@ -29,7 +34,8 @@ class ExpenseController extends Controller
      */
     public function store(StoreExpenseRequest $request)
     {
-        //
+        $expense = Expense::create($request->validated());
+        return redirect()->route('expenses.index')->with('success', 'Expense creada exitosamente.');
     }
 
     /**
@@ -45,7 +51,8 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        //
+        $horses = Horse::all();
+        return view('expenses.edit', compact('expense', 'horses'));
     }
 
     /**
@@ -53,7 +60,8 @@ class ExpenseController extends Controller
      */
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
-        //
+        $expense->update($request->validated());
+        return redirect()->route('expenses.index')->with('success', 'Gastos subidos exitosamente .');
     }
 
     /**
@@ -61,6 +69,7 @@ class ExpenseController extends Controller
      */
     public function destroy(Expense $expense)
     {
-        //
+        $expense->delete();
+        return redirect()->route('expenses.index')->with('success', 'Se borro correctamente.');
     }
 }
