@@ -63,6 +63,8 @@
             <!-- Sidebar content here -->
             <li><a href="{{ route('training.index') }}" class="btn btn-primary ml-2">Entrenamientos</a></li>
             <li> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a></li>
+            <li><a href="{{ route('expenses.index') }}" class="btn btn-info ml-2">Gastos</a></li>
+            <li><a href="{{ route('vet.index') }}" class="btn btn-warning ml-2">Veterinario</a></li>
             <li><a href="{{ route('calendar.index') }}" class="btn btn-secondary ml-2">Calendario</a></li>
         </ul>
 
