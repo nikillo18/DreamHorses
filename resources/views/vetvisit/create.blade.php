@@ -1,9 +1,17 @@
 <x-app-layout>
+    
     <div class="max-w-3xl mx-auto p-6" data-theme="forest">
-        <h2 class="text-2xl font-bold text-blue-400 mb-6">🩺 Registrar Visita Veterinaria</h2>
+    @auth
+    @if (auth()->user()->role === 'veterinario')
 
+        <h2 class="text-2xl font-bold text-blue-400 mb-6">🩺 Registrar Visita Veterinaria</h2>
+  
         <form action="{{ route('vet-visits.store') }}" method="POST" class="bg-gray-900 text-white p-6 rounded-xl shadow-md space-y-4 ">
             @csrf
+             @else
+                <p class="text-red-400 font-semibold">🚫 No tienes permiso para registrar visitas veterinarias.</p>
+            @endif
+        @endauth
 
             <label for="horse_id" class="font-semibold text-blue-200">Caballo</label>
             <select name="horse_id" id="horse_id" class="select select-bordered w-full bg-blue-950 text-white">

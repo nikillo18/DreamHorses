@@ -11,7 +11,7 @@
 
         <div class="mb-4">
             <a href="{{ route('vet-visits.create') }}" class="btn btn-primary">
-                ➕ Nueva Visita
+                Nueva Visita
             </a>
         </div>
 
@@ -56,4 +56,5 @@
             </table>
         </div>
     </div>
+    
 </x-app-layout>
