@@ -22,12 +22,12 @@ class UpdateCalendarEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:255',
+            'title' => 'required|string|max:100',
             'horse_id' => 'required|exists:horses,id',
             'event_date' => 'required|date',
-            'event_time' => 'required|time',
+            'event_time' => 'required|date_format:H:i',
             'category' => 'required|string|max:50',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:150',
         ];
     }
 }

@@ -10,10 +10,12 @@
                     {{ session('success') }}
                 </div>
             @endif
-
+            <form action="{{ route('CreateHorse') }}" method="get">
+                <button type="submit" class="btn btn-primary  btn-xs w-100">Crear caballo</button>
+            </form>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($horses as $horse)
-                    <div class="card bg-base-100 w-96 shadow-sm">
+                    <div class="card bg-base-100 w-70 gap-4 shadow-sm">
                         <figure>
                             <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://images.unsplash.com/photo-1615989275591-9fdbfe661ec1?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') }}"
                                 class="w-full h-48 object-cover rounded-t-lg" />

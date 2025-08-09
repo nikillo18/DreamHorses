@@ -27,7 +27,7 @@ class StoreRaceRequest extends FormRequest
             'place' => 'nullable|integer|min:1',
             'distance' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
-            'jockey' => 'required|string|max:255',
+            'jockey' => 'required|string|max:50',
         ];
     }
 }

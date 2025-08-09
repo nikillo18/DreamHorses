@@ -25,6 +25,7 @@ class CalendarEventController extends Controller
     public function create()
     {
         $horse = Horse::all();
+
         return view('calendar.create', compact('horse'));
     }
 

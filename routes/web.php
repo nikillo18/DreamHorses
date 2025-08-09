@@ -12,6 +12,7 @@ use App\Models\Expense;
 use App\Models\Horse;
 use App\Models\Race;
 use App\Models\VetVisit;
+use App\Models\CalendarEvent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,11 +23,64 @@ Route::get('/dashboard', function () {
     $horses = Horse::with('caretaker')->get();
     $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
     $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
+    $nextCalendarEvents = CalendarEvent::where('event_date', '>=', now())->orderBy('event_date')->get();
+
+    $events = $nextRaces->take(5)->map(function ($race) {
+        return (object) [
+            'horse_id' => $race->horse_id,
+            'event_date' => $race->date,
+            'title' => $race->name,
+            'category' => 'Carrera',
+        ];
+    })->concat($nextVetVisits->map(function ($visit) {
+        return (object) [ // Take only the next 5 events
+            'horse_id' => $visit->horse_id,
+            'event_date' => $visit->visit_date,
+            'title' => $visit->reason,
+            'category' => 'Visita Veterinaria',
+        ];
+    }))->concat($nextCalendarEvents->map(function ($event) {
+        return (object) [
+            'horse_id' => $event->horse_id,
+            'event_date' => $event->event_date,
+            'title' => $event->title,
+            'category' => $event->category,
+        ];
+    }))->sortBy('event_date')->take(5);
+
     $expenses = Expense::selectRaw('horse_id, SUM(amount) as total')
         ->groupBy('horse_id')->get()->keyBy('horse_id');
-    $alerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get();
 
-    return view('dashboard', compact('horses', 'nextRaces', 'nextVetVisits', 'expenses', 'alerts'));
+    $vetVisitAlerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get()->map(function ($visit) {
+        return (object) [
+            'horse_id' => $visit->horse_id,
+            'event_date' => $visit->visit_date,
+            'title' => $visit->reason,
+            'category' => 'Visita Veterinaria',
+        ];
+    });
+
+    $raceAlerts = Race::whereBetween('date', [now(), now()->addDays(7)])->get()->map(function ($race) {
+        return (object) [
+            'horse_id' => $race->horse_id,
+            'event_date' => $race->date,
+            'title' => $race->name,
+            'category' => 'Carrera',
+        ];
+    });
+
+    $calendarEventAlerts = CalendarEvent::whereBetween('event_date', [now(), now()->addDays(7)])->get()->map(function ($event) {
+        return (object) [
+            'horse_id' => $event->horse_id,
+            'event_date' => $event->event_date,
+            'title' => $event->title,
+            'category' => $event->category,
+        ];
+    });
+
+    $alerts = $vetVisitAlerts->concat($raceAlerts)->concat($calendarEventAlerts);
+
+    return view('dashboard', compact('horses', 'events', 'expenses', 'alerts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

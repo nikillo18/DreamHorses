@@ -24,8 +24,8 @@ class CalendarEventFactory extends Factory
             'horse_id' => Horse::inRandomOrder()->first()->id,
             'event_date' => $this->faker->date(),
             'event_time' => $this->faker->time(),
-            'description' => $this->faker->paragraph,
-            'category' => $this->faker->word,
+            'description' => $this->faker->sentence,
+            'category' => $this->faker->randomElement(['Visita Veterinario', 'Carrera']),
         ];
     }
 }

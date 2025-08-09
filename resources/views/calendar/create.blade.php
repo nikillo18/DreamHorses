@@ -46,8 +46,14 @@
                 <input type="time" name="event_time" id="event_time" required class="input input-bordered w-full">
             </fieldset>
             <fieldset>
-                <label for="category" class="block text-sm font-medium">Tipo de Evento</label>
-                <input type="text" name="category" id="category" required class="input input-bordered w-full">
+                <label class="fieldset-legend">Tipo de Evento</label>
+                <select class="select select-bordered w-full" name="category" id="category" required>
+                    <option disabled selected>Elija evento</option>
+
+                    <option>Visita Veterinario</option>
+                    <option>Carrera</option>
+
+                </select>
             </fieldset>
             <fieldset>
                 <label for="description" class="block text-sm font-medium">Descripción</label>
