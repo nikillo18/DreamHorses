@@ -26,8 +26,8 @@ class StoreVetVisitRequest extends FormRequest
             'visit_date'   => 'required|date',
             'vet_name'     => 'required|string|max:100',
             'vet_phone'    => 'nullable|string|max:20',
-            'diagnosis'    => 'required|string',
-            'treatment'    => 'required|string',
+            'diagnosis'    => 'required|string|max:120',
+            'treatment'    => 'required|string|max:120',
             'next_visit'   => 'nullable|date|after_or_equal:visit_date',
 
         ];

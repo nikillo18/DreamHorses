@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HorseController;
+use App\Http\Controllers\CalendarEventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RaceController;
 use App\Http\Controllers\TrainingController;
@@ -11,6 +12,7 @@ use App\Models\Expense;
 use App\Models\Horse;
 use App\Models\Race;
 use App\Models\VetVisit;
+use App\Models\CalendarEvent;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,11 +23,64 @@ Route::get('/dashboard', function () {
     $horses = Horse::with('caretaker')->get();
     $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
     $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
+    $nextCalendarEvents = CalendarEvent::where('event_date', '>=', now())->orderBy('event_date')->get();
+
+    $events = $nextRaces->take(5)->map(function ($race) {
+        return (object) [
+            'horse_id' => $race->horse_id,
+            'event_date' => $race->date,
+            'title' => $race->name,
+            'category' => 'Carrera',
+        ];
+    })->concat($nextVetVisits->map(function ($visit) {
+        return (object) [ // Take only the next 5 events
+            'horse_id' => $visit->horse_id,
+            'event_date' => $visit->visit_date,
+            'title' => $visit->reason,
+            'category' => 'Visita Veterinaria',
+        ];
+    }))->concat($nextCalendarEvents->map(function ($event) {
+        return (object) [
+            'horse_id' => $event->horse_id,
+            'event_date' => $event->event_date,
+            'title' => $event->title,
+            'category' => $event->category,
+        ];
+    }))->sortBy('event_date')->take(5);
+
     $expenses = Expense::selectRaw('horse_id, SUM(amount) as total')
         ->groupBy('horse_id')->get()->keyBy('horse_id');
-    $alerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get();
 
-    return view('dashboard', compact('horses', 'nextRaces', 'nextVetVisits', 'expenses', 'alerts'));
+    $vetVisitAlerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get()->map(function ($visit) {
+        return (object) [
+            'horse_id' => $visit->horse_id,
+            'event_date' => $visit->visit_date,
+            'title' => $visit->reason,
+            'category' => 'Visita Veterinaria',
+        ];
+    });
+
+    $raceAlerts = Race::whereBetween('date', [now(), now()->addDays(7)])->get()->map(function ($race) {
+        return (object) [
+            'horse_id' => $race->horse_id,
+            'event_date' => $race->date,
+            'title' => $race->name,
+            'category' => 'Carrera',
+        ];
+    });
+
+    $calendarEventAlerts = CalendarEvent::whereBetween('event_date', [now(), now()->addDays(7)])->get()->map(function ($event) {
+        return (object) [
+            'horse_id' => $event->horse_id,
+            'event_date' => $event->event_date,
+            'title' => $event->title,
+            'category' => $event->category,
+        ];
+    });
+
+    $alerts = $vetVisitAlerts->concat($raceAlerts)->concat($calendarEventAlerts);
+
+    return view('dashboard', compact('horses', 'events', 'expenses', 'alerts'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -77,5 +132,14 @@ Route::get('/expenses/{expense}/edit', [ExpenseController::class, 'edit'])->name
 Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('expenses.update');
 Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 
-require __DIR__.'/auth.php';
 
+
+
+/* Calendar */
+Route::get('/calendar', [CalendarEventController::class, 'index'])->name('calendar.index');
+Route::get('/calendar/create', [CalendarEventController::class, 'create'])->name('calendar.create');
+Route::post('/calendar', [CalendarEventController::class, 'store'])->name('calendar.store');
+Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'edit'])->name('calendar.edit');
+Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update');
+Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy');
+require __DIR__ . '/auth.php';

@@ -18,8 +18,8 @@ return new class extends Migration
             $table->date('visit_date');
             $table->string('vet_name');
             $table->string('vet_phone')->nullable();
-            $table->text('diagnosis');
-            $table->text('treatment');
+            $table->string('diagnosis');
+            $table->string('treatment');
             $table->date('next_visit')->nullable();
             $table->timestamps();
         });

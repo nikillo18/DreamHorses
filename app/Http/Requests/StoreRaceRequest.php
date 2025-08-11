@@ -24,10 +24,10 @@ class StoreRaceRequest extends FormRequest
         return [
             'horse_id' => 'required|exists:horses,id',
             'date' => 'required|date',
-            'place' => 'required|integer|min:1',
-            'distance' => 'required|numeric|min:0',
+            'place' => 'nullable|integer|min:1',
+            'distance' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
-            'jockey' => 'required|string|max:255',
+            'jockey' => 'required|string|max:50',
         ];
     }
 }

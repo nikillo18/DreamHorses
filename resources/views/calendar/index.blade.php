@@ -9,57 +9,52 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </label>
-        <div class="p-6 max-w-6xl mx-auto space-y-6">
-            <h2 class="text-3xl font-bold text-blue-400 mb-4"> Lista de Gastos</h2>
-
-            @if (session('success'))
-                <div class="alert alert-success shadow-md">
-                    {{ session('success') }}
-                </div>
-            @endif
-
-            <div class="flex justify-end mb-4">
-                <a href="{{ route('expenses.create') }}" class="btn btn-primary">
-                    Nuevo Gasto
-                </a>
+        <div class="container mx-auto p-4">
+            <h1 class="text-2xl sm:text-3xl font-bold text-primary text-center sm:text-left mb-6">
+                Lista de Eventos
+            </h1>
+            <div class="flex justify-start mb-4">
+                <form action="{{ route('calendar.create') }}" method="get">
+                    <button type="submit" class="btn btn-success">Crear Evento</button>
+                </form>
             </div>
-
-            <div class="overflow-x-auto rounded shadow">
-                <table class="table table-zebra w-full">
-                    <thead class="bg-blue-900 text-white">
+            <div class="overflow-x-auto rounded-lg shadow">
+                <table class="table table-zebra w-full text-sm">
+                    <thead>
                         <tr>
-                            <th>Fecha</th>
+                            <th>Titulo</th>
                             <th>Caballo</th>
-                            <th>Categoría</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Tipo de Evento</th>
                             <th>Descripción</th>
-                            <th>Monto</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($expenses as $expense)
+                        @foreach ($events as $event)
                             <tr>
-                                <td>{{ $expense->date }}</td>
-                                <td>{{ $expense->horse->name }}</td>
-                                <td>{{ $expense->category }}</td>
-                                <td>{{ $expense->description }}</td>
-                                <td class="text-green-400 font-semibold">${{ number_format($expense->amount) }}</td>
-                                <td class="flex gap-2">
-                                    <a href="{{ route('expenses.edit', $expense->id) }}"
-                                        class="btn btn-xs btn-warning">Modificar</a>
-                                    <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de eliminar este gasto?')">
+                                <td class="whitespace-nowrap">{{ $event->title }}</td>
+                                <td class="whitespace-nowrap">{{ $event->horse->name }}</td>
+                                <td class="whitespace-nowrap">{{ $event->event_date }}</td>
+                                <td class="whitespace-nowrap">{{ $event->event_time }}</td>
+                                <td class="whitespace-nowrap">{{ $event->category }}</td>
+                                <td class="max-w-xs break-words">{{ $event->description }}</td>
+                                <td class="flex flex-col sm:flex-row gap-2">
+                                    <form action="{{ route('calendar.edit', $event) }}" method="get"
+                                        style="display:inline;">
+                                        <button type="submit" class="btn btn-primary btn-xs w-full">Editar</button>
+                                    </form>
+                                    <form action="{{ route('calendar.destroy', $event) }}" method="POST"
+                                        style="display:inline;">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-xs btn-error">Borrar</button>
+                                        <button type="submit" class="btn btn-error btn-xs w-full"
+                                            onclick="return confirm('¿Estás seguro de que deseas eliminar este evento?');">Eliminar</button>
                                     </form>
                                 </td>
                             </tr>
-                        @empty
-                            <tr>
-                                <td colspan="6" class="text-center text-gray-500">No hay gastos registrados.</td>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -73,12 +68,11 @@
             <li class="mb-2"><a href="{{ route('training.index') }}" class="btn btn-primary ml-2">Entrenamientos</a>
             </li>
             <li class="mb-2"> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a></li>
-
+            <li class="mb-2"><a href="{{ route('expenses.index') }}" class="btn btn-info ml-2">Gastos</a></li>
             <li class="mb-2"><a href="{{ route('vet-visits.index') }}" class="btn btn-warning ml-2">Veterinario</a>
             </li>
             <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-secondary ml-2">Caballos</a></li>
-            <li class="mb-4"><a href="{{ route('calendar.index') }}" class="btn btn-secondary ml-2">Calendario</a>
-            </li>
+
 
             <div class="flex flex-col justify-center items-center mt-4 space-y-2 w-full">
                 <form method="POST" action="{{ route('logout') }}" class="w-full">
@@ -91,5 +85,6 @@
                 </form>
             </div>
         </ul>
+
     </div>
 </div>

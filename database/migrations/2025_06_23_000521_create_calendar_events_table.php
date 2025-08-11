@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Horse::class);
             $table->date('event_date');
             $table->time('event_time');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->string('category');
             $table->timestamps();
         });

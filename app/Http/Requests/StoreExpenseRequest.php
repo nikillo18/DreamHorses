@@ -23,7 +23,7 @@ class StoreExpenseRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric|min:0',
-            'description' => 'nullable|string|max:255',
+            'description' => 'nullable|string|max:150',
             'date' => 'required|date',
             'category' => 'required|string|max:50',
             'horse_id' => 'required|exists:horses,id',

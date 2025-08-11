@@ -1,64 +1,107 @@
-<x-app-layout>
-    <div class="max-w-3xl mx-auto p-6">
-        <h2 class="text-2xl font-bold text-blue-400 mb-6"> Registrar Gasto</h2>
+<div class="drawer lg:drawer-open">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
 
-        @if ($errors->any())
-            <div class="alert alert-error mb-4">
-                <ul class="list-disc list-inside text-sm text-white">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+    <div class="drawer-content">
+        <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </label>
+        <!-- Page content here -->
+        <div class="max-w-3xl mx-auto p-6">
+            <h2 class="text-2xl font-bold text-blue-400 mb-6"> Registrar Gasto</h2>
 
-        <form action="{{ route('expenses.store') }}" method="POST"
-              class="space-y-4 bg-base-200 text-white p-6 rounded-xl shadow-md ">
-            @csrf
+            @if ($errors->any())
+                <div class="alert alert-error mb-4">
+                    <ul class="list-disc list-inside text-sm text-white">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
 
-            <div>
-                <label for="date" class="block font-semibold mb-1 text-blue-300"> Fecha del Gasto</label>
-                <input type="date" name="date" id="date" class="input input-bordered w-full bg-blue-950 text-white"
-                       value="{{ old('date') }}">
-            </div>
+            <form action="{{ route('expenses.store') }}" method="POST"
+                class="space-y-4 bg-base-200 text-white p-6 rounded-xl shadow-md ">
+                @csrf
 
-            <div>
-                <label for="category" class="block font-semibold mb-1 text-blue-300">Categoría</label>
-                <input type="text" name="category" id="category" placeholder="Ej. Alimentación, Veterinaria, etc."
-                       class="input input-bordered w-full bg-blue-950 text-white"
-                       value="{{ old('category') }}">
-            </div>
+                <div>
+                    <label for="date" class="block font-semibold mb-1 text-blue-300"> Fecha del Gasto</label>
+                    <input type="date" name="date" id="date"
+                        class="input input-bordered w-full bg-blue-950 text-white" value="{{ old('date') }}">
+                </div>
 
-            <div>
-                <label for="description" class="block font-semibold mb-1 text-blue-300"> Descripción</label>
-                <textarea name="description" id="description" rows="3"
-                          class="textarea textarea-bordered w-full bg-blue-950 text-white">{{ old('description') }}</textarea>
-            </div>
+                <div>
+                    <label for="category" class="block font-semibold mb-1 text-blue-300">Categoría</label>
+                    <input type="text" name="category" id="category"
+                        placeholder="Ej. Alimentación, Veterinaria, etc."
+                        class="input input-bordered w-full bg-blue-950 text-white" value="{{ old('category') }}">
+                </div>
 
-            <div>
-                <label for="amount" class="block font-semibold mb-1 text-blue-300"> Monto ($)</label>
-                <input type="number" name="amount" id="amount" step="0.01"
-                       class="input input-bordered w-full bg-blue-950 text-white"
-                       value="{{ old('amount') }}">
-            </div>
+                <div>
+                    <label for="description" class="block font-semibold mb-1 text-blue-300"> Descripción</label>
+                    <textarea name="description" id="description" rows="3"
+                        class="textarea textarea-bordered w-full bg-blue-950 text-white">{{ old('description') }}</textarea>
+                </div>
 
-            <div>
-                <label for="horse_id" class="block font-semibold mb-1 text-blue-300"> Caballo</label>
-                <select name="horse_id" id="horse_id" class="select select-bordered w-full bg-blue-950 text-white">
-                    <option disabled selected>Seleccione un caballo</option>
-                    @foreach ($horses as $horse)
-                        <option value="{{ $horse->id }}" {{ old('horse_id') == $horse->id ? 'selected' : '' }}>
-                            {{ $horse->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+                <div>
+                    <label for="amount" class="block font-semibold mb-1 text-blue-300"> Monto ($)</label>
+                    <input type="number" name="amount" id="amount" step="0.01"
+                        class="input input-bordered w-full bg-blue-950 text-white" value="{{ old('amount') }}">
+                </div>
 
-            <div class="pt-4">
-                <button type="submit" class="btn w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold">
-                    Guardar Gasto
-                </button>
-            </div>
-        </form>
+                <div>
+                    <label for="horse_id" class="block font-semibold mb-1 text-blue-300"> Caballo</label>
+                    <select name="horse_id" id="horse_id" class="select select-bordered w-full bg-blue-950 text-white">
+                        <option disabled selected>Seleccione un caballo</option>
+                        @foreach ($horses as $horse)
+                            <option value="{{ $horse->id }}" {{ old('horse_id') == $horse->id ? 'selected' : '' }}>
+                                {{ $horse->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="pt-4">
+                    <button type="submit"
+                        class="btn w-full bg-blue-600 hover:bg-blue-700 text-white text-lg font-bold">
+                        Guardar Gasto
+                    </button>
+                </div>
+            </form>
+        </div>
+        @vite('resources/css/app.css', 'resources/js/app.js')
+
+        <div class="drawer-side">
+            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                <!-- Sidebar content here -->
+                <li class="mb-2"><a href="{{ route('training.index') }}"
+                        class="btn btn-primary ml-2">Entrenamientos</a>
+                </li>
+                <li class="mb-2"> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a>
+                </li>
+                <li class="mb-2"><a href="{{ route('expenses.index') }}" class="btn btn-info ml-2">Gastos</a></li>
+                <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
+                        class="btn btn-warning ml-2">Veterinario</a>
+                </li>
+                <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-secondary ml-2">Caballos</a></li>
+                <li class="mb-4"><a href="{{ route('calendar.index') }}"
+                        class="btn btn-secondary ml-2">Calendario</a>
+                </li>
+
+                <div class="flex flex-col justify-center items-center mt-4 space-y-2 w-full">
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="btn btn-error w-full">Cerrar sesión</button>
+                    </form>
+                    <form method="GET" action="{{ route('profile.edit') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="btn btn-secondary w-full">Ver perfil</button>
+                    </form>
+                </div>
+            </ul>
+
+        </div>
     </div>
-</x-app-layout>
