@@ -2,6 +2,12 @@
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content">
+        <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </label>
         <div class="p-6" data-theme="forest">
             <h2 class="text-2xl font-bold text-blue-400 mb-6 flex items-center gap-2">🐎 Listado de Caballos</h2>
 
@@ -50,17 +56,17 @@
             <li class="mb-4"><a href="{{ route('calendar.index') }}" class="btn btn-secondary ml-2">Calendario</a>
             </li>
 
+            <div class="flex flex-col justify-center items-center mt-4 space-y-2 w-full">
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <button type="submit" class="btn btn-error w-full">Cerrar sesión</button>
+                </form>
+                <form method="GET" action="{{ route('profile.edit') }}" class="w-full">
+                    @csrf
+                    <button type="submit" class="btn btn-secondary w-full">Ver perfil</button>
+                </form>
+            </div>
         </ul>
-        <div class="flex justify-center items-center mt-4 space-x-2">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-error w-32">Cerrar sesión</button>
-            </form>
-            <form method="GET" action="{{ route('profile.edit') }}">
-                @csrf
-                <button type="submit" class="btn btn-secondary w-32">Ver perfil</button>
-            </form>
-        </div>
 
     </div>
 </div>

@@ -22,7 +22,7 @@ class StoreCalendarEventRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|max:100',
+            'title' => 'required|string|max:50',
             'horse_id' => 'required|exists:horses,id',
             'event_date' => 'required|date',
             'event_time' => 'required|date_format:H:i',
