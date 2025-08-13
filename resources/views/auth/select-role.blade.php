@@ -10,9 +10,9 @@
         <h2 class="text-2xl font-bold mb-6 text-center">Selecciona tu rol</h2>
 
         <div class="flex flex-col gap-4">
-            <a href="{{ route('register', ['role' => 'jefe']) }}" class="btn btn-primary">Jefe</a>
-            <a href="{{ route('register', ['role' => 'cuidador']) }}" class="btn btn-secondary">Cuidador</a>
-            <a href="{{ route('register', ['role' => 'veterinario']) }}" class="btn btn-accent">Veterinario</a>
+            <a href="{{ route('register', ['role' => 'boss']) }}" class="btn btn-primary">Jefe</a>
+            <a href="{{ route('register', ['role' => 'caretakers']) }}" class="btn btn-secondary">Cuidador</a>
+            <a href="{{ route('register', ['role' => 'veterinarian']) }}" class="btn btn-accent">Veterinario</a>
         </div>
     </div>
 </body>

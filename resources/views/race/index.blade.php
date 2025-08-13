@@ -3,7 +3,6 @@
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <label for="my-drawer" class="btn btn-primary drawer-button">Panel</label>
     <div class="drawer-content">
-        <!-- Page content here -->
         <!DOCTYPE html>
         <html lang="en" data-theme="forest">
 

@@ -37,9 +37,9 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:jefe,cuidador,veterinario'],
-           'phone' => [$request->role === 'cuidador' ? 'required' : 'nullable', 'string', 'max:20'],
-           'address' => [$request->role === 'cuidador' ? 'required' : 'nullable', 'string', 'max:255'],
+            'role' => ['required', 'string', 'in:boss,caretakers,veterinarian'],
+           'phone' => [$request->role === 'caretakers' ? 'required' : 'nullable', 'string', 'max:20'],
+           'address' => [$request->role === 'caretakers' ? 'required' : 'nullable', 'string', 'max:255'],
 
         ]);
 
@@ -51,7 +51,7 @@ class RegisteredUserController extends Controller
 
         ]);
 
-        if ($request->role === 'cuidador') {
+        if ($request->role === 'caretakers') {
         Caretaker::create([
             'name' => $request->name,
             'phone' => $request->phone,
