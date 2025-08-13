@@ -2,7 +2,7 @@
 <html lang="es" data-theme="forest">
 <head>
     <meta charset="UTF-8">
-    <title>Gestión Equina - Bienvenido</title>
+    <title>DreamHorse - Bienvenido</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite('resources/css/app.css')
 </head>
@@ -21,7 +21,7 @@
             <a href="{{ route('login') }}" class="btn btn-primary w-full sm:w-auto">
                 Iniciar Sesión
             </a>
-            <a href="{{ route('register') }}" class="btn btn-secondary w-full sm:w-auto">
+            <a href="{{ route('select-role') }}" class="btn btn-secondary w-full sm:w-auto">
                 Registrarse
             </a>
         </div>

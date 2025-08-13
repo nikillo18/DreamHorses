@@ -12,6 +12,7 @@ use App\Models\Horse;
 use App\Models\Race;
 use App\Models\VetVisit;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\RegisteredUserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -78,6 +79,15 @@ Route::put('/expenses/{expense}', [ExpenseController::class, 'update'])->name('e
 Route::delete('/expenses/{expense}', [ExpenseController::class, 'destroy'])->name('expenses.destroy');
 
 /* Roles */
+Route::get('/select-role', function () {
+    return view('auth.select-role');
+})->name('select-role');
+
+Route::get('/register', [RegisteredUserController::class, 'create'])
+    ->name('register');
+
+Route::post('/register', [RegisteredUserController::class, 'store']);
+
 
 require __DIR__.'/auth.php';
 
