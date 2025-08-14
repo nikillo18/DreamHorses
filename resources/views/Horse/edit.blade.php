@@ -1,64 +1,93 @@
 @vite('resources/css/app.css', 'resources/js/app.js')
+
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-
-    <div class="drawer-content">
-        <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden">
+    <div class="drawer-content bg-gray-950 text-white">
+        <!-- Botón hamburguesa -->
+        <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden m-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </label>
-        <!-- Page content here -->
-        <div class="max-w-3xl mx-auto p-6">
-            <h2 class="text-2xl font-bold text-white-300 mb-6">✏️ Editar Caballo: {{ $horse->name }}</h2>
+
+        <!-- Contenido principal -->
+        <div class="p-6 md:p-8">
+            <h1 class="text-3xl font-bold mb-6 text-white">✏️ Editar Caballo: {{ $horse->name }}</h1>
+            <a href="{{ route('Horseindex') }}" class="btn bg-gray-700 hover:bg-gray-600 text-white ml-2">Volver a la Lista</a>
 
             <form action="{{ route('horses.update', $horse->id) }}" method="POST" enctype="multipart/form-data"
-                class="space-y-4 bg-gray-800 text-white p-6 rounded-xl shadow-md ">
+                class="space-y-4 bg-gray-900 p-6 rounded-lg mt-4">
                 @csrf
                 @method('PUT')
 
-                <input type="text" name="name" value="{{ old('name', $horse->name) }}" placeholder="Nombre"
-                    class="input input-bordered w-full bg-blue-900 text-white placeholder:text-blue-400" />
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Nombre</legend>
+                        <input type="text" name="name" value="{{ old('name', $horse->name) }}" placeholder="Nombre"
+                            class="input input-bordered w-full bg-gray-800 text-white" />
+                    </fieldset>
 
-                <input type="text" name="breed" value="{{ old('breed', $horse->breed) }}" placeholder="Raza"
-                    class="input input-bordered w-full bg-blue-900 text-white placeholder:text-blue-400" />
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Raza</legend>
+                        <input type="text" name="breed" value="{{ old('breed', $horse->breed) }}" placeholder="Raza"
+                            class="input input-bordered w-full bg-gray-800 text-white" />
+                    </fieldset>
 
-                <input type="text" name="color" value="{{ old('color', $horse->color) }}" placeholder="Color"
-                    class="input input-bordered w-full text-white bg-blue-900 placeholder:text-blue-400" />
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Color</legend>
+                        <input type="text" name="color" value="{{ old('color', $horse->color) }}" placeholder="Color"
+                            class="input input-bordered w-full bg-gray-800 text-white" />
+                    </fieldset>
 
-                <input type="date" name="birth_date" value="{{ old('birth_date', $horse->birth_date) }}"
-                    class="input input-bordered w-full bg-blue-900 text-white" />
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Fecha de Nacimiento</legend>
+                        <input type="date" name="birth_date" value="{{ old('birth_date', $horse->birth_date) }}"
+                            class="input input-bordered w-full bg-gray-800 text-white" />
+                    </fieldset>
 
-                <select name="gender" class="select select-bordered w-full bg-blue-900 text-white">
-                    <option value="male" {{ $horse->gender == 'male' ? 'selected' : '' }}>Macho</option>
-                    <option value="female" {{ $horse->gender == 'female' ? 'selected' : '' }}>Hembra</option>
-                </select>
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Género</legend>
+                        <select name="gender" class="select select-bordered w-full bg-gray-800 text-white">
+                            <option value="male" {{ $horse->gender == 'male' ? 'selected' : '' }}>Macho</option>
+                            <option value="female" {{ $horse->gender == 'female' ? 'selected' : '' }}>Hembra</option>
+                        </select>
+                    </fieldset>
 
-                <input type="text" name="father_name" value="{{ old('father_name', $horse->father_name) }}"
-                    placeholder="Padre"
-                    class="input input-bordered w-full bg-blue-900 text-white placeholder:text-blue-400" />
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Padre</legend>
+                        <input type="text" name="father_name" value="{{ old('father_name', $horse->father_name) }}"
+                            placeholder="Padre"
+                            class="input input-bordered w-full bg-gray-800 text-white" />
+                    </fieldset>
 
-                <input type="text" name="mother_name" value="{{ old('mother_name', $horse->mother_name) }}"
-                    placeholder="Madre"
-                    class="input input-bordered w-full bg-blue-900 text-white placeholder:text-blue-400" />
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Madre</legend>
+                        <input type="text" name="mother_name" value="{{ old('mother_name', $horse->mother_name) }}"
+                            placeholder="Madre"
+                            class="input input-bordered w-full bg-gray-800 text-white" />
+                    </fieldset>
 
-                <select name="caretaker_id" class="select select-bordered w-full bg-blue-900 text-white">
-                    @foreach ($caretakers as $caretaker)
-                        <option value="{{ $caretaker->id }}"
-                            {{ $horse->caretaker_id == $caretaker->id ? 'selected' : '' }}>
-                            {{ $caretaker->name }}
-                        </option>
-                    @endforeach
-                </select>
+                    <fieldset class="fieldset">
+                        <legend class="text-white">Cuidador</legend>
+                        <select name="caretaker_id" class="select select-bordered w-full bg-gray-800 text-white">
+                            @foreach ($caretakers as $caretaker)
+                                <option value="{{ $caretaker->id }}"
+                                    {{ $horse->caretaker_id == $caretaker->id ? 'selected' : '' }}>
+                                    {{ $caretaker->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </fieldset>
+                </div>
 
-                <div class="space-y-2">
-                    <label class="text-blue-300 font-semibold">📸 Fotos actuales:</label>
+                <div class="space-y-2 mt-6">
+                    <label class="text-white font-semibold">📸 Fotos actuales:</label>
                     @if ($horse->photos->count())
-                        <div class="grid grid-cols-2 gap-2">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             @foreach ($horse->photos as $photo)
                                 <img src="{{ asset('storage/' . $photo->path) }}"
-                                    class="w-full h-32 object-cover rounded border border-blue-700" />
+                                    class="w-full h-32 object-cover rounded-lg border-2 border-gray-700" />
                             @endforeach
                         </div>
                     @else
@@ -67,48 +96,64 @@
                 </div>
 
 
-                <div>
-                    <label class="text-blue-300 font-semibold"> Agregar nuevas fotos:</label>
+                <fieldset class="fieldset mt-6">
+                    <legend class="text-white">Agregar nuevas fotos:</legend>
                     <input type="file" name="photos[]" multiple accept="image/*"
-                        class="file-input file-input-bordered w-full bg-blue-900 text-white" />
-                </div>
+                        class="file-input file-input-bordered w-full bg-gray-800 text-white" />
+                </fieldset>
 
 
-                <button type="submit" class="btn bg-blue-600 hover:bg-blue-700 text-white w-full text-lg font-bold">
+                <button type="submit" class="btn bg-blue-500 hover:bg-blue-600 text-white w-full mt-6">
                     Actualizar Caballo
                 </button>
             </form>
         </div>
-
-        <div class="drawer-side">
-            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                <!-- Sidebar content here -->
-                <li class="mb-2"><a href="{{ route('training.index') }}"
-                        class="btn btn-primary ml-2">Entrenamientos</a>
-                </li>
-                <li class="mb-2"> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a>
-                </li>
-                <li class="mb-2"><a href="{{ route('expenses.index') }}" class="btn btn-info ml-2">Gastos</a></li>
-                <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
-                        class="btn btn-warning ml-2">Veterinario</a>
-                </li>
-                <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-secondary ml-2">Caballos</a></li>
-                <li class="mb-4"><a href="{{ route('calendar.index') }}"
-                        class="btn btn-secondary ml-2">Calendario</a>
-                </li>
-
-                <div class="flex flex-col justify-center items-center mt-4 space-y-2 w-full">
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <button type="submit" class="btn btn-error w-full">Cerrar sesión</button>
-                    </form>
-                    <form method="GET" action="{{ route('profile.edit') }}" class="w-full">
-                        @csrf
-                        <button type="submit" class="btn btn-secondary w-full">Ver perfil</button>
-                    </form>
-                </div>
-            </ul>
-
-        </div>
     </div>
+
+    <!-- Menú lateral -->
+    <div class="drawer-side">
+        <label for="my-drawer" class="drawer-overlay"></label>
+        <ul class="menu bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-white">
+            <div>
+                <h3 class="text-white text-sm font-semibold">Control</h3>
+                <li class="mb-2"><a href="{{ route('training.index') }}"
+                        class="btn w-full text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-md font-semibold">
+                        Entrenamientos</a></li>
+                <li class="mb-2"><a href="{{ route('Horseindex') }}"
+                        class="btn w-full text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-md font-semibold">
+                        Caballos</a></li>
+                <li><a href="{{ route('calendar.index') }}"
+                        class="btn w-full text-left bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-md font-semibold">
+                        Calendario</a></li>
+            </div>
+            <hr class="border-gray-700" />
+            <div>
+                <h3 class="text-white text-sm font-semibold">Gestion</h3>
+                <li class="mb-2"><a href="{{ route('race.index') }}"
+                        class="btn w-full text-left bg-blue-400 hover:bg-red-200 text-black px-4 py-2 rounded-md font-semibold">
+                        Carreras</a></li>
+                <li class="mb-2"><a href="{{ route('expenses.index') }}"
+                        class="btn w-full text-left  bg-blue-400 hover:bg-red-200 text-black px-4 py-2 rounded-md font-semibold">
+                        Gastos</a></li>
+                <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
+                        class="btn w-full text-left  bg-blue-400 hover:bg-red-200 text-black px-4 py-2 rounded-md font-semibold">
+                        Veterinario</a></li>
+            </div>
+
+
+            <div class="mt-auto space-y-2">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="btn w-full bg-rose-600 hover:bg-rose-500 px-4 py-2 rounded-md font-bold"> Cerrar
+                        sesión</button>
+                </form>
+                <form method="GET" action="{{ route('profile.edit') }}">
+                    <button type="submit"
+                        class="btn w-full bg-sky-700 hover:bg-sky-600 px-4 py-2 rounded-md font-semibold"> Ver
+                        perfil</button>
+                </form>
+            </div>
+        </ul>
+    </div>
+</div>
