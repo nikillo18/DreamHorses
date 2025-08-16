@@ -16,13 +16,13 @@
         <div>
             <x-input-label for="update_password_current_password" :value="__('Contraseña Actual')" />
             <x-text-input id="update_password_current_password" name="current_password" type="password"
-                class="mt-1 block w-full" autocomplete="current-password" />
+                class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" autocomplete="current-password" />
             <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
         </div>
 
         <div>
             <x-input-label for="update_password_password" :value="__('Nueva Contraseña')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full"
+            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
                 autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
         </div>
@@ -30,7 +30,7 @@
         <div>
             <x-input-label for="update_password_password_confirmation" :value="__('Confirmar Contraseña')" />
             <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password"
-                class="mt-1 block w-full" autocomplete="new-password" />
+                class="mt-1 block w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" autocomplete="new-password" />
             <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
         </div>
 
