@@ -37,9 +37,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:boss,caretakers,veterinarian'],
-           'phone' => [$request->role === 'caretakers' ? 'required' : 'nullable', 'string', 'max:20'],
-           'address' => [$request->role === 'caretakers' ? 'required' : 'nullable', 'string', 'max:255'],
+           'phone' => [$request->role === 'caretaker' ? 'required' : 'nullable', 'string', 'max:20'],
+           'address' => [$request->role === 'caretaker' ? 'required' : 'nullable', 'string', 'max:255'],
 
         ]);
 
@@ -47,11 +46,11 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role, 
 
         ]);
+        $user->assignRole($request->role);
 
-        if ($request->role === 'caretakers') {
+        if ($request->role === 'caretaker') {
         Caretaker::create([
             'name' => $request->name,
             'phone' => $request->phone,

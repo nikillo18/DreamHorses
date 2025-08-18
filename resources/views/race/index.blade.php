@@ -35,9 +35,12 @@
                                 <th>Posicion</th>
                                 <th>Distancia</th>
                                 <th>Descripcion de la Carrera</th>
-                                <th>Jokey</th>
+                                <th>Jockey</th>
+                                @can('caretaker')
                                 <th>Acciones</th>
+                                @endcan
                             </tr>
+
                         </thead>
                         <tbody>
                             @foreach ($race as $race)
@@ -49,6 +52,7 @@
                                     <td class="max-w-xs break-words">{{ $race->description }}</td>
                                     <td class="whitespace-nowrap">{{ $race->jockey }}</td>
                                     <td class="flex flex-col sm:flex-row gap-2">
+                                        @can('caretaker')
                                         <form action="{{ route('race.edit', $race->id) }}" method="get">
                                             <button type="submit" class="btn btn-primary btn-xs w-full">Editar</button>
                                         </form>
@@ -57,6 +61,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-error btn-xs w-full">Eliminar</button>
                                         </form>
+                                        @endcan
                                     </td>
                                 </tr>
                             @endforeach

@@ -8,12 +8,14 @@
         @if(session('success'))
             <div class="alert alert-success mb-4">{{ session('success') }}</div>
         @endif
+        @can ('veterinarian')
 
         <div class="mb-4">
             <a href="{{ route('vet-visits.create') }}" class="btn btn-primary">
                 Nueva Visita
             </a>
         </div>
+        @endcan
 
         <div class="overflow-x-auto shadow rounded-lg">
             <table class="table table-zebra w-full text-sm">
@@ -26,7 +28,9 @@
                         <th>Diagnóstico</th>
                         <th>Tratamiento</th>
                         <th>Próxima Visita</th>
+                        @can ('')
                         <th>Acciones</th>
+                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -39,6 +43,7 @@
                             <td class="max-w-xs break-words">{{ $visit->diagnosis }}</td>
                             <td class="max-w-xs break-words">{{ $visit->treatment }}</td>
                             <td>{{ $visit->next_visit ?? '-' }}</td>
+                            @can ('veterinarian')
                             <td class="flex flex-col sm:flex-row gap-2">
                                 <a href="{{ route('vet-visits.edit', $visit->id) }}"
                                    class="btn btn-warning btn-xs"> Editar</a>
@@ -49,8 +54,10 @@
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-error btn-xs"> Eliminar</button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
+
                     @endforeach
                 </tbody>
             </table>
