@@ -14,45 +14,52 @@
 
         <!-- Contenido principal -->
         <div class="p-6 md:p-8">
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">✏️ Editar Carrera</h1>
-                <a href="{{route('race.index')}}" class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 mt-4 sm:mt-0 shadow-sm">Volver a la Lista</a>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 text-center sm:text-left mb-6">
+                📅 Lista de Eventos
+            </h1>
+            <div class="flex justify-start mb-4">
+                <form action="{{ route('calendar.create') }}" method="get">
+                    <button type="submit" class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear
+                        Evento</button>
+                </form>
             </div>
-            <form action="{{route('race.update', $race->id)}}" method="post" class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
-                @csrf
-                @method('PUT')
-                <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Fecha de la Carrera</legend>
-                    <input type="date" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="date" value="{{$race->date}}"required />
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Caballos</legend>
-                    <select class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="horse_id" id="horse_id" required>
-                        <option disabled selected>Elija un Caballo</option>
-                        @foreach($horse as $horses)
-                            <option value="{{ $horses->id }}" {{ $horses->id == $race->horse_id ? 'selected' : '' }}>{{$horses->name}}</option>
+            <div class="overflow-x-auto rounded-lg shadow-lg">
+                <table class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+                    <thead class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100">
+                        <tr>
+                            <th class="p-4">Titulo</th>
+                            <th class="p-4">Caballo</th>
+                            <th class="p-4">Fecha</th>
+                            <th class="p-4">Hora</th>
+                            <th class="p-4">Tipo de Evento</th>
+                            <th class="p-4">Descripción</th>
+                            <th class="p-4">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($events as $event)
+                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <td class="p-4  break-words">{{ $event->title }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ $event->horse->name }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ $event->event_date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ $event->event_time }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ $event->category }}</td>
+                                <td class="p-4 max-w-xs break-words">{{ $event->description }}</td>
+                                <td class="p-4 flex flex-col md:flex-row gap-2">
+                                    <a href="{{ route('calendar.edit', $event) }}"
+                                        class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
+                                    <form action="{{ route('calendar.destroy', $event) }}" method="POST" class="w-full"
+                                        onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
                         @endforeach
-                    </select>
-                </fieldset>
-                
-                <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Posicion</legend>
-                    <input type="number" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="place" placeholder="Posicion del Caballo" value="{{ $race->place }}" required />
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Distancia Recorrida</legend>
-                    <input type="number" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="distance" placeholder="Distancia Recorrida" value="{{ $race->distance }}" required />
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Descripcion de la Carrera</legend>
-                    <textarea class="textarea textarea-bordered h-24 w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="description" placeholder="Descripcion de la Carrera">{{ $race->description }}</textarea>
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Jockey</legend>
-                    <input type="text" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="jockey" placeholder="Nombre del Jokey" value="{{ $race->jockey }}" required/>
-                </fieldset>
-                <button type="submit" class="btn bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900 font-bold w-full shadow-sm">Actualizar</button>
-            </form>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -61,6 +68,8 @@
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
             <div>
+                <li class="mb-2"><a href="{{ route('dashboard') }}" class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">Panel principal</a>
+                </li>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">

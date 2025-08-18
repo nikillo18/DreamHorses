@@ -15,43 +15,55 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">✏️ Editar Carrera</h1>
-                <a href="{{route('race.index')}}" class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 mt-4 sm:mt-0 shadow-sm">Volver a la Lista</a>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-100">
+                    📅 Crear Nuevo Evento
+                </h1>
+                <a href="{{ route('calendar.index') }}"
+                    class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 mt-4 sm:mt-0 shadow-sm">Volver a la Lista</a>
             </div>
-            <form action="{{route('race.update', $race->id)}}" method="post" class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
+            <form action="{{ route('calendar.store') }}" method="POST" class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700">
                 @csrf
-                @method('PUT')
                 <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Fecha de la Carrera</legend>
-                    <input type="date" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="date" value="{{$race->date}}"required />
+                    <legend class="text-gray-700 dark:text-gray-300">Título</legend>
+                    <input type="text" name="title" id="title" required
+                        class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-gray-700 dark:text-gray-300">Caballos</legend>
-                    <select class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="horse_id" id="horse_id" required>
+                    <select class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="horse_id" id="horse_id"
+                        required>
                         <option disabled selected>Elija un Caballo</option>
-                        @foreach($horse as $horses)
-                            <option value="{{ $horses->id }}" {{ $horses->id == $race->horse_id ? 'selected' : '' }}>{{$horses->name}}</option>
+                        @foreach ($horse as $horses)
+                            <option value="{{ $horses->id }}">{{ $horses->name }}</option>
                         @endforeach
                     </select>
                 </fieldset>
-                
                 <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Posicion</legend>
-                    <input type="number" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="place" placeholder="Posicion del Caballo" value="{{ $race->place }}" required />
+                    <legend class="text-gray-700 dark:text-gray-300">Fecha del Evento</legend>
+                    <input type="date" name="event_date" id="event_date" value="{{ request('event_date') }}" required
+                        class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
                 </fieldset>
                 <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Distancia Recorrida</legend>
-                    <input type="number" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="distance" placeholder="Distancia Recorrida" value="{{ $race->distance }}" required />
+                    <legend class="text-gray-700 dark:text-gray-300">Hora del Evento</legend>
+                    <input type="time" name="event_time" id="event_time" required
+                        class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
                 </fieldset>
                 <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Descripcion de la Carrera</legend>
-                    <textarea class="textarea textarea-bordered h-24 w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="description" placeholder="Descripcion de la Carrera">{{ $race->description }}</textarea>
+                    <legend class="text-gray-700 dark:text-gray-300">Tipo de Evento</legend>
+                    <select class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="category" id="category"
+                        required>
+                        <option disabled selected>Elija evento</option>
+                        <option>Visita Veterinario</option>
+                        <option>Carrera</option>
+                    </select>
                 </fieldset>
                 <fieldset class="fieldset">
-                    <legend class="text-gray-700 dark:text-gray-300">Jockey</legend>
-                    <input type="text" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="jockey" placeholder="Nombre del Jokey" value="{{ $race->jockey }}" required/>
+                    <legend class="text-gray-700 dark:text-gray-300">Descripción</legend>
+                    <textarea name="description" id="description" rows="3"
+                        class="textarea textarea-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"></textarea>
                 </fieldset>
-                <button type="submit" class="btn bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900 font-bold w-full shadow-sm">Actualizar</button>
+                <button type="submit" class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold w-full shadow-sm">Crear
+                    Evento</button>
             </form>
         </div>
     </div>

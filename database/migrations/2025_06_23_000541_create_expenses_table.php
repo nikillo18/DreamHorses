@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->string('category');
-            $table->text('description');
+            $table->string('description');
             $table->decimal('amount', 10, 2);
             $table->foreignIdFor(Horse::class);
             $table->timestamps();

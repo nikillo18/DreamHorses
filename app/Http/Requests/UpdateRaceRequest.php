@@ -27,7 +27,7 @@ class UpdateRaceRequest extends FormRequest
             'place' => 'required|integer|min:1',
             'distance' => 'required|integer|min:0',
             'description' => 'nullable|string',
-            'jockey' => 'required|string|max:255',
+            'jockey' => 'required|string|max:50',
         ];
     }
 }
