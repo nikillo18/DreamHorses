@@ -17,12 +17,14 @@
             <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 text-center sm:text-left mb-6">
                 📅 Lista de Eventos
             </h1>
+            @role('caretaker|boss')
             <div class="flex justify-start mb-4">
                 <form action="{{ route('calendar.create') }}" method="get">
                     <button type="submit" class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear
                         Evento</button>
                 </form>
             </div>
+            @endrole
             <div class="overflow-x-auto rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
                     <thead class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100">
@@ -33,8 +35,11 @@
                             <th class="p-4">Hora</th>
                             <th class="p-4">Tipo de Evento</th>
                             <th class="p-4">Descripción</th>
+                            @role('caretaker|boss')
                             <th class="p-4">Acciones</th>
+                            @endrole
                         </tr>
+
                     </thead>
                     <tbody>
                         @foreach ($events as $event)
@@ -46,6 +51,7 @@
                                 <td class="p-4 whitespace-nowrap">{{ $event->category }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $event->description }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">
+                                    @role('caretaker|boss')
                                     <a href="{{ route('calendar.edit', $event) }}"
                                         class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
                                     <form action="{{ route('calendar.destroy', $event) }}" method="POST" class="w-full"
@@ -55,6 +61,7 @@
                                         <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
                                     </form>
                                 </td>
+                                @endrole
                             </tr>
                         @endforeach
                     </tbody>

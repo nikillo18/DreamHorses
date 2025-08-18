@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->foreignIdFor(Horse::class);
+            $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
             $table->string('place')->nullable();
             $table->integer('distance')->default(0);
             $table->string('description')->nullable();

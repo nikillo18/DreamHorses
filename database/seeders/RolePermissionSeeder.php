@@ -21,7 +21,7 @@ class RolePermissionSeeder extends Seeder
         $veterinariansRole = Role::create(['name' => 'veterinarian']);
 
         // horse permissions
-        $createHorsePermission = Permission::create(['name' => 'create horse']);
+       /* $createHorsePermission = Permission::create(['name' => 'create horse']);
         $editHorsePermission = Permission::create(['name' => 'edit horse']);
         $deleteHorsePermission = Permission::create(['name' => 'delete horse']);
         $viewHorsePermission = Permission::create(['name' => 'view horse']);
@@ -107,7 +107,7 @@ class RolePermissionSeeder extends Seeder
             $viewCalendarPermission,
             $viewTrainingPermission,
 
-        ]);
+        ]);*/
 
     }
 }

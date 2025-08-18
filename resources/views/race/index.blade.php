@@ -18,10 +18,12 @@
                 <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 text-center sm:text-left mb-2">
                     🏁 Lista de Carreras
                 </h1>
+                @role('caretaker')
                 <div class="flex justify-start">
                     <a href="{{ route('race.create') }}"
                         class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear Carrera</a>
                 </div>
+                @endrole
             </div>
             <div class="overflow-x-auto rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
@@ -33,7 +35,9 @@
                             <th class="p-4">Distancia</th>
                             <th class="p-4">Descripcion de la Carrera</th>
                             <th class="p-4">Jockey</th>
+                            @role('caretaker')
                             <th class="p-4">Acciones</th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +50,7 @@
                                 <td class="p-4 max-w-xs break-words">{{ $race->description }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->jockey }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">
+                                    @role('caretaker')
                                     <a href="{{ route('race.edit', $race->id) }}"
                                         class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
                                     <form action="{{ route('race.destroy', $race->id) }}" method="POST">
@@ -53,6 +58,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
                                     </form>
+                                    @endrole
                                 </td>
                             </tr>
                         @endforeach

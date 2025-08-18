@@ -67,6 +67,7 @@
             <div class="flex justify-between">
                 <a href="{{ route('Horseindex') }}" class="btn btn-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100">←
                     Volver</a>
+                    @role('caretaker|boss')
                 <div class="flex gap-2">
                     <a href="{{ route('horses.edit', $horse->id) }}"
                         class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>
@@ -78,6 +79,7 @@
                             Eliminar</button>
                     </form>
                 </div>
+                @endrole
             </div>
         </div>
     </div>

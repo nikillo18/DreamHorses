@@ -22,10 +22,12 @@
                     {{ session('success') }}
                 </div>
             @endif
+            @role('caretaker|boss')
             <div class="mb-4">
                 <a href="{{ route('CreateHorse') }}"
                     class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear caballo</a>
             </div>
+            @endrole
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($horses as $horse)
                     <div class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl shadow-xl p-6 w-full max-w-sm flex flex-col gap-4 border border-gray-200 dark:border-gray-700">

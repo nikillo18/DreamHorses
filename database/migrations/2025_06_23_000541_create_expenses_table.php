@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('category');
             $table->string('description');
             $table->decimal('amount', 10, 2);
-            $table->foreignIdFor(Horse::class);
+            $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

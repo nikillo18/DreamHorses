@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('vet_visits', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Horse::class);
+            $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
             $table->date('visit_date');
             $table->string('vet_name');
             $table->string('vet_phone')->nullable();

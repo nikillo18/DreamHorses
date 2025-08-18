@@ -18,10 +18,12 @@
                 <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 text-center sm:text-left mb-2">
                     🏋️‍♀️ Lista de Entrenamientos
                 </h1>
+                 @role('caretaker')
                 <div class="flex justify-start">
                     <a href="{{ route('training.create') }}"
                         class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear Entrenamiento</a>
                 </div>
+                @endrole
             </div>
             <div class="overflow-x-auto rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
@@ -33,7 +35,9 @@
                             <th class="p-4">Fecha</th>
                             <th class="p-4">Entrenamiento</th>
                             <th class="p-4">Comentarios</th>
+                            @role('caretaker')
                             <th class="p-4">Acciones</th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -46,6 +50,7 @@
                                 <td class="p-4 whitespace-nowrap">{{ $training->type_training }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $training->comments }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">
+                                    @role('caretaker')
                                     <a href="{{ route('training.edit', $training->id) }}"
                                         class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
                                     <form action="{{ route('training.destroy', $training->id) }}" method="POST"
@@ -54,8 +59,10 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
                                     </form>
+                                    
                                 </td>
                             </tr>
+                             @endrole
                         @endforeach
                     </tbody>
                 </table>

@@ -21,13 +21,15 @@
             @if (session('success'))
                 <div class="bg-green-200 text-green-800 dark:bg-green-700 dark:text-green-100 p-4 rounded-md mb-4">{{ session('success') }}</div>
             @endif
-
+            
+           @role('veterinarian')
             <div class="mb-4">
                 <a href="{{ route('vet-visits.create') }}"
                     class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">
                     ➕ Nueva Visita
                 </a>
             </div>
+            @endrole
 
             <div class="overflow-x-auto shadow-lg rounded-lg">
                 <table class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
@@ -40,7 +42,9 @@
                             <th class="p-4">Diagnóstico</th>
                             <th class="p-4">Tratamiento</th>
                             <th class="p-4">Próxima Visita</th>
+                            @role('veterinarian')
                             <th class="p-4">Acciones</th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -54,6 +58,7 @@
                                 <td class="p-4 max-w-xs break-words">{{ $visit->treatment }}</td>
                                 <td class="p-4">{{ $visit->next_visit ?? '-' }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">
+                                     @role('veterinarian')
                                     <a href="{{ route('vet-visits.edit', $visit->id) }}"
                                         class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
                                     <form action="{{ route('vet-visits.destroy', $visit->id) }}" method="POST"
@@ -62,6 +67,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
                                     </form>
+                                    @endrole
                                 </td>
                             </tr>
                         @endforeach

@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('calendar_events', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->foreignIdFor(Horse::class);
+            $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
             $table->date('event_date');
             $table->time('event_time');
             $table->text('description')->nullable();

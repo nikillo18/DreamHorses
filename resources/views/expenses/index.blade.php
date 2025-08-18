@@ -21,13 +21,14 @@
                     {{ session('success') }}
                 </div>
             @endif
-
+            @role('caretaker')
             <div class="flex justify-end mb-4">
                 <a href="{{ route('expenses.create') }}"
                     class="btn bg-green-500 hover:bg-green-600 text-white font-bold">
                     Nuevo Gasto
                 </a>
             </div>
+            @endrole
 
             <div class="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left text-gray-800 dark:text-gray-200">
@@ -38,7 +39,9 @@
                             <th class="p-4">Categoría</th>
                             <th class="p-4">Descripción</th>
                             <th class="p-4">Monto</th>
+                            @role('caretaker')
                             <th class="p-4">Acciones</th>
+                            @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -50,6 +53,7 @@
                                 <td class="p-4">{{ $expense->description }}</td>
                                 <td class="p-4 text-green-600 dark:text-green-400 font-semibold">${{ number_format($expense->amount, 2) }}</td>
                                 <td class="p-4 flex gap-2">
+                                    @role('caretaker')
                                     <a href="{{ route('expenses.edit', $expense->id) }}"
                                         class="btn btn-xs btn-warning">Editar</a>
                                     <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST"
@@ -58,6 +62,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-xs btn-error">Eliminar</button>
                                     </form>
+                                    @endrole
                                 </td>
                             </tr>
                         @empty
