@@ -11,15 +11,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Caretaker; // Importar modelo cuidador
+
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(Request $request): View
     {
-        return view('auth.register');
+        return view('auth.register', [
+            'role' => $request->query('role')
+        ]);
     }
 
     /**
@@ -33,13 +37,26 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+           'phone' => [$request->role === 'caretaker' ? 'required' : 'nullable', 'string', 'max:20'],
+           'address' => [$request->role === 'caretaker' ? 'required' : 'nullable', 'string', 'max:255'],
+
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+
         ]);
+        $user->assignRole($request->role);
+
+        if ($request->role === 'caretaker') {
+        Caretaker::create([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'address' => $request->address,
+        ]);
+         }
 
         event(new Registered($user));
 

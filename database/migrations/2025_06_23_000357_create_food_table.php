@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('food', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Horse::class);
+            $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
             $table->date('date');
             $table->string('type_food');
             $table->decimal('quantity', 8, 2)->default(0.00);

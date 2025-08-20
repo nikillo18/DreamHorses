@@ -1,171 +1,152 @@
 @vite('resources/css/app.css', 'resources/js/app.js')
+
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-
-    <div class="drawer-content">
-        <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden">
+    <div class="drawer-content bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+        <!-- Botón hamburguesa -->
+        <label for="my-drawer"
+            class="btn bg-pink-300 hover:bg-pink-400 text-gray-900 dark:bg-pink-400 dark:hover:bg-pink-500 dark:text-gray-900 drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </label>
-        <!-- Page content here -->
-        <!DOCTYPE html>
-        <html lang="en">
 
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <meta http-equiv="X-UA-Compatible" content="ie=edge">
-            <title>Crear Caballo</title>
-        </head>
+        <!-- Contenido principal -->
+        <div class="p-6 md:p-8">
+            <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">🐴 Registrar Caballo</h1>
+            <a href="{{ route('Horseindex') }}" class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 ml-2 shadow-sm">Volver a la Lista</a>
+            <form action="{{ route('StoreHorse') }}" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg mt-4 shadow-md border border-gray-200 dark:border-gray-700">
+                @csrf
 
-        <body>
-            <x-slot name="header">
-                <h2 class="text-2xl font-bold text-primary text-center mb-4">
-                    🐴 Registrar Caballo
-                </h2>
-            </x-slot>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Nombre</legend>
+                        <input type="text" name="name" id="name"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            placeholder="Ej. Relámpago" />
+                    </fieldset>
 
-            <div class="container mx-auto px-4 py-6">
-                <div class="max-w-3xl mx-auto bg-base-100 p-8 rounded-xl shadow-lg  space-y-6">
-                    <form action="{{ route('StoreHorse') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Raza</legend>
+                        <input type="text" name="breed" id="breed"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            placeholder="Ej. Pura Sangre" />
+                    </fieldset>
 
-                        <div>
-                            <label for="name" class="label">
-                                <span class="label-text text-primary font-semibold">Nombre</span>
-                            </label>
-                            <input type="text" name="name" id="name"
-                                class="input input-bordered w-full bg-base-200 text-white"
-                                placeholder="Ej. Relámpago" />
-                        </div>
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Color</legend>
+                        <input type="text" name="color" id="color"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" placeholder="Ej. Castaño" />
+                    </fieldset>
 
-                        <div>
-                            <label for="breed" class="label">
-                                <span class="label-text text-primary font-semibold">Raza</span>
-                            </label>
-                            <input type="text" name="breed" id="breed"
-                                class="input input-bordered w-full bg-base-200 text-white"
-                                placeholder="Ej. Pura Sangre" />
-                        </div>
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Número de Microchip</legend>
+                        <input type="text" name="number_microchip" id="number_microchip"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            placeholder="Ej. 1234567AJF" />
+                    </fieldset>
 
-                        <div>
-                            <label for="color" class="label">
-                                <span class="label-text text-primary font-semibold">Color</span>
-                            </label>
-                            <input type="text" name="color" id="color"
-                                class="input input-bordered w-full bg-base-200 text-white" placeholder="Ej. Castaño" />
-                        </div>
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Fecha de nacimiento</legend>
+                        <input type="date" name="birth_date" id="birth_date"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" />
+                    </fieldset>
 
-                        <div>
-                            <label for="photos" class="label">
-                                <span class="label-text text-primary font-semibold">Fotos del Caballo</span>
-                            </label>
-                            <input type="file" name="photos[]" id="photos" multiple accept="image/*"
-                                class="file-input file-input-bordered w-full bg-base-200 text-white" />
-                        </div>
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Género</legend>
+                        <select name="gender" id="gender"
+                            class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
+                            <option disabled selected>Seleccione género</option>
+                            <option value="male">Macho</option>
+                            <option value="female">Hembra</option>
+                        </select>
+                    </fieldset>
 
-                        <div>
-                            <label for="number_microchip" class="label">
-                                <span class="label-text text-primary font-semibold">Número de Microchip</span>
-                            </label>
-                            <input type="text" name="number_microchip" id="number_microchip"
-                                class="input input-bordered w-full bg-base-200 text-white"
-                                placeholder="Ej. 1234567AJF" />
-                        </div>
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Padre</legend>
+                        <input type="text" name="father_name" id="father_name"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" placeholder="Ej. Viento" />
+                    </fieldset>
 
-                        <div>
-                            <label for="birth_date" class="label">
-                                <span class="label-text text-primary font-semibold">Fecha de nacimiento</span>
-                            </label>
-                            <input type="date" name="birth_date" id="birth_date"
-                                class="input input-bordered w-full bg-base-200 text-white" />
-                        </div>
+                    <fieldset class="fieldset">
+                        <legend class="text-gray-700 dark:text-gray-300">Madre</legend>
+                        <input type="text" name="mother_name" id="mother_name"
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" placeholder="Ej. Rayo" />
+                    </fieldset>
 
-                        <div>
-                            <label for="gender" class="label">
-                                <span class="label-text text-primary font-semibold">Género</span>
-                            </label>
-                            <select name="gender" id="gender"
-                                class="select select-bordered w-full bg-base-200 text-white">
-                                <option disabled selected>Seleccione género</option>
-                                <option value="male">Macho</option>
-                                <option value="female">Hembra</option>
-                            </select>
-                        </div>
+                    <fieldset class="fieldset md:col-span-2">
+                        <legend class="text-gray-700 dark:text-gray-300">Cuidador</legend>
+                        <select name="caretaker_id" id="caretaker_id"
+                            class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
+                            <option disabled selected>Seleccione cuidador</option>
+                            @foreach ($caretakers as $caretaker)
+                                <option value="{{ $caretaker->id }}">{{ $caretaker->name }}</option>
+                            @endforeach
+                        </select>
+                    </fieldset>
 
-                        <div>
-                            <label for="father_name" class="label">
-                                <span class="label-text text-primary font-semibold">Padre</span>
-                            </label>
-                            <input type="text" name="father_name" id="father_name"
-                                class="input input-bordered w-full bg-base-200 text-white" placeholder="Ej. Viento" />
-                        </div>
-
-                        <div>
-                            <label for="mother_name" class="label">
-                                <span class="label-text text-primary font-semibold">Madre</span>
-                            </label>
-                            <input type="text" name="mother_name" id="mother_name"
-                                class="input input-bordered w-full bg-base-200 text-white" placeholder="Ej. Rayo" />
-                        </div>
-
-                        <div>
-                            <label for="caretaker_id" class="label">
-                                <span class="label-text text-primary font-semibold">Cuidador</span>
-                            </label>
-                            <select name="caretaker_id" id="caretaker_id"
-                                class="select select-bordered w-full bg-base-200 text-white">
-                                <option disabled selected>Seleccione cuidador</option>
-                                @foreach ($caretakers as $caretaker)
-                                    <option value="{{ $caretaker->id }}">{{ $caretaker->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="pt-4">
-                            <button type="submit"
-                                class="btn w-full bg-primary hover:bg-primary-focus text-white text-lg font-bold">
-                                Guardar Caballo
-                            </button>
-                        </div>
-                    </form>
+                    <fieldset class="fieldset md:col-span-2">
+                        <legend class="text-gray-700 dark:text-gray-300">Fotos del Caballo</legend>
+                        <input type="file" name="photos[]" id="photos" multiple accept="image/*"
+                            class="file-input file-input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" />
+                    </fieldset>
                 </div>
-            </div>
-        </body>
 
-        </html>
-        <div class="drawer-side">
-            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-            <ul class="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-                <!-- Sidebar content here -->
-                <li class="mb-2"><a href="{{ route('training.index') }}"
-                        class="btn btn-primary ml-2">Entrenamientos</a>
-                </li>
-                <li class="mb-2"> <a href="{{ route('race.index') }}" class="btn btn-secondary ml-2">Carreras</a>
-                </li>
-                <li class="mb-2"><a href="{{ route('expenses.index') }}" class="btn btn-info ml-2">Gastos</a></li>
-                <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
-                        class="btn btn-warning ml-2">Veterinario</a>
-                </li>
-                <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-secondary ml-2">Caballos</a>
-                </li>
-                <li class="mb-4"><a href="{{ route('calendar.index') }}"
-                        class="btn btn-secondary ml-2">Calendario</a>
-                </li>
-
-                <div class="flex flex-col justify-center items-center mt-4 space-y-2 w-full">
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
-                        @csrf
-                        <button type="submit" class="btn btn-error w-full">Cerrar sesión</button>
-                    </form>
-                    <form method="GET" action="{{ route('profile.edit') }}" class="w-full">
-                        @csrf
-                        <button type="submit" class="btn btn-secondary w-full">Ver perfil</button>
-                    </form>
+                <div class="pt-4">
+                    <button type="submit"
+                        class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 w-full shadow-sm">
+                        Guardar Caballo
+                    </button>
                 </div>
-            </ul>
-
+            </form>
         </div>
     </div>
+
+    <!-- Menú lateral -->
+    <div class="drawer-side">
+        <label for="my-drawer" class="drawer-overlay"></label>
+        <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+            <div>
+                <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
+                <li class="mb-2"><a href="{{ route('training.index') }}"
+                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Entrenamientos</a></li>
+                <li class="mb-2"><a href="{{ route('Horseindex') }}"
+                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Caballos</a></li>
+                <li><a href="{{ route('calendar.index') }}"
+                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Calendario</a></li>
+            </div>
+            <hr class="border-gray-300 dark:border-gray-700" />
+            <div>
+                <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Gestion</h3>
+                <li class="mb-2"><a href="{{ route('race.index') }}"
+                        class="btn w-full text-left bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Carreras</a></li>
+                <li class="mb-2"><a href="{{ route('expenses.index') }}"
+                        class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Gastos</a></li>
+                <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
+                        class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Veterinario</a></li>
+            </div>
+
+
+            <div class="mt-auto space-y-2">
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit"
+                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow"> Cerrar
+                        sesión</button>
+                </form>
+                <form method="GET" action="{{ route('profile.edit') }}">
+                    <button type="submit"
+                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow"> Ver
+                        perfil</button>
+                </form>
+            </div>
+        </ul>
+    </div>
+</div>
