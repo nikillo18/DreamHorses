@@ -16,7 +16,7 @@ class RaceController extends Controller
      */
     public function index()
     {
-        $race = Race::with(['horse'])->get();
+        $race = Race::with(['horse'])->latest()->get();
 
         return view('race.index', compact('race'));
     }
