@@ -41,10 +41,14 @@
                 <li class="mb-2"><a href="{{ route('Horseindex') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Caballos</a></li>
-                <li><a href="{{ route('calendar.index') }}"
+                  <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Calendario</a></li>
-            </div>
+                        @role('boss')
+                <li><a href="{{ route('caretakers.index') }}"
+                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Cuidadores</a></li>
+                        @endrole
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Gestion</h3>
