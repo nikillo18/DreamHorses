@@ -4,7 +4,6 @@
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
 
-        <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn bg-pink-300 hover:bg-pink-400 text-gray-900 dark:bg-pink-400 dark:hover:bg-pink-500 drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -19,9 +18,8 @@
     </h2>
 
 
-    <!-- Lista de caballos -->
     <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="text-xl font-semibold mb-4">🐎 Caballos a su cuidado</h3>
+        <h3 class="text-xl font-semibold mb-4"> Caballos a su cuidado</h3>
 
         @if ($caretaker->horses->count())
             <table class="table-auto w-full text-sm text-left text-gray-800 dark:text-gray-200">
@@ -68,7 +66,6 @@
         @endif
     </div>
 
-    <!-- Volver -->
     <div class="pt-4">
         <a href="{{ route('caretakers.index') }}"
             class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white">
@@ -79,7 +76,6 @@
 </div>
 
 
-    <!-- Menú lateral -->
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">

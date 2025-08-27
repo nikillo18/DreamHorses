@@ -26,7 +26,7 @@
             <div class="mb-4">
                 <a href="{{ route('vet-visits.create') }}"
                     class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">
-                    ➕ Nueva Visita
+                     Nueva Visita
                 </a>
             </div>
             @endrole

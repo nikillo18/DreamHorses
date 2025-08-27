@@ -3,7 +3,6 @@
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
-        <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn bg-pink-300 hover:bg-pink-400 text-gray-900 dark:bg-pink-400 dark:hover:bg-pink-500 dark:text-gray-900 drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -13,7 +12,7 @@
         </label>
 
         <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
-            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">👨‍🌾 Lista de Cuidadores</h2>
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-4"> Lista de Cuidadores</h2>
 
             @if (session('success'))
                 <div class="bg-green-500 text-white p-4 rounded-md shadow-md">
