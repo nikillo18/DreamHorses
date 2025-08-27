@@ -15,7 +15,8 @@ class HorseController extends Controller
      */
     public function index()
     {
-        $horses = Horse::all();
+
+        $horses = Horse::paginate(6);
         return view('Horse.index', compact('horses'));
     }
 

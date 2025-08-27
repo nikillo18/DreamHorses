@@ -98,6 +98,9 @@
                 @endforeach
             </div>
         </div>
+        <div class="mt-8">
+            {{ $horses->links() }}
+        </div>
     </div>
 
     <!-- Menú lateral -->

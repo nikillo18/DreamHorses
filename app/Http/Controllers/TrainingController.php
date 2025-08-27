@@ -14,7 +14,7 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        $training = Training::with(['horse'])->get();
+        $training = Training::with(['horse'])->latest()->get();
 
         return view('training.index', compact('training'));
     }

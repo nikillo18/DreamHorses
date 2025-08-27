@@ -49,6 +49,9 @@
                     </div>
                 @endforeach
             </div>
+            <div class="mt-8">
+                {{ $horses->links() }}
+            </div>
         </div>
     </div>
 

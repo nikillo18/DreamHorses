@@ -14,7 +14,7 @@ class CalendarEventController extends Controller
      */
     public function index()
     {
-        $events = CalendarEvent::with('horse')->get();
+        $events = CalendarEvent::with('horse')->latest()->get();
         $horse = Horse::all();
         return view('calendar.index', compact('events', 'horse'));
     }
