@@ -31,9 +31,11 @@
                         <tr>
                             <th class="p-4">Fecha de Carrera</th>
                             <th class="p-4">Caballo</th>
-                            <th class="p-4">Posicion</th>
+                            <th class="p-4">Hipódromo</th>
+                            <th class="p-4">Video</th>
+                            <th class="p-4">Posición</th>
                             <th class="p-4">Distancia</th>
-                            <th class="p-4">Descripcion de la Carrera</th>
+                            <th class="p-4">Descripción de la Carrera</th>
                             <th class="p-4">Jockey</th>
                             @role('caretaker')
                             <th class="p-4">Acciones</th>
@@ -45,8 +47,17 @@
                             <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td class="p-4 whitespace-nowrap">{{ $race->date }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->horse->name }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ $race->hipodromo }}</td>
+                                <td class="p-4 whitespace-nowrap">
+                               @if($race->video)
+                               @php
+                               $embedUrl = str_replace('watch?v=', 'embed/', $race->video);
+                               @endphp
+                               <iframe width="200" height="100" src="{{ $embedUrl }}" frameborder="0" allowfullscreen></iframe>
+                               @endif
+                            </td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->place }}</td>
-                                <td class="p-4 whitespace-nowrap">{{ $race->distance }} km</td>
+                            <td class="p-4 whitespace-nowrap">{{ $race->distance }}Mt</td>
                                 <td class="p-4 max-w-xs break-words">{{ $race->description }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->jockey }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">

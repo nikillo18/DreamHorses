@@ -16,7 +16,9 @@ return new class extends Migration
             $table->id();
             $table->date('date');
             $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
-            $table->string('place')->nullable();
+            $table->string('hipodromo');
+            $table->integer('place')->nullable();
+            $table->string('video')->nullable();
             $table->integer('distance')->default(0);
             $table->string('description')->nullable();
             $table->string('jockey');

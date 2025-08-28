@@ -28,6 +28,8 @@ class StoreRaceRequest extends FormRequest
             'distance' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
             'jockey' => 'required|string|max:50',
+            'hipodromo' => 'required|string|max:100',
+            'video' => 'nullable|url',
         ];
     }
 }

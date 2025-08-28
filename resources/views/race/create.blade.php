@@ -34,6 +34,15 @@
                     </select>
                 </fieldset>
                 <fieldset class="fieldset">
+                    <legend class="text-gray-700 dark:text-gray-300">Hipódromo</legend>
+                    <input type="text" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="hipodromo" placeholder="Nombre del Hipódromo"
+                        required />
+                </fieldset>
+                <fieldset class="fieldset">
+                    <legend class="text-gray-700 dark:text-gray-300">Video</legend>
+                    <input type="url" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="video" placeholder="URL del Video" />
+                </fieldset>
+                <fieldset class="fieldset">
                     <legend class="text-gray-700 dark:text-gray-300">Posición</legend>
                     <input type="number" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="place"
                         placeholder="Posición del Caballo" />

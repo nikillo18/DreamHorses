@@ -119,11 +119,11 @@ Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name
 
 /* Race */
 Route::get('/race', [RaceController::class, 'index'])->name('race.index')->middleware('role:boss|veterinarian|caretaker');
-Route::get('/race/create', [RaceController::class, 'create'])->name('race.create')->middleware('caretaker');
+Route::get('/race/create', [RaceController::class, 'create'])->name('race.create')->middleware('role:caretaker');
 Route::post('/race', [RaceController::class, 'store'])->name('race.store')->middleware('role:caretaker');
 Route::get('/race/{race}/edit', [RaceController::class, 'edit'])->name('race.edit')->middleware('role:caretaker');
 Route::put('/race/{race}', [RaceController::class, 'update'])->name('race.update')->middleware('role:caretaker');
-Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy')->middleware('role:catetaker');
+Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.destroy')->middleware('role:caretaker');
 
 /* Expense */
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index')->middleware('role:boss|caretaker|veterinarian');
