@@ -14,9 +14,10 @@
 
         <!-- Contenido principal -->
         <div class="p-6 md:p-8 max-w-3xl mx-auto">
-            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">💰 Registrar Gasto</h2>
+            <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6"> Registrar Gasto</h2>
             <a href="{{ route('expenses.index') }}"
-                class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white mt-4 sm:mt-0">Volver a la Lista</a>
+                class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white mt-4 sm:mt-0">Volver
+                a la Lista</a>
             @if ($errors->any())
                 <div class="bg-red-500 text-white p-4 rounded-md mb-4">
                     <ul class="list-disc list-inside text-sm">
@@ -32,33 +33,42 @@
                 @csrf
 
                 <div>
-                    <label for="date" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Fecha del Gasto</label>
+                    <label for="date" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Fecha del
+                        Gasto</label>
                     <input type="date" name="date" id="date"
-                        class="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white" value="{{ old('date') }}">
+                        class="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                        value="{{ old('date') }}">
                 </div>
 
                 <div>
-                    <label for="category" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Categoría</label>
+                    <label for="category"
+                        class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Categoría</label>
                     <input type="text" name="category" id="category"
                         placeholder="Ej. Alimentación, Veterinaria, etc."
-                        class="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white" value="{{ old('category') }}">
+                        class="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                        value="{{ old('category') }}">
                 </div>
 
                 <div>
-                    <label for="description" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Descripción</label>
+                    <label for="description"
+                        class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Descripción</label>
                     <textarea name="description" id="description" rows="3"
                         class="textarea textarea-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white">{{ old('description') }}</textarea>
                 </div>
 
                 <div>
-                    <label for="amount" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Monto ($)</label>
+                    <label for="amount" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Monto
+                        ($)</label>
                     <input type="number" name="amount" id="amount" step="0.01"
-                        class="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white" value="{{ old('amount') }}">
+                        class="input input-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"
+                        value="{{ old('amount') }}">
                 </div>
 
                 <div>
-                    <label for="horse_id" class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Caballo</label>
-                    <select name="horse_id" id="horse_id" class="select select-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white">
+                    <label for="horse_id"
+                        class="block font-semibold mb-1 text-gray-600 dark:text-gray-300">Caballo</label>
+                    <select name="horse_id" id="horse_id"
+                        class="select select-bordered w-full bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white">
                         <option disabled selected>Seleccione un caballo</option>
                         @foreach ($horses as $horse)
                             <option value="{{ $horse->id }}" {{ old('horse_id') == $horse->id ? 'selected' : '' }}>
@@ -93,12 +103,12 @@
                         Caballos</a></li>
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Calendario</a></li>
-                        @role('boss')
-                <li><a href="{{ route('caretakers.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Cuidadores</a></li>
-                        @endrole
+                        Eventos</a></li>
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
             </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>

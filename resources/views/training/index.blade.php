@@ -15,18 +15,21 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8">
             <div class="mb-6">
-                <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 text-center sm:text-left mb-2">
+                <h1
+                    class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-100 text-center sm:text-left mb-2">
                     🏋️‍♀️ Lista de Entrenamientos
                 </h1>
-                 @role('caretaker')
-                <div class="flex justify-start">
-                    <a href="{{ route('training.create') }}"
-                        class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear Entrenamiento</a>
-                </div>
+                @role('caretaker')
+                    <div class="flex justify-start">
+                        <a href="{{ route('training.create') }}"
+                            class="btn bg-green-300 hover:bg-green-400 dark:bg-green-600 dark:hover:bg-green-500 text-gray-900 font-bold shadow-sm">Crear
+                            Entrenamiento</a>
+                    </div>
                 @endrole
             </div>
             <div class="overflow-x-auto rounded-lg shadow-lg">
-                <table class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
+                <table
+                    class="table-auto w-full text-sm text-left bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100">
                     <thead class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-100">
                         <tr>
                             <th class="p-4">Caballo</th>
@@ -36,13 +39,14 @@
                             <th class="p-4">Entrenamiento</th>
                             <th class="p-4">Comentarios</th>
                             @role('caretaker')
-                            <th class="p-4">Acciones</th>
+                                <th class="p-4">Acciones</th>
                             @endrole
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($training as $training)
-                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
+                            <tr
+                                class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700">
                                 <td class="p-4 whitespace-nowrap">{{ $training->horse->name }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->distance }} km</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->duration_minutes }} minutos</td>
@@ -51,18 +55,19 @@
                                 <td class="p-4 max-w-xs break-words">{{ $training->comments }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">
                                     @role('caretaker')
-                                    <a href="{{ route('training.edit', $training->id) }}"
-                                        class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
-                                    <form action="{{ route('training.destroy', $training->id) }}" method="POST"
-                                        class="w-full">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
-                                    </form>
-                                    
-                                </td>
-                            </tr>
-                             @endrole
+                                        <a href="{{ route('training.edit', $training->id) }}"
+                                            class="btn btn-xs bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">Editar</a>
+                                        <form action="{{ route('training.destroy', $training->id) }}" method="POST"
+                                            class="w-full">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="btn btn-xs bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">Eliminar</button>
+                                        </form>
+
+                                    </td>
+                                </tr>
+                            @endrole
                         @endforeach
                     </tbody>
                 </table>
@@ -73,9 +78,12 @@
     <!-- Menú lateral -->
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
-        <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+        <ul
+            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
             <div>
-                <li class="mb-2"><a href="{{ route('dashboard') }}" class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">Panel principal</a>
+                <li class="mb-2"><a href="{{ route('dashboard') }}"
+                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">Panel
+                        principal</a>
                 </li>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
@@ -84,14 +92,14 @@
                 <li class="mb-2"><a href="{{ route('Horseindex') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Caballos</a></li>
-               <li class="mb-2"><a href="{{ route('calendar.index') }}"
+                <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Calendario</a></li>
-                        @role('boss')
-                <li><a href="{{ route('caretakers.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Cuidadores</a></li>
-                        @endrole
+                        Eventos</a></li>
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
             </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>
@@ -112,12 +120,14 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow"> Cerrar
+                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow">
+                        Cerrar
                         sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
-                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow"> Ver
+                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow">
+                        Ver
                         perfil</button>
                 </form>
             </div>

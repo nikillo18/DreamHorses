@@ -13,10 +13,19 @@ class ExpenseController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Logic to retrieve and return a list of expenses
-        $expenses = Expense::with('horse')->latest()->get();
+        $query = Expense::with('horse')->latest();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->whereHas('horse', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $expenses = $query->get();
+
         return view('expenses.index', compact('expenses'));
     }
 

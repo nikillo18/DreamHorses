@@ -18,9 +18,15 @@ export default {
         },
     },
 
-    plugins: [require("daisyui"), forms],
-
+    plugins: [require("daisyui")],
     daisyui: {
         themes: ["forest"],
+        darkTheme: "forest",
+        base: true,
+        styled: true,
+        utils: true,
+        prefix: "",
+        logs: true,
+        themeRoot: ":root",
     },
 };

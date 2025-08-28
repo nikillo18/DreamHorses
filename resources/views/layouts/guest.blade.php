@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="forest">
 
 <head>
     <meta charset="UTF-8" />
@@ -8,23 +8,19 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="bg-base-100 min-h-screen flex flex-col transition-colors duration-300">
+<body class="bg-base-200 min-h-screen flex items-center justify-center p-4">
 
-    <!-- Hero -->
-    <section class="flex flex-1 items-center justify-center relative overflow-hidden px-6">
-
-        <!-- Marca de agua con logo -->
-        <div class="absolute inset-0 flex items-center justify-center opacity-10 dark:opacity-20">
+    <div class="w-full max-w-md mx-auto">
+        <div class="text-center mb-8">
             <a href="/">
-                <img src="{{ asset('logo/logo1.png') }}" alt="DreamHorse Logo" class="max-w-md w-full object-contain" />
+                <img src="{{ asset('logo/logo1.png') }}" alt="DreamHorse Logo" class="w-48 mx-auto" />
             </a>
         </div>
 
-        <!-- Contenido -->
-        <div class="relative z-10 w-full sm:max-w-md mt-6 px-6 py-4">
+        <div class="bg-base-100 rounded-2xl shadow-xl p-8">
             {{ $slot }}
         </div>
-    </section>
+    </div>
 
 </body>
 

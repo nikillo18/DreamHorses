@@ -32,13 +32,14 @@
                     </thead>
                     <tbody>
                         @foreach ($caretakers as $caretaker)
-                            <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                            <tr
+                                class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
                                 <td class="p-4">{{ $caretaker->name }}</td>
                                 <td class="p-4">{{ $caretaker->phone }}</td>
                                 <td class="p-4">{{ $caretaker->address }}</td>
                                 <td class="p-4 flex gap-2">
                                     <a href="{{ route('caretakers.show', $caretaker->id) }}"
-                                       class="btn btn-xs bg-blue-300 hover:bg-blue-400 text-gray-900">
+                                        class="btn btn-xs bg-blue-300 hover:bg-blue-400 text-gray-900">
                                         Ver caballos
                                     </a>
 
@@ -46,7 +47,8 @@
                                         onsubmit="return confirm('¿Estás seguro de eliminar este cuidador?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-xs bg-red-300 hover:bg-red-400 text-gray-900">
+                                        <button type="submit"
+                                            class="btn btn-xs bg-red-300 hover:bg-red-400 text-gray-900">
                                             Eliminar
                                         </button>
                                     </form>
@@ -59,7 +61,7 @@
         </div>
     </div>
 
-     <div class="drawer-side">
+    <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul
             class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
@@ -77,12 +79,12 @@
                         Caballos</a></li>
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Calendario</a></li>
-                        @role('boss')
-                <li><a href="{{ route('caretakers.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Cuidadores</a></li>
-                        @endrole
+                        Eventos</a></li>
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
             </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>

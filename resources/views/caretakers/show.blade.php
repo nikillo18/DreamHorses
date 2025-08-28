@@ -12,73 +12,74 @@
             </svg>
         </label>
 
-<div class="p-6 md:p-8 max-w-5xl mx-auto space-y-6">
-    <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">
-        👨‍🌾 Detalles del Cuidador: {{ $caretaker->name }}
-    </h2>
+        <div class="p-6 md:p-8 max-w-5xl mx-auto space-y-6">
+            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+                Detalles del Cuidador: {{ $caretaker->name }}
+            </h2>
 
 
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="text-xl font-semibold mb-4"> Caballos a su cuidado</h3>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4"> Caballos a su cuidado</h3>
 
-        @if ($caretaker->horses->count())
-            <table class="table-auto w-full text-sm text-left text-gray-800 dark:text-gray-200">
-                <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase">
-                    <tr>
-                        <th class="p-4">Nombre</th>
-      
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($caretaker->horses as $horse)
-                        <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
-                            <td class="p-4">{{ $horse->name }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p class="text-gray-600 dark:text-gray-400">Este cuidador no tiene caballos asignados.</p>
-        @endif
+                @if ($caretaker->horses->count())
+                    <table class="table-auto w-full text-sm text-left text-gray-800 dark:text-gray-200">
+                        <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase">
+                            <tr>
+                                <th class="p-4">Nombre</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($caretaker->horses as $horse)
+                                <tr
+                                    class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <td class="p-4">{{ $horse->name }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p class="text-gray-600 dark:text-gray-400">Este cuidador no tiene caballos asignados.</p>
+                @endif
+            </div>
+
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+                <h3 class="text-xl font-semibold mb-4"> Reasignar Caballos</h3>
+
+                @if ($caretaker->horses->count())
+                    <form action="{{ route('caretakers.reassign', $caretaker->id) }}" method="POST" class="space-y-4">
+                        @csrf
+                        <label for="new_caretaker_id" class="font-semibold">Nuevo cuidador:</label>
+                        <select name="new_caretaker_id" required class="select select-bordered w-full">
+                            <option disabled selected>Seleccione un cuidador</option>
+                            @foreach ($otherCaretakers as $c)
+                                <option value="{{ $c->id }}">{{ $c->name }}</option>
+                            @endforeach
+                        </select>
+
+                        <button type="submit" class="btn bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold">
+                            Reasignar caballos y eliminar cuidador
+                        </button>
+                    </form>
+                @else
+                    <p class="text-gray-600 dark:text-gray-400">No hay caballos que reasignar.</p>
+                @endif
+            </div>
+
+            <div class="pt-4">
+                <a href="{{ route('caretakers.index') }}"
+                    class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white">
+                    ⬅ Volver a la lista de cuidadores
+                </a>
+            </div>
+        </div>
     </div>
-
-    <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
-        <h3 class="text-xl font-semibold mb-4"> Reasignar Caballos</h3>
-
-        @if ($caretaker->horses->count())
-            <form action="{{ route('caretakers.reassign', $caretaker->id) }}" method="POST" class="space-y-4">
-                @csrf
-                <label for="new_caretaker_id" class="font-semibold">Nuevo cuidador:</label>
-                <select name="new_caretaker_id" required class="select select-bordered w-full">
-                    <option disabled selected>Seleccione un cuidador</option>
-                    @foreach ($otherCaretakers as $c)
-                        <option value="{{ $c->id }}">{{ $c->name }}</option>
-                    @endforeach
-                </select>
-
-                <button type="submit"
-                    class="btn bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold">
-                    Reasignar caballos y eliminar cuidador
-                </button>
-            </form>
-        @else
-            <p class="text-gray-600 dark:text-gray-400">No hay caballos que reasignar.</p>
-        @endif
-    </div>
-
-    <div class="pt-4">
-        <a href="{{ route('caretakers.index') }}"
-            class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white">
-            ⬅ Volver a la lista de cuidadores
-        </a>
-    </div>
-</div>
-</div>
 
 
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
-        <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+        <ul
+            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
             <div>
                 <li class="mb-2"><a href="{{ route('dashboard') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
@@ -92,13 +93,13 @@
                         Caballos</a></li>
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Calendario</a></li>
-                        @role('boss')
-                <li><a href="{{ route('caretakers.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Cuidadores</a></li>
-                        @endrole
-             </div>
+                        Eventos</a></li>
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
+            </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Gestión</h3>

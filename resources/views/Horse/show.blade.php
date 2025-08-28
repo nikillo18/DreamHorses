@@ -47,17 +47,22 @@
                     </div>
 
                     <div class="md:w-1/2 space-y-2">
-                        <h2 class="text-2xl font-bold text-indigo-600 dark:text-indigo-300">🐴 {{ $horse->name }}</h2>
-                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Raza:</span> {{ $horse->breed }}</p>
-                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Color:</span> {{ $horse->color }}</p>
+                        <h2 class="text-2xl font-bold text-indigo-600 dark:text-indigo-300"> {{ $horse->name }}</h2>
+                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Raza:</span> {{ $horse->breed }}
+                        </p>
+                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Color:</span>
+                            {{ $horse->color }}</p>
                         <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Género:</span>
                             {{ $horse->gender === 'male' ? 'Macho' : 'Hembra' }}</p>
                         <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Número de Microchip:</span>
                             {{ $horse->number_microchip }}
                         </p>
-                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Nacimiento:</span> {{ $horse->birth_date }}</p>
-                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Padre:</span> {{ $horse->father_name }}</p>
-                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Madre:</span> {{ $horse->mother_name }}</p>
+                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Nacimiento:</span>
+                            {{ $horse->birth_date }}</p>
+                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Padre:</span>
+                            {{ $horse->father_name }}</p>
+                        <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Madre:</span>
+                            {{ $horse->mother_name }}</p>
                         <p><span class="text-gray-500 dark:text-gray-400 font-semibold">Cuidador:</span>
                             {{ $horse->caretaker->name ?? 'Sin cuidador' }}</p>
                     </div>
@@ -65,20 +70,23 @@
             </div>
 
             <div class="flex justify-between">
-                <a href="{{ route('Horseindex') }}" class="btn btn-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100">←
+                <a href="{{ route('Horseindex') }}"
+                    class="btn btn-sm bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-100">←
                     Volver</a>
-                    @role('caretaker|boss')
-                <div class="flex gap-2">
-                    <a href="{{ route('horses.edit', $horse->id) }}"
-                        class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>
-                    <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
-                        onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
-                            Eliminar</button>
-                    </form>
-                </div>
+                @role('caretaker|boss')
+                    <div class="flex gap-2">
+                        <a href="{{ route('horses.edit', $horse->id) }}"
+                            class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900">
+                            Editar</a>
+                        <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
+                            onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
+                                Eliminar</button>
+                        </form>
+                    </div>
                 @endrole
             </div>
         </div>
@@ -87,7 +95,8 @@
     <!-- Menú lateral -->
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
-        <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+        <ul
+            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
             <div>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
@@ -99,11 +108,11 @@
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Calendario</a></li>
-                        @role('boss')
-                <li><a href="{{ route('caretakers.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Cuidadores</a></li>
-                        @endrole
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
             </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>
@@ -124,12 +133,14 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow"> Cerrar
+                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow">
+                        Cerrar
                         sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
-                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow"> Ver
+                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow">
+                        Ver
                         perfil</button>
                 </form>
             </div>

@@ -14,8 +14,11 @@
 
         <!-- Contenido principal -->
         <div class="p-6 md:p-8">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">✏️ Editar Caballo: {{ $horse->name }}</h1>
-            <a href="{{ route('Horseindex') }}" class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 ml-2 shadow-sm">Volver a la Lista</a>
+            <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"> Editar Caballo: {{ $horse->name }}
+            </h1>
+            <a href="{{ route('Horseindex') }}"
+                class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 ml-2 shadow-sm">Volver
+                a la Lista</a>
 
             <form action="{{ route('horses.update', $horse->id) }}" method="POST" enctype="multipart/form-data"
                 class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg mt-4 shadow-md border border-gray-200 dark:border-gray-700">
@@ -25,19 +28,22 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Nombre</legend>
-                        <input type="text" name="name" value="{{ old('name', $horse->name) }}" placeholder="Nombre"
+                        <input type="text" name="name" value="{{ old('name', $horse->name) }}"
+                            placeholder="Nombre"
                             class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" />
                     </fieldset>
 
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Raza</legend>
-                        <input type="text" name="breed" value="{{ old('breed', $horse->breed) }}" placeholder="Raza"
+                        <input type="text" name="breed" value="{{ old('breed', $horse->breed) }}"
+                            placeholder="Raza"
                             class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" />
                     </fieldset>
 
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Color</legend>
-                        <input type="text" name="color" value="{{ old('color', $horse->color) }}" placeholder="Color"
+                        <input type="text" name="color" value="{{ old('color', $horse->color) }}"
+                            placeholder="Color"
                             class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" />
                     </fieldset>
 
@@ -49,7 +55,8 @@
 
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Género</legend>
-                        <select name="gender" class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
+                        <select name="gender"
+                            class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
                             <option value="male" {{ $horse->gender == 'male' ? 'selected' : '' }}>Macho</option>
                             <option value="female" {{ $horse->gender == 'female' ? 'selected' : '' }}>Hembra</option>
                         </select>
@@ -71,7 +78,8 @@
 
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Cuidador</legend>
-                        <select name="caretaker_id" class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
+                        <select name="caretaker_id"
+                            class="select select-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100">
                             @foreach ($caretakers as $caretaker)
                                 <option value="{{ $caretaker->id }}"
                                     {{ $horse->caretaker_id == $caretaker->id ? 'selected' : '' }}>
@@ -83,7 +91,7 @@
                 </div>
 
                 <div class="space-y-2 mt-6">
-                    <label class="text-gray-700 dark:text-gray-300 font-semibold">📸 Fotos actuales:</label>
+                    <label class="text-gray-700 dark:text-gray-300 font-semibold"> Fotos actuales:</label>
                     @if ($horse->photos->count())
                         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                             @foreach ($horse->photos as $photo)
@@ -104,7 +112,8 @@
                 </fieldset>
 
 
-                <button type="submit" class="btn bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900 w-full mt-6 shadow-sm">
+                <button type="submit"
+                    class="btn bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900 w-full mt-6 shadow-sm">
                     Actualizar Caballo
                 </button>
             </form>
@@ -114,7 +123,8 @@
     <!-- Menú lateral -->
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
-        <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+        <ul
+            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
             <div>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
@@ -123,14 +133,14 @@
                 <li class="mb-2"><a href="{{ route('Horseindex') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Caballos</a></li>
-                  <li class="mb-2"><a href="{{ route('calendar.index') }}"
+                <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Calendario</a></li>
-                        @role('boss')
-                <li><a href="{{ route('caretakers.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Cuidadores</a></li>
-                        @endrole
+                        Eventos</a></li>
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
             </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>
@@ -151,12 +161,14 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow"> Cerrar
+                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow">
+                        Cerrar
                         sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
-                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow"> Ver
+                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow">
+                        Ver
                         perfil</button>
                 </form>
             </div>

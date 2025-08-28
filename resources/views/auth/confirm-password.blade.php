@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
+    <div class="mb-4 text-sm text-base-content/70">
         {{ __('Esta es un área segura de la aplicación. Por favor, confirma tu contraseña antes de continuar.') }}
     </div>
 
@@ -8,20 +8,18 @@
 
         <!-- Password -->
         <div>
-            <x-input-label for="password" :value="__('Contraseña')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
+            <label for="password" class="label">{{ __('Contraseña') }}</label>
+            <input id="password" class="input input-bordered w-full"
                             type="password"
                             name="password"
                             required autocomplete="current-password" />
-
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
+        <div class="flex justify-end mt-6">
+            <button type="submit" class="btn btn-primary">
                 {{ __('Confirmar') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </x-guest-layout>
