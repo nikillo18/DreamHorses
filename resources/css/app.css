@@ -1,18 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import "tailwindcss";
-
-@source "../**/*.blade.php";
-@source "../**/*.js";
-@source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
-@source "../../storage/framework/views/*.php";
 
 :root {
     color-scheme: dark;
 }
 
+/* Aplicar el tema Forest exacto del Theme Generator */
 [data-theme="forest"] {
+    color-scheme: dark;
+
+    /* Colores principales del Theme Generator */
+    --p: #1eb854;
+    --pc: #000e04;
+    --s: #1fd65f;
+    --sc: #001203;
+    --a: #1db584;
+    --ac: #000c06;
+    --n: #19362d;
+    --nc: #cdd2d0;
+    --b1: #2a3f37;
+    --b2: #24352d;
+    --b3: #1e2b23;
+    --bc: #d5dbd8;
+    --in: #2563eb;
+    --inc: #d1e7ff;
+    --su: #16a34a;
+    --suc: #000702;
+    --wa: #d97706;
+    --wac: #110400;
+    --er: #dc2626;
+    --erc: #ffd9d4;
+
+    /* Variables DaisyUI para componentes */
     --rounded-box: 1rem;
     --rounded-btn: 0.5rem;
     --rounded-badge: 1.9rem;
@@ -23,4 +43,269 @@
     --border-btn: 1px;
     --tab-border: 1px;
     --tab-radius: 0.5rem;
+}
+
+/* Estilos base del body */
+body {
+    background-color: #2a3f37; /* base-100 */
+    color: #d5dbd8; /* base-content */
+    font-family: "Figtree", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Componentes personalizados para el tema Forest */
+
+/* Botones */
+.btn-primary {
+    background-color: #1eb854;
+    color: #000e04;
+    border-color: #1eb854;
+}
+
+.btn-primary:hover {
+    background-color: #16a146;
+    border-color: #16a146;
+}
+
+.btn-secondary {
+    background-color: #1fd65f;
+    color: #001203;
+    border-color: #1fd65f;
+}
+
+.btn-secondary:hover {
+    background-color: #1bc252;
+    border-color: #1bc252;
+}
+
+.btn-accent {
+    background-color: #1db584;
+    color: #000c06;
+    border-color: #1db584;
+}
+
+.btn-accent:hover {
+    background-color: #19a276;
+    border-color: #19a276;
+}
+
+/* Inputs y formularios */
+.input {
+    background-color: #24352d; /* base-200 */
+    border-color: rgba(213, 219, 216, 0.2); /* base-content con opacidad */
+    color: #d5dbd8; /* base-content */
+}
+
+.input:focus {
+    border-color: #1eb854; /* primary */
+    outline: 2px solid rgba(30, 184, 84, 0.2);
+}
+
+.select {
+    background-color: #24352d;
+    border-color: rgba(213, 219, 216, 0.2);
+    color: #d5dbd8;
+}
+
+.select:focus {
+    border-color: #1eb854;
+    outline: 2px solid rgba(30, 184, 84, 0.2);
+}
+
+.textarea {
+    background-color: #24352d;
+    border-color: rgba(213, 219, 216, 0.2);
+    color: #d5dbd8;
+}
+
+.textarea:focus {
+    border-color: #1eb854;
+    outline: 2px solid rgba(30, 184, 84, 0.2);
+}
+
+/* Cards */
+.card {
+    background-color: #2a3f37; /* base-100 */
+    border: 1px solid rgba(213, 219, 216, 0.1);
+}
+
+/* Navbar */
+.navbar {
+    background-color: #24352d; /* base-200 */
+    border-bottom: 1px solid rgba(213, 219, 216, 0.1);
+}
+
+.navbar .btn-ghost:hover {
+    background-color: rgba(30, 184, 84, 0.1);
+    color: #1eb854;
+}
+
+/* Alertas */
+.alert-success {
+    background-color: rgba(22, 163, 74, 0.1);
+    color: #16a34a;
+    border-color: rgba(22, 163, 74, 0.2);
+}
+
+.alert-error {
+    background-color: rgba(220, 38, 38, 0.1);
+    color: #dc2626;
+    border-color: rgba(220, 38, 38, 0.2);
+}
+
+.alert-warning {
+    background-color: rgba(217, 119, 6, 0.1);
+    color: #d97706;
+    border-color: rgba(217, 119, 6, 0.2);
+}
+
+.alert-info {
+    background-color: rgba(37, 99, 235, 0.1);
+    color: #2563eb;
+    border-color: rgba(37, 99, 235, 0.2);
+}
+
+/* Toggle switches */
+.toggle {
+    background-color: rgba(213, 219, 216, 0.2);
+}
+
+.toggle:checked {
+    background-color: #1eb854;
+}
+
+.toggle-primary:checked {
+    background-color: #1eb854;
+}
+
+.toggle-secondary:checked {
+    background-color: #1fd65f;
+}
+
+.toggle-accent:checked {
+    background-color: #1db584;
+}
+
+/* Progress bars */
+.progress {
+    background-color: rgba(213, 219, 216, 0.2);
+}
+
+.progress-primary::-webkit-progress-value {
+    background-color: #1eb854;
+}
+
+.progress-secondary::-webkit-progress-value {
+    background-color: #1fd65f;
+}
+
+.progress-accent::-webkit-progress-value {
+    background-color: #1db584;
+}
+
+/* Badges */
+.badge-primary {
+    background-color: #1eb854;
+    color: #000e04;
+}
+
+.badge-secondary {
+    background-color: #1fd65f;
+    color: #001203;
+}
+
+.badge-accent {
+    background-color: #1db584;
+    color: #000c06;
+}
+
+/* Tabs */
+.tab-active {
+    color: #1eb854;
+    border-bottom-color: #1eb854;
+}
+
+/* Links */
+.link:hover {
+    color: #1eb854;
+}
+
+/* Dropdown menus */
+.dropdown-content {
+    background-color: #2a3f37;
+    border: 1px solid rgba(213, 219, 216, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.menu li > *:hover {
+    background-color: rgba(30, 184, 84, 0.1);
+    color: #1eb854;
+}
+
+/* Modales */
+.modal-box {
+    background-color: #2a3f37;
+    color: #d5dbd8;
+}
+
+/* Scrollbar personalizado */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #24352d;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(30, 184, 84, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #1eb854;
+}
+
+/* Estados de hover para elementos interactivos */
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+/* Animaciones suaves */
+.btn,
+.card,
+.input,
+.select,
+.textarea {
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Focus states mejorados */
+.btn:focus-visible {
+    outline: 2px solid #1eb854;
+    outline-offset: 2px;
+}
+
+/* Estilos específicos para DreamHorses */
+.hero-gradient {
+    background: linear-gradient(135deg, #2a3f37 0%, #24352d 50%, #1e2b23 100%);
+}
+
+.glass-effect {
+    background: rgba(42, 63, 55, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(213, 219, 216, 0.1);
+}
+
+/* Estados activos para navegación */
+.nav-active {
+    background-color: rgba(30, 184, 84, 0.1);
+    color: #1eb854;
+    border-left: 3px solid #1eb854;
 }

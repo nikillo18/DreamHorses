@@ -2,10 +2,10 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-gray-50 text-gray-800 dark:bg-gray-900 dark:text-gray-100">
+    <div class="drawer-content bg-base-100 text-base-content">
 
         <label for="my-drawer"
-            class="btn bg-pink-300 hover:bg-pink-400 text-gray-900 dark:bg-pink-400 dark:hover:bg-pink-500 drawer-button lg:hidden m-4 shadow-md">
+            class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                 stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -13,17 +13,17 @@
         </label>
 
         <div class="p-6 md:p-8 max-w-5xl mx-auto space-y-6">
-            <h2 class="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+            <h2 class="text-3xl font-bold text-base-content mb-6">
                 Detalles del Cuidador: {{ $caretaker->name }}
             </h2>
 
 
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <div class="bg-base-200 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-semibold mb-4"> Caballos a su cuidado</h3>
 
                 @if ($caretaker->horses->count())
-                    <table class="table-auto w-full text-sm text-left text-gray-800 dark:text-gray-200">
-                        <thead class="bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 uppercase">
+                    <table class="table-auto w-full text-sm text-left text-base-content">
+                        <thead class="bg-base-300 text-base-content/80 uppercase">
                             <tr>
                                 <th class="p-4">Nombre</th>
 
@@ -32,18 +32,18 @@
                         <tbody>
                             @foreach ($caretaker->horses as $horse)
                                 <tr
-                                    class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    class="border-b border-base-300 hover:bg-base-300">
                                     <td class="p-4">{{ $horse->name }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
                     </table>
                 @else
-                    <p class="text-gray-600 dark:text-gray-400">Este cuidador no tiene caballos asignados.</p>
+                    <p class="text-base-content/70">Este cuidador no tiene caballos asignados.</p>
                 @endif
             </div>
 
-            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+            <div class="bg-base-200 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-semibold mb-4"> Reasignar Caballos</h3>
 
                 @if ($caretaker->horses->count())
@@ -57,18 +57,18 @@
                             @endforeach
                         </select>
 
-                        <button type="submit" class="btn bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-bold">
+                        <button type="submit" class="btn btn-warning font-bold">
                             Reasignar caballos y eliminar cuidador
                         </button>
                     </form>
                 @else
-                    <p class="text-gray-600 dark:text-gray-400">No hay caballos que reasignar.</p>
+                    <p class="text-base-content/70">No hay caballos que reasignar.</p>
                 @endif
             </div>
 
             <div class="pt-4">
                 <a href="{{ route('caretakers.index') }}"
-                    class="btn bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-800 dark:text-white">
+                    class="btn btn-ghost">
                     ⬅ Volver a la lista de cuidadores
                 </a>
             </div>
@@ -79,38 +79,38 @@
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul
-            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+            class="menu bg-base-200 min-h-screen w-64 p-4 flex flex-col gap-4 text-base-content">
             <div>
                 <li class="mb-2"><a href="{{ route('dashboard') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Panel principal</a></li>
-                <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
+                <h3 class="text-base-content/70 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Entrenamientos</a></li>
                 <li class="mb-2"><a href="{{ route('Horseindex') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Caballos</a></li>
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Eventos</a></li>
                 @role('boss')
                     <li><a href="{{ route('caretakers.index') }}"
-                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            class="btn btn-primary w-full text-left">
                             Cuidadores</a></li>
                 @endrole
             </div>
-            <hr class="border-gray-300 dark:border-gray-700" />
+            <div class="divider"></div>
             <div>
-                <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Gestión</h3>
+                <h3 class="text-base-content/70 text-sm font-semibold">Gestión</h3>
                 <li class="mb-2"><a href="{{ route('race.index') }}"
-                        class="btn w-full text-left bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-secondary w-full text-left">
                         Carreras</a></li>
                 <li class="mb-2"><a href="{{ route('expenses.index') }}"
-                        class="btn w-full text-left bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-secondary w-full text-left">
                         Gastos</a></li>
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
-                        class="btn w-full text-left bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-secondary w-full text-left">
                         Veterinario</a></li>
             </div>
 
@@ -118,12 +118,12 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow">
+                        class="btn btn-error w-full">
                         Cerrar sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
-                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow">
+                        class="btn btn-info w-full">
                         Ver perfil</button>
                 </form>
             </div>
