@@ -14,9 +14,12 @@
 
         <!-- Contenido principal -->
         <div class="p-6 md:p-8">
-            <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100">🐴 Registrar Caballo</h1>
-            <a href="{{ route('Horseindex') }}" class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 ml-2 shadow-sm">Volver a la Lista</a>
-            <form action="{{ route('StoreHorse') }}" method="POST" enctype="multipart/form-data" class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg mt-4 shadow-md border border-gray-200 dark:border-gray-700">
+            <h1 class="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-100"> Registrar Caballo</h1>
+            <a href="{{ route('Horseindex') }}"
+                class="btn bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 ml-2 shadow-sm">Volver
+                a la Lista</a>
+            <form action="{{ route('StoreHorse') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-4 bg-white dark:bg-gray-800 p-6 rounded-lg mt-4 shadow-md border border-gray-200 dark:border-gray-700">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -37,7 +40,8 @@
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Color</legend>
                         <input type="text" name="color" id="color"
-                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" placeholder="Ej. Castaño" />
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            placeholder="Ej. Castaño" />
                     </fieldset>
 
                     <fieldset class="fieldset">
@@ -66,13 +70,15 @@
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Padre</legend>
                         <input type="text" name="father_name" id="father_name"
-                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" placeholder="Ej. Viento" />
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            placeholder="Ej. Viento" />
                     </fieldset>
 
                     <fieldset class="fieldset">
                         <legend class="text-gray-700 dark:text-gray-300">Madre</legend>
                         <input type="text" name="mother_name" id="mother_name"
-                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" placeholder="Ej. Rayo" />
+                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            placeholder="Ej. Rayo" />
                     </fieldset>
 
                     <fieldset class="fieldset md:col-span-2">
@@ -106,7 +112,8 @@
     <!-- Menú lateral -->
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
-        <ul class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+        <ul
+            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
             <div>
                 <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
@@ -115,9 +122,14 @@
                 <li class="mb-2"><a href="{{ route('Horseindex') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Caballos</a></li>
-                <li><a href="{{ route('calendar.index') }}"
+                <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
-                        Calendario</a></li>
+                        Eventos</a></li>
+                @role('boss')
+                    <li><a href="{{ route('caretakers.index') }}"
+                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            Cuidadores</a></li>
+                @endrole
             </div>
             <hr class="border-gray-300 dark:border-gray-700" />
             <div>
@@ -138,12 +150,14 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow"> Cerrar
+                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow">
+                        Cerrar
                         sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
-                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow"> Ver
+                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow">
+                        Ver
                         perfil</button>
                 </form>
             </div>

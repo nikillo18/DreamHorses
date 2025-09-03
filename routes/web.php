@@ -8,6 +8,7 @@ use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\VetVisitController;
 use App\Http\Controllers\HorsePhotoController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\CaretakerController;
 use App\Models\Expense;
 use App\Models\Horse;
 use App\Models\Race;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $horses = Horse::with('caretaker')->get();
+    $horses = Horse::with('caretaker')->paginate(6);
     $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
     $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
     $nextCalendarEvents = CalendarEvent::where('event_date', '>=', now())->orderBy('event_date')->get();
@@ -143,8 +144,15 @@ Route::get('/register', [RegisteredUserController::class, 'create'])
 
 Route::post('/register', [RegisteredUserController::class, 'store']);
 
+/* Caretakers*/
+
+Route::get('/caretakers', [CaretakerController::class, 'index'])->name('caretakers.index');
+Route::get('/caretakers/{caretaker}', [CaretakerController::class, 'show'])->name('caretakers.show');
+Route::delete('/caretakers/{caretaker}', [CaretakerController::class, 'destroy'])->name('caretakers.destroy');
+Route::post('/caretakers/{caretaker}/reassign', [CaretakerController::class, 'reassign'])->name('caretakers.reassign');
 
 
+/* Roles */
 
 
 /* Calendar */

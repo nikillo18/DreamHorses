@@ -1,35 +1,46 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="forest">
+
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>DreamHorse - Bienvenido</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     @vite('resources/css/app.css')
 </head>
+
 <body class="bg-base-200 min-h-screen flex flex-col">
 
-  <div
-    class="hero flex-1"
-    style="background-image: url('{{ asset('logo/logo1.png') }}');"
-  >
-    <div class="hero-overlay bg-opacity-60"></div>
-    <div class="hero-content text-neutral-content text-center">
-      <div class="max-w-md">
-        <h1 class="mb-5 text-5xl font-bold">Bienvenido a DreamHorse</h1>
-        
-        <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            <a href="{{ route('login') }}" class="btn btn-primary w-full sm:w-auto">
-                Iniciar Sesión
-            </a>
-            <a href="{{ route('select-role') }}" class="btn btn-secondary w-full sm:w-auto">
-                Registrarse
-            </a>
+    <!-- Hero -->
+    <section class="flex-1 flex items-center justify-center text-center p-6">
+        <div class="max-w-2xl mx-auto">
+            <img src="{{ asset('logo/logo1.png') }}" alt="DreamHorse Logo" class="w-64 mx-auto mb-8" />
+
+            <h1 class="text-5xl font-bold mb-4">
+                Bienvenido a <span class="text-primary">DreamHorse</span>
+            </h1>
+
+            <p class="text-lg text-base-content/80 mb-8">
+                Tu portal para gestionar y administrar caballos.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{{ route('login') }}"
+                    class="btn btn-primary btn-lg rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    Iniciar Sesión
+                </a>
+                <a href="{{ route('select-role') }}"
+                    class="btn btn-outline btn-lg rounded-full shadow-lg hover:shadow-xl transition-shadow duration-300">
+                    Registrarse
+                </a>
+            </div>
         </div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-
+    <!-- Footer -->
+    <footer class="p-4 text-center text-sm text-base-content/70">
+        © {{ date('Y') }} DreamHorse · Todos los derechos reservados
+    </footer>
 
 </body>
+
 </html>

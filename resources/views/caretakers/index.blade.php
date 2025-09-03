@@ -3,7 +3,6 @@
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
-        <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -12,66 +11,47 @@
             </svg>
         </label>
 
-        <!-- Contenido principal -->
-        <div class="p-6 md:p-8 max-w-7xl mx-auto">
-            <h2 class="text-2xl sm:text-3xl font-bold text-base-content mb-6">
-                Visitas Veterinarias
-            </h2>
+        <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
+            <h2 class="text-3xl font-bold text-base-content mb-4"> Lista de Cuidadores</h2>
 
             @if (session('success'))
                 <div class="alert alert-success">
-                    {{ session('success') }}</div>
+                    {{ session('success') }}
+                </div>
             @endif
 
-            @role('veterinarian')
-                <div class="mb-4">
-                    <a href="{{ route('vet-visits.create') }}"
-                        class="btn btn-success font-bold shadow-sm">
-                        Nueva Visita
-                    </a>
-                </div>
-            @endrole
-
-            <div class="overflow-x-auto shadow-lg rounded-lg">
-                <table
-                    class="table-auto w-full text-sm text-left bg-base-200 text-base-content">
-                    <thead class="bg-base-300 text-base-content">
+            <div class="overflow-x-auto bg-base-200 rounded-lg shadow-lg">
+                <table class="table-auto w-full text-sm text-left text-base-content">
+                    <thead class="bg-base-300 text-base-content/80 uppercase">
                         <tr>
-                            <th class="p-4">Caballo</th>
-                            <th class="p-4">Veterinario</th>
+                            <th class="p-4">Nombre</th>
                             <th class="p-4">Teléfono</th>
-                            <th class="p-4">Fecha</th>
-                            <th class="p-4">Diagnóstico</th>
-                            <th class="p-4">Tratamiento</th>
-                            <th class="p-4">Próxima Visita</th>
-                            @role('veterinarian')
-                                <th class="p-4">Acciones</th>
-                            @endrole
+                            <th class="p-4">Dirección</th>
+                            <th class="p-4">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($visits as $visit)
+                        @foreach ($caretakers as $caretaker)
                             <tr
                                 class="border-b border-base-300 hover:bg-base-300">
-                                <td class="p-4">{{ $visit->horse->name }}</td>
-                                <td class="p-4">{{ $visit->vet_name }}</td>
-                                <td class="p-4">{{ $visit->vet_phone ?? '-' }}</td>
-                                <td class="p-4">{{ $visit->visit_date }}</td>
-                                <td class="p-4 max-w-xs break-words">{{ $visit->diagnosis }}</td>
-                                <td class="p-4 max-w-xs break-words">{{ $visit->treatment }}</td>
-                                <td class="p-4">{{ $visit->next_visit ?? '-' }}</td>
-                                <td class="p-4 flex flex-col sm:flex-row gap-2">
-                                    @role('veterinarian')
-                                        <a href="{{ route('vet-visits.edit', $visit->id) }}"
-                                            class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('vet-visits.destroy', $visit->id) }}" method="POST"
-                                            onsubmit="return confirm('¿Eliminar esta visita?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
-                                    @endrole
+                                <td class="p-4">{{ $caretaker->name }}</td>
+                                <td class="p-4">{{ $caretaker->phone }}</td>
+                                <td class="p-4">{{ $caretaker->address }}</td>
+                                <td class="p-4 flex gap-2">
+                                    <a href="{{ route('caretakers.show', $caretaker->id) }}"
+                                        class="btn btn-xs btn-info">
+                                        Ver caballos
+                                    </a>
+
+                                    <form action="{{ route('caretakers.destroy', $caretaker->id) }}" method="POST"
+                                        onsubmit="return confirm('¿Estás seguro de eliminar este cuidador?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="btn btn-xs btn-error">
+                                            Eliminar
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -81,15 +61,14 @@
         </div>
     </div>
 
-    <!-- Menú lateral -->
     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul
             class="menu bg-base-200 min-h-screen w-64 p-4 flex flex-col gap-4 text-base-content">
             <div>
                 <li class="mb-2"><a href="{{ route('dashboard') }}"
-                        class="btn btn-primary w-full text-left">Panel
-                        principal</a>
+                        class="btn btn-primary w-full text-left">
+                        Panel principal</a>
                 </li>
                 <h3 class="text-base-content/70 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
@@ -109,7 +88,7 @@
             </div>
             <div class="divider"></div>
             <div>
-                <h3 class="text-base-content/70 text-sm font-semibold">Gestion</h3>
+                <h3 class="text-base-content/70 text-sm font-semibold">Gestión</h3>
                 <li class="mb-2"><a href="{{ route('race.index') }}"
                         class="btn btn-secondary w-full text-left">
                         Carreras</a></li>
@@ -127,14 +106,12 @@
                     @csrf
                     <button type="submit"
                         class="btn btn-error w-full">
-                        Cerrar
-                        sesión</button>
+                        Cerrar sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
                         class="btn btn-info w-full">
-                        Ver
-                        perfil</button>
+                        Ver perfil</button>
                 </form>
             </div>
         </ul>

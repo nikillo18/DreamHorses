@@ -5,62 +5,41 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCaretakerRequest;
 use App\Http\Requests\UpdateCaretakerRequest;
 use App\Models\Caretaker;
+use Illuminate\Http\Request;
 
 class CaretakerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $caretakers = Caretaker::all();
+        return view('caretakers.index', compact('caretakers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreCaretakerRequest $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
     public function show(Caretaker $caretaker)
     {
-        //
+        $otherCaretakers = Caretaker::where('id', '!=', $caretaker->id)->get();
+
+        return view('caretakers.show', compact('caretaker', 'otherCaretakers'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Caretaker $caretaker)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateCaretakerRequest $request, Caretaker $caretaker)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Caretaker $caretaker)
     {
-        //
+        $caretaker->delete();
+        return redirect()->route('caretakers.index')->with('success', 'Cuidador eliminado correctamente.');
+    }
+
+    public function reassign(Request $request, Caretaker $caretaker)
+    {
+        $request->validate([
+            'new_caretaker_id' => 'required|exists:caretakers,id'
+        ]);
+
+        $caretaker->horses()->update([
+            'caretaker_id' => $request->new_caretaker_id
+        ]);
+
+        $caretaker->delete();
+
+        return redirect()->route('caretakers.index')->with('success', 'Caballos reasignados y cuidador eliminado.');
     }
 }
