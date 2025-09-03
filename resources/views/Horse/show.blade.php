@@ -73,20 +73,18 @@
                 <a href="{{ route('Horseindex') }}"
                     class="btn btn-sm btn-ghost">←
                     Volver</a>
-                @role('caretaker|boss')
-                    <div class="flex gap-2">
-                        <a href="{{ route('horses.edit', $horse->id) }}"
-                            class="btn btn-sm btn-warning">
-                            Editar</a>
-                        <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
-                            onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit"
-                                class="btn btn-sm btn-error">
-                                Eliminar</button>
-                        </form>
-                    </div>
+                    @role('caretaker')
+                <div class="flex gap-2">
+                    <a href="{{ route('horses.edit', $horse->id) }}"
+                        class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>
+                    <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
+                        onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
+                            Eliminar</button>
+                    </form>
+                </div>
                 @endrole
             </div>
         </div>

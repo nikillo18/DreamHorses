@@ -42,12 +42,18 @@
                         @endforeach
                     </select>
                 </fieldset>
-
                 <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Posicion</legend>
-                    <input type="number"
-                        class="input input-bordered w-full"
-                        name="place" placeholder="Posicion del Caballo" value="{{ $race->place }}" required />
+                    <legend class="text-gray-700 dark:text-gray-300">Hipódromo</legend>
+                    <input type="text" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="hipodromo" placeholder="Nombre del Hipódromo" value="{{ $race->hipodromo }}" required />
+                </fieldset>
+                <fieldset class="fieldset">
+                    <legend class="text-gray-700 dark:text-gray-300">Video</legend>
+                    <input type="text" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="video" placeholder="URL del Video" value="{{ $race->video }}" />
+                </fieldset>
+                <fieldset class="fieldset">
+                    <legend class="text-gray-700 dark:text-gray-300">Posición</legend>
+                    <input type="number" class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100" name="place" placeholder="Posición del Caballo" value="{{ $race->place }}" required />
+
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Distancia Recorrida</legend>

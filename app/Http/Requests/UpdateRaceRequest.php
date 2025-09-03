@@ -25,9 +25,11 @@ class UpdateRaceRequest extends FormRequest
             'horse_id' => 'required|exists:horses,id',
             'date' => 'required|date',
             'place' => 'required|integer|min:1',
-            'distance' => 'required|integer|min:0',
+            'distance' => 'required|numeric|min:0',
             'description' => 'nullable|string',
             'jockey' => 'required|string|max:50',
+            'hipodromo' => 'required|string|max:100',
+            'video' => 'nullable|url',
         ];
     }
 }
