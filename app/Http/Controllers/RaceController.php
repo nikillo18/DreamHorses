@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateRaceRequest;
 use App\Models\Horse;
 use App\Models\Race;
 
+use Illuminate\Http\Request;
+
 use function Pest\Laravel\get;
 
 class RaceController extends Controller
@@ -14,9 +16,18 @@ class RaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $race = Race::with(['horse'])->latest()->get();
+        $query = Race::with(['horse'])->latest();
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->whereHas('horse', function ($q) use ($searchTerm) {
+                $q->where('date', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        $race = $query->get();
 
         return view('race.index', compact('race'));
     }
