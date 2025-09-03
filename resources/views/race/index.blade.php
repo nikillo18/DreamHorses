@@ -32,7 +32,7 @@
             <div class="mb-4">
                 <form action="{{ route('race.index') }}" method="GET">
                     <div class="flex">
-                        <input type="text" name="search" placeholder="Buscar por caballo..."
+                        <input type="text" name="search" placeholder="Buscar por Fecha..."
                             class="input input-bordered w-full max-w-xs mr-2" value="{{ request('search') }}" />
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
