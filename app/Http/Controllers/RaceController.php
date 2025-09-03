@@ -23,7 +23,7 @@ class RaceController extends Controller
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
             $query->whereHas('horse', function ($q) use ($searchTerm) {
-                $q->where('name', 'like', '%' . $searchTerm . '%');
+                $q->where('date', 'like', '%' . $searchTerm . '%');
             });
         }
 
