@@ -6,18 +6,25 @@ use App\Http\Requests\StoreTrainingRequest;
 use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Horse;
 use App\Models\Training;
+use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $training = Training::with(['horse'])->latest()->get();
+    public function index(Request $request)
+{
+    $query = Training::with(['horse'])->latest();
 
-        return view('training.index', compact('training'));
+    if ($request->has('horse_id')) {
+        $query->where('horse_id', $request->input('horse_id'));
     }
+
+    $training = $query->get();
+
+    return view('training.index', compact('training'));
+}
 
     /**
      * Show the form for creating a new resource.

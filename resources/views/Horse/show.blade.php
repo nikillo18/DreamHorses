@@ -65,6 +65,9 @@
                             {{ $horse->mother_name }}</p>
                         <p><span class="text-base-content/70 font-semibold">Cuidador:</span>
                             {{ $horse->caretaker->name ?? 'Sin cuidador' }}</p>
+                            <a href="{{ route('race.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Carreras</a>
+                            <a href="{{ route('vet-visits.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Visitas de veterinario</a>
+                            <a href="{{ route('training.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Entrenamientos</a>
                     </div>
                 </div>
             </div>
@@ -91,7 +94,7 @@
     </div>
 
     <!-- Menú lateral -->
-    <div class="drawer-side">
+     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul
             class="menu bg-base-200 min-h-screen w-64 p-4 flex flex-col gap-4 text-base-content">
@@ -105,7 +108,8 @@
                         Caballos</a></li>
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn btn-primary w-full text-left">
-                        Calendario</a></li>
+                        Eventos</a></li>
+
                 @role('boss')
                     <li><a href="{{ route('caretakers.index') }}"
                             class="btn btn-primary w-full text-left">
@@ -124,6 +128,9 @@
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
                         class="btn btn-secondary w-full text-left">
                         Veterinario</a></li>
+                <li class="mb-2"><a href="{{ route('blacksmiths.index') }}"
+                        class="btn btn-primary w-full text-left">
+                        Herradura</a></li>
             </div>
 
 

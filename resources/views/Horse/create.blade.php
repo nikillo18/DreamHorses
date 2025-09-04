@@ -110,39 +110,43 @@
     </div>
 
     <!-- Menú lateral -->
-    <div class="drawer-side">
+      <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul
-            class="menu bg-pink-100 dark:bg-gray-950 min-h-screen w-64 p-4 flex flex-col gap-4 text-gray-800 dark:text-gray-100">
+            class="menu bg-base-200 min-h-screen w-64 p-4 flex flex-col gap-4 text-base-content">
             <div>
-                <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Control</h3>
+                <h3 class="text-base-content/70 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Entrenamientos</a></li>
                 <li class="mb-2"><a href="{{ route('Horseindex') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Caballos</a></li>
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
-                        class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-primary w-full text-left">
                         Eventos</a></li>
+
                 @role('boss')
                     <li><a href="{{ route('caretakers.index') }}"
-                            class="btn w-full text-left bg-indigo-200 hover:bg-indigo-300 dark:bg-indigo-500 dark:hover:bg-indigo-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                            class="btn btn-primary w-full text-left">
                             Cuidadores</a></li>
                 @endrole
             </div>
-            <hr class="border-gray-300 dark:border-gray-700" />
+            <div class="divider"></div>
             <div>
-                <h3 class="text-gray-700 dark:text-gray-300 text-sm font-semibold">Gestion</h3>
+                <h3 class="text-base-content/70 text-sm font-semibold">Gestion</h3>
                 <li class="mb-2"><a href="{{ route('race.index') }}"
-                        class="btn w-full text-left bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-secondary w-full text-left">
                         Carreras</a></li>
                 <li class="mb-2"><a href="{{ route('expenses.index') }}"
-                        class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-secondary w-full text-left">
                         Gastos</a></li>
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
-                        class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        class="btn btn-secondary w-full text-left">
                         Veterinario</a></li>
+                <li class="mb-2"><a href="{{ route('blacksmiths.index') }}"
+                        class="btn btn-primary w-full text-left">
+                        Herradura</a></li>
             </div>
 
 
@@ -150,13 +154,13 @@
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <button type="submit"
-                        class="btn w-full bg-rose-300 hover:bg-rose-400 dark:bg-rose-600 dark:hover:bg-rose-500 px-4 py-2 rounded-md font-bold shadow">
+                        class="btn btn-error w-full">
                         Cerrar
                         sesión</button>
                 </form>
                 <form method="GET" action="{{ route('profile.edit') }}">
                     <button type="submit"
-                        class="btn w-full bg-teal-200 hover:bg-teal-300 dark:bg-teal-500 dark:hover:bg-teal-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow">
+                        class="btn btn-info w-full">
                         Ver
                         perfil</button>
                 </form>
@@ -164,3 +168,4 @@
         </ul>
     </div>
 </div>
+

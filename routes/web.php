@@ -16,6 +16,7 @@ use App\Models\VetVisit;
 use App\Models\CalendarEvent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BlacksmithController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -152,8 +153,13 @@ Route::delete('/caretakers/{caretaker}', [CaretakerController::class, 'destroy']
 Route::post('/caretakers/{caretaker}/reassign', [CaretakerController::class, 'reassign'])->name('caretakers.reassign');
 
 
-/* Roles */
-
+/* Herreria */
+Route::get('/blacksmiths', [BlacksmithController::class, 'index'])->name('blacksmiths.index')->middleware('role:boss|caretaker|veterinarian');
+Route::get('/blacksmiths/create', [BlacksmithController::class, 'create'])->name('blacksmiths.create')->middleware('role:caretaker');
+Route::post('/blacksmiths', [BlacksmithController::class, 'store'])->name('blacksmiths.store')->middleware('role:caretaker');
+Route::get('/blacksmiths/{blacksmith}/edit', [BlacksmithController::class, 'edit'])->name('blacksmiths.edit')->middleware('role:caretaker');
+Route::put('/blacksmiths/{blacksmith}', [BlacksmithController::class, 'update'])->name('blacksmiths.update')->middleware('role:caretaker');
+Route::delete('/blacksmiths/{blacksmith}', [BlacksmithController::class, 'destroy'])->name('blacksmiths.destroy')->middleware('role:caretaker');
 
 /* Calendar */
 Route::get('/calendar', [CalendarEventController::class, 'index'])->name('calendar.index');

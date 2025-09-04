@@ -104,11 +104,13 @@
     </div>
 
     <!-- Menú lateral -->
-    <div class="drawer-side">
+     <div class="drawer-side">
         <label for="my-drawer" class="drawer-overlay"></label>
         <ul class="menu bg-base-200 min-h-screen w-64 p-4 flex flex-col gap-4 text-base-content">
             <div>
-
+                <li class="mb-2"><a href="{{ route('dashboard') }}" class="btn btn-primary w-full text-left">Panel
+                        principal</a>
+                </li>
                 <h3 class="text-base-content/70 text-sm font-semibold">Control</h3>
                 <li class="mb-2"><a href="{{ route('training.index') }}" class="btn btn-primary w-full text-left">
                         Entrenamientos</a></li>
@@ -131,6 +133,9 @@
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
                         class="btn btn-secondary w-full text-left">
                         Veterinario</a></li>
+                <li class="mb-2"><a href="{{ route('blacksmiths.index') }}"
+                        class="btn btn-primary w-full text-left">
+                        Herradura</a></li>
             </div>
 
 

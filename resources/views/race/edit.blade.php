@@ -95,6 +95,7 @@
                 <li class="mb-2"><a href="{{ route('calendar.index') }}"
                         class="btn btn-primary w-full text-left">
                         Eventos</a></li>
+
                 @role('boss')
                     <li><a href="{{ route('caretakers.index') }}"
                             class="btn btn-primary w-full text-left">
@@ -113,6 +114,9 @@
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
                         class="btn btn-secondary w-full text-left">
                         Veterinario</a></li>
+                <li class="mb-2"><a href="{{ route('blacksmiths.index') }}"
+                        class="btn btn-primary w-full text-left">
+                        Herradura</a></li>
             </div>
 
 

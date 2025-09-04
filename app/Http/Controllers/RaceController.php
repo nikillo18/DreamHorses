@@ -17,20 +17,24 @@ class RaceController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-    {
-        $query = Race::with(['horse'])->latest();
+{
+    $query = Race::with(['horse'])->latest();
 
-        if ($request->has('search')) {
-            $searchTerm = $request->input('search');
-            $query->whereHas('horse', function ($q) use ($searchTerm) {
-                $q->where('date', 'like', '%' . $searchTerm . '%');
-            });
-        }
-
-        $race = $query->get();
-
-        return view('race.index', compact('race'));
+    if ($request->has('horse_id')) {
+        $query->where('horse_id', $request->input('horse_id'));
     }
+
+    if ($request->has('search')) {
+        $searchTerm = $request->input('search');
+        $query->whereHas('horse', function ($q) use ($searchTerm) {
+            $q->where('date', 'like', '%' . $searchTerm . '%');
+        });
+    }
+
+    $race = $query->get();
+
+    return view('race.index', compact('race'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -86,4 +90,5 @@ class RaceController extends Controller
         $race->delete();
         return redirect()->route('race.index')->with('success', 'Carrera Eliminada con Exito');
     }
+
 }
