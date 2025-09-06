@@ -1,0 +1,144 @@
+services:
+    # Aplicación Laravel + Vite
+    laravel:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: dreamhorses_laravel
+        restart: unless-stopped
+        ports:
+            - "8000:8000" # Laravel artisan serve
+            - "5173:5173" # Vite dev server para HMR
+        volumes:
+            - ./:/var/www/html
+            - /var/www/html/node_modules # Evitar conflictos con node_modules local
+        working_dir: /var/www/html
+        environment:
+            - APP_NAME=${APP_NAME}
+            - APP_ENV=${APP_ENV}
+            - APP_DEBUG=${APP_DEBUG}
+            - APP_URL=${APP_URL}
+            # Base de datos
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD} # ← Se lee del .env
+            # N8N Integration
+            - N8N_WEBHOOK_URL=http://n8n:5678
+            - N8N_API_KEY=${N8N_API_KEY} # ← Se lee del .env
+            # Cache usando file driver (por defecto de Laravel)
+            - CACHE_DRIVER=${CACHE_DRIVER}
+            - SESSION_DRIVER=${SESSION_DRIVER}
+            - QUEUE_CONNECTION=${QUEUE_CONNECTION}
+        depends_on:
+            mysql:
+                condition: service_healthy
+            n8n:
+                condition: service_started
+        networks:
+            - dreamhorses_network
+
+    # Base de datos MySQL
+    mysql:
+        image: mysql:8.0
+        container_name: dreamhorses_mysql
+        restart: unless-stopped
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secure_password}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD} # ← Se lee del .env
+        ports:
+            - "3306:3306"
+        volumes:
+            - mysql_data:/var/lib/mysql
+            - ./database/init:/docker-entrypoint-initdb.d
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+            interval: 10s
+            timeout: 5s
+            retries: 5
+            start_period: 30s
+        networks:
+            - dreamhorses_network
+
+    # N8N para automatización
+    n8n:
+        image: n8nio/n8n:latest
+        container_name: dreamhorses_n8n
+        restart: unless-stopped
+        ports:
+            - "5678:5678"
+        environment:
+            - N8N_BASIC_AUTH_ACTIVE=true
+            - N8N_BASIC_AUTH_USER=${N8N_BASIC_AUTH_USER}
+            - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD} # ← Se lee del .env
+            # Configuración de red
+            - N8N_HOST=0.0.0.0
+            - N8N_PORT=5678
+            - N8N_PROTOCOL=http
+            - WEBHOOK_URL=http://localhost:5678/
+            # Base de datos N8N (usando MySQL)
+            - DB_TYPE=mysqldb
+            - DB_MYSQLDB_HOST=mysql
+            - DB_MYSQLDB_PORT=3306
+            - DB_MYSQLDB_DATABASE=n8n_db
+            - DB_MYSQLDB_USER=${DB_USERNAME}
+            - DB_MYSQLDB_PASSWORD=${DB_PASSWORD} # ← Se lee del .env
+            # Configuraciones adicionales
+            - NODE_ENV=production
+            - GENERIC_TIMEZONE=${APP_TIMEZONE:-America/Argentina/Buenos_Aires}
+            - N8N_LOG_LEVEL=info
+            - N8N_METRICS=true
+            - EXECUTIONS_PROCESS=main
+        volumes:
+            - n8n_data:/home/node/.n8n
+            - ./n8n/workflows:/home/node/.n8n/workflows
+            - ./n8n/credentials:/home/node/.n8n/credentials
+        depends_on:
+            mysql:
+                condition: service_healthy
+        networks:
+            - dreamhorses_network
+
+    # Worker para procesar colas usando database driver
+    worker:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: dreamhorses_worker
+        restart: unless-stopped
+        command: php artisan queue:work database --sleep=3 --tries=3 --timeout=90
+        volumes:
+            - ./:/var/www/html
+        working_dir: /var/www/html
+        environment:
+            - APP_ENV=${APP_ENV}
+            - APP_DEBUG=${APP_DEBUG}
+            - DB_CONNECTION=mysql
+            - DB_HOST=mysql
+            - DB_PORT=3306
+            - DB_DATABASE=${DB_DATABASE}
+            - DB_USERNAME=${DB_USERNAME}
+            - DB_PASSWORD=${DB_PASSWORD} # ← Se lee del .env
+            - QUEUE_CONNECTION=${QUEUE_CONNECTION}
+            - N8N_WEBHOOK_URL=http://n8n:5678
+            - N8N_API_KEY=${N8N_API_KEY} # ← Se lee del .env
+        depends_on:
+            mysql:
+                condition: service_healthy
+        networks:
+            - dreamhorses_network
+
+volumes:
+    mysql_data:
+        driver: local
+    n8n_data:
+        driver: local
+
+networks:
+    dreamhorses_network:
+        driver: bridge

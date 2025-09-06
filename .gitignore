@@ -1,16 +1,7 @@
+# ===================================
+# LARAVEL CORE
+# ===================================
 *.log
-.DS_Store
-.env
-.env.backup
-.env.production
-.phpactor.json
-.phpunit.result.cache
-/.fleet
-/.idea
-/.nova
-/.phpunit.cache
-/.vscode
-/.zed
 /auth.json
 /node_modules
 /public/build
@@ -18,8 +9,181 @@
 /public/storage
 /storage/*.key
 /storage/pail
+/storage/debugbar/
 /vendor
+/.phpunit.cache
+.phpunit.result.cache
+/bootstrap/cache/*.php
+
+# ===================================
+# 🔐 ARCHIVOS DE ENTORNO - CRÍTICO PARA SEGURIDAD
+# ===================================
+.env
+.env.backup
+.env.production
+.env.staging
+.env.local
+.env.*.local
+.env.testing
+
+# ===================================
+# 🐎 DREAMHORSES ESPECÍFICO - N8N Y DOCKER
+# ===================================
+
+# N8N - Credenciales cifradas (NUNCA subir al repo)
+/n8n/credentials/
+/n8n/credentials/*.json
+/n8n/backups/
+
+# N8N - Logs y cache
+/n8n/logs/
+/n8n/cache/
+
+# Docker - Configuraciones locales específicas
+docker-compose.override.yml
+.dockerignore
+
+# Backups de base de datos
+*.sql
+*.backup
+*.bak
+*.dump
+/backups/
+database-backup-*.sql
+
+# ===================================
+# ARCHIVOS DE DESARROLLO Y IDE
+# ===================================
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+.phpactor.json
+
+# PHPStorm específico
+/.idea/
+*.iml
+*.ipr
+*.iws
+
+# Visual Studio Code específico
+/.vscode/
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+
+# ===================================
+# ARCHIVOS DEL SISTEMA OPERATIVO
+# ===================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# Windows
+*.tmp
+*.temp
+
+# ===================================
+# DEPENDENCIAS Y CACHE
+# ===================================
+
+# NPM
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.pnpm-debug.log*
+
+# Composer
+composer.phar
+/vendor/
+
+# Laravel Mix
+/public/mix-manifest.json
+
+# ===================================
+# ARCHIVOS DE TESTING Y ANÁLISIS
+# ===================================
+.phpunit.result.cache
+.php-cs-fixer.cache
+.php-cs-fixer.php
+.dusk-php-console
+
+# Coverage reports
+/coverage/
+clover.xml
+coverage.xml
+*.coverage
+
+# ===================================
+# ARCHIVOS DE LOGS Y DEBUG
+# ===================================
+*.log
+/storage/logs/*.log
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+
+# Laravel Telescope
+/storage/telescope/
+
+# Laravel Horizon
+/storage/horizon/
+
+# ===================================
+# ARCHIVOS DE CONFIGURACIÓN LOCAL
+# ===================================
 Homestead.json
 Homestead.yaml
-Thumbs.db
-/storage/debugbar/
+Vagrantfile
+
+# ===================================
+# CERTIFICADOS Y CLAVES
+# ===================================
+*.key
+*.pem
+*.crt
+*.csr
+*.p12
+*.pfx
+
+# ===================================
+# ARCHIVOS TEMPORALES Y DE TRABAJO
+# ===================================
+*.tmp
+*.temp
+*.swp
+*.swo
+*.orig
+*.rej
+*~
+
+# ===================================
+# ESPECÍFICO PARA PRODUCCIÓN
+# ===================================
+/public/storage/
+.env.production
+.env.prod
+
