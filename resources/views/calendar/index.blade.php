@@ -17,16 +17,21 @@
             <h1 class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-6">
                 Lista de Eventos
             </h1>
-            @role('caretaker|boss')
-                <div class="flex justify-start mb-4">
-                    <form action="{{ route('calendar.create') }}" method="get">
-                        <button type="submit"
-                            class="btn btn-success font-bold shadow-sm">Crear
-                            Evento</button>
+                <div class="flex justify-start mb-4 gap-2">
+                <form action="{{ route('calendarhorse') }}" method="get">
+                    <button type="submit" class="btn btn-success font-bold shadow-sm">
+                        Calendario
+                    </button>
+                </form>
+                @role('caretaker|boss')
+                <form action="{{ route('calendar.create') }}" method="get">
+                    <button type="submit" class="btn btn-success font-bold shadow-sm">
+                        Crear Evento
+                    </button>
                     </form>
+                    @endrole
                 </div>
-            @endrole
-            <div class="overflow-x-auto rounded-lg shadow-lg">
+             <div class="overflow-x-auto rounded-lg shadow-lg">
                 <table
                     class="table-auto w-full text-sm text-left bg-base-200 text-base-content">
                     <thead class="bg-base-300 text-base-content">

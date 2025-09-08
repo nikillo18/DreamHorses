@@ -74,4 +74,17 @@ class CalendarEventController extends Controller
         $calendarEvent->delete();
         return redirect()->route('calendar.index')->with('success', 'Evento Eliminado con Exito');
     }
+public function calendar()
+{
+    $events = CalendarEvent::with('horse')->get()->map(function($event) {
+        return [
+            'title' => $event->category,
+            'horse' => $event->horse->name,
+            'time' => $event->event_time,
+            'start' => $event->event_date . 'T' . $event->event_time,
+        ];
+    });
+
+    return view('calendar.show', compact('events'));
+}
 }

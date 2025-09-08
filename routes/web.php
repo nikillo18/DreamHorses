@@ -162,4 +162,8 @@ Route::post('/calendar', [CalendarEventController::class, 'store'])->name('calen
 Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'edit'])->name('calendar.edit');
 Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update');
 Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy');
+
+Route::get('/calendarhorse', [CalendarEventController::class, 'calendar'])
+    ->name('calendarhorse');
+
 require __DIR__ . '/auth.php';
