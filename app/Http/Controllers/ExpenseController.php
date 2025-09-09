@@ -81,4 +81,39 @@ class ExpenseController extends Controller
         $expense->delete();
         return redirect()->route('expenses.index')->with('success', 'Se borro correctamente.');
     }
+
+    public function chart()
+    {
+        $monthlyExpenses = Expense::selectRaw('MONTH(date) as month, SUM(amount) as total')
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        $monthLabels = [];
+        $monthData = [];
+        $months = [
+            'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+            'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+        ];
+
+        foreach ($monthlyExpenses as $expense) {
+            $monthLabels[] = $months[$expense->month - 1];
+            $monthData[] = $expense->total;
+        }
+
+        $categoryExpenses = Expense::selectRaw('category, SUM(amount) as total')
+            ->groupBy('category')
+            ->orderBy('total', 'desc')
+            ->get();
+
+        $categoryLabels = [];
+        $categoryData = [];
+
+        foreach ($categoryExpenses as $expense) {
+            $categoryLabels[] = $expense->category;
+            $categoryData[] = $expense->total;
+        }
+
+        return view('expenses.chart', compact('monthLabels', 'monthData', 'categoryLabels', 'categoryData'));
+    }
 }

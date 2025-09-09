@@ -140,6 +140,9 @@
                 <li class="mb-2"><a href="{{ route('expenses.index') }}"
                         class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Gastos</a></li>
+                <li class="mb-2"><a href="{{ route('expenses.chart') }}"
+                        class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
+                        Gráfico de Gastos</a></li>
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
                         class="btn w-full text-left  bg-sky-200 hover:bg-sky-300 dark:bg-sky-500 dark:hover:bg-sky-400 text-gray-900 px-4 py-2 rounded-md font-semibold shadow-sm">
                         Veterinario</a></li>
