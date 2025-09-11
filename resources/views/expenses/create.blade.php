@@ -47,8 +47,6 @@
                         </option>
                         <option value="Equipamiento" {{ old('category') == 'Equipamiento' ? 'selected' : '' }}>
                             Equipamiento</option>
-                        <option value="Mantenimiento" {{ old('category') == 'Mantenimiento' ? 'selected' : '' }}>
-                            Mantenimiento</option>
                         <option value="Herrero" {{ old('category') == 'Herrero' ? 'selected' : '' }}>Herrero</option>
                         <option value="Entrenamiento" {{ old('category') == 'Entrenamiento' ? 'selected' : '' }}>
                             Entrenamiento</option>

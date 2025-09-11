@@ -51,9 +51,7 @@
                         <option value="Equipamiento"
                             {{ old('category', $expense->category) == 'Equipamiento' ? 'selected' : '' }}>
                             Equipamiento</option>
-                        <option value="Mantenimiento"
-                            {{ old('category', $expense->category) == 'Mantenimiento' ? 'selected' : '' }}>
-                            Mantenimiento</option>
+                        
                         <option value="Herrero"
                             {{ old('category', $expense->category) == 'Herrero' ? 'selected' : '' }}>Herrero</option>
                         <option value="Entrenamiento"

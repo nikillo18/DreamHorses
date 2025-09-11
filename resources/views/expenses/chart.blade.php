@@ -12,7 +12,7 @@
         </label>
 
         <!-- Main content -->
-        <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
+        <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4">Gráficos de Gastos</h2>
 
             <div class="flex flex-col gap-6">
