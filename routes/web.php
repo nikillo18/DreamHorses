@@ -127,6 +127,7 @@ Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.de
 
 /* Expense */
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index')->middleware('role:boss|caretaker|veterinarian');
+Route::get('/expenses/chart', [ExpenseController::class, 'chart'])->name('expenses.chart')->middleware('role:boss|caretaker|veterinarian');
 Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create')->middleware('role:caretaker');
 Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store')->middleware('role:caretaker');
 Route::get('/expenses/{expense}', [ExpenseController::class, 'show'])->name('expenses.show')->middleware('role:caretaker');
