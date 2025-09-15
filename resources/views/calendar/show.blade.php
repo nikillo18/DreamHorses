@@ -6,9 +6,20 @@
         <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
-            <!-- ...icono... -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
         </label>
-        
+<div>
+                @role('caretaker|boss')
+                <form action="{{ route('calendar.index') }}" method="get">
+                    <button type="submit" class="btn btn-success font-bold shadow-sm">
+                        lista de Eventos
+                    </button>
+                    </form>
+                    @endrole
+                </div>
 
         <div class="p-6">
             <div id='calendar'></div>
@@ -19,7 +30,7 @@
           document.addEventListener('DOMContentLoaded', function() {
     var calendarEl = document.getElementById('calendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+         contentHeight: 'auto',
         locale: 'es',
          buttonText: {
       today: 'Hoy',
@@ -98,3 +109,4 @@
         </ul>
     </div>
 </div>
+<style>
