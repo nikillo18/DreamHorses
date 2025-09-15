@@ -8,6 +8,7 @@ use App\Models\Expense;
 use App\Models\Horse;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
@@ -26,7 +27,17 @@ class ExpenseController extends Controller
         }
 
         $expenses = $query->get();
+        if ($request->filled('from_month')) {
+            $from = \Carbon\Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+            $query->where('date', '>=', $from);
+        }
 
+        if ($request->filled('to_month')) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+            $query->where('date', '<=', $to);
+        }
+
+        $expenses = $query->get();
         return view('expenses.index', compact('expenses'));
     }
 
@@ -35,7 +46,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $horses= Horse::all();
+        $horses = Horse::all();
         return view('expenses.create', compact('horses'));
     }
 
@@ -86,15 +97,32 @@ class ExpenseController extends Controller
     public function chart(Request $request)
     {
         $meses = [
-            'January'   => 'Enero', 'February' => 'Febrero', 'March' => 'Marzo',
-            'April'     => 'Abril', 'May' => 'Mayo', 'June' => 'Junio',
-            'July'      => 'Julio', 'August' => 'Agosto', 'September' => 'Septiembre',
-            'October'   => 'Octubre', 'November' => 'Noviembre', 'December' => 'Diciembre'
+            'January'   => 'Enero',
+            'February' => 'Febrero',
+            'March' => 'Marzo',
+            'April'     => 'Abril',
+            'May' => 'Mayo',
+            'June' => 'Junio',
+            'July'      => 'Julio',
+            'August' => 'Agosto',
+            'September' => 'Septiembre',
+            'October'   => 'Octubre',
+            'November' => 'Noviembre',
+            'December' => 'Diciembre'
         ];
         $meses_abrev = [
-            'Jan' => 'Ene', 'Feb' => 'Feb', 'Mar' => 'Mar', 'Apr' => 'Abr',
-            'May' => 'May', 'Jun' => 'Jun', 'Jul' => 'Jul', 'Aug' => 'Ago',
-            'Sep' => 'Sep', 'Oct' => 'Oct', 'Nov' => 'Nov', 'Dec' => 'Dic'
+            'Jan' => 'Ene',
+            'Feb' => 'Feb',
+            'Mar' => 'Mar',
+            'Apr' => 'Abr',
+            'May' => 'May',
+            'Jun' => 'Jun',
+            'Jul' => 'Jul',
+            'Aug' => 'Ago',
+            'Sep' => 'Sep',
+            'Oct' => 'Oct',
+            'Nov' => 'Nov',
+            'Dec' => 'Dic'
         ];
 
         // === Bar Chart (Current month + 12 previous months) ===
@@ -170,5 +198,28 @@ class ExpenseController extends Controller
             'startMonth',
             'endMonth'
         ));
+    }
+    public function summary(Request $request)
+    {
+        $query = DB::table('expenses')
+            ->select('category', DB::raw('SUM(amount) as total_amount'))
+            ->groupBy('category')
+            ->orderBy('category', 'asc');
+
+        if ($request->filled('from_month')) {
+            $from = \Carbon\Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+            $query->where('date', '>=', $from);
+        }
+
+        if ($request->filled('to_month')) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+            $query->where('date', '<=', $to);
+        }
+
+        $monthlyCategorySummary = $query->get();
+
+        $totalGeneral = $monthlyCategorySummary->sum('total_amount');
+
+        return view('expenses.summary', compact('monthlyCategorySummary', 'totalGeneral'));
     }
 }
