@@ -152,6 +152,9 @@
                 <li class="mb-2"><a href="{{ route('expenses.index') }}"
                         class="btn btn-secondary w-full text-left">
                         Gastos</a></li>
+                <li class="mb-2"><a href="{{ route('expenses.chart') }}"
+                        class="btn btn-secondary w-full text-left">
+                        Gráfico de Gastos</a></li>
                 <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
                         class="btn btn-secondary w-full text-left">
                         Veterinario</a></li>
