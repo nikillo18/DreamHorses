@@ -31,6 +31,12 @@
                     </a>
                 </div>
             @endrole
+               <div class="p-6 md:p-1">
+                 @if($horseId)
+        <a href="{{ route('horses.show', $horseId) }}" 
+           class="btn btn-sm btn-secondary mb-4">⬅ Volver al caballo</a>
+    @endif
+    </div>
 
             <div class="overflow-x-auto shadow-lg rounded-lg">
                 <table

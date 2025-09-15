@@ -14,13 +14,17 @@ class VetVisitController extends Controller
 {
     $query = VetVisit::with('horse')->latest();
 
+    $horseId = null;
     if ($request->has('horse_id')) {
-        $query->where('horse_id', $request->input('horse_id'));
+        $horseId = $request->input('horse_id');
+        $query->where('horse_id', $horseId);
     }
 
     $visits = $query->get();
-    return view('vetvisit.index', compact('visits'));
+
+    return view('vetvisit.index', compact('visits', 'horseId'));
 }
+
 
     public function create()
     {

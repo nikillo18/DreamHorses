@@ -13,17 +13,19 @@ class TrainingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+   public function index(Request $request)
 {
     $query = Training::with(['horse'])->latest();
 
+    $horseId = null;
     if ($request->has('horse_id')) {
-        $query->where('horse_id', $request->input('horse_id'));
+        $horseId = $request->input('horse_id');
+        $query->where('horse_id', $horseId);
     }
 
     $training = $query->get();
 
-    return view('training.index', compact('training'));
+    return view('training.index', compact('training', 'horseId'));
 }
 
     /**

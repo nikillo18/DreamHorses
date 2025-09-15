@@ -18,23 +18,24 @@ class RaceController extends Controller
      */
     public function index(Request $request)
 {
-    $query = Race::with(['horse'])->latest();
+    $query = Race::with('horse')->latest();
 
+    $horseId = null;
     if ($request->has('horse_id')) {
-        $query->where('horse_id', $request->input('horse_id'));
+        $horseId = $request->input('horse_id');
+        $query->where('horse_id', $horseId);
     }
 
     if ($request->has('search')) {
         $searchTerm = $request->input('search');
-        $query->whereHas('horse', function ($q) use ($searchTerm) {
-            $q->where('date', 'like', '%' . $searchTerm . '%');
-        });
+        $query->where('date', 'like', '%' . $searchTerm . '%');
     }
 
-    $race = $query->get();
+    $races = $query->get();
 
-    return view('race.index', compact('race'));
+    return view('race.index', compact('races', 'horseId'));
 }
+
 
     /**
      * Show the form for creating a new resource.

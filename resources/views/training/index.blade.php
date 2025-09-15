@@ -23,6 +23,12 @@
                             Entrenamiento</a>
                     </div>
                 @endrole
+                 <div class="p-6 md:p-2">
+                 @if($horseId)
+        <a href="{{ route('horses.show', $horseId) }}" 
+           class="btn btn-sm btn-secondary mb-4">⬅ Volver al caballo</a>
+    @endif
+    </div>
             </div>
             <div class="overflow-x-auto rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left bg-base-200 text-base-content">
