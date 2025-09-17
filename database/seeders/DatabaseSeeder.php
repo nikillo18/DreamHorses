@@ -29,7 +29,8 @@ class DatabaseSeeder extends Seeder
             FoodSeeder::class,
             RaceSeeder::class,
             VetVisitSeeder::class,
-            HorseSeeder::class
+            HorseSeeder::class,
+            BlacksmithSeeder::class,
 
         ]);
     }
