@@ -6,8 +6,10 @@ use App\Http\Requests\StoreExpenseRequest;
 use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
 use App\Models\Horse;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ExpenseController extends Controller
 {
@@ -26,7 +28,17 @@ class ExpenseController extends Controller
         }
 
         $expenses = $query->get();
+        if ($request->filled('from_month')) {
+            $from = \Carbon\Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+            $query->where('date', '>=', $from);
+        }
 
+        if ($request->filled('to_month')) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+            $query->where('date', '<=', $to);
+        }
+
+        $expenses = $query->get();
         return view('expenses.index', compact('expenses'));
     }
 
@@ -35,7 +47,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $horses= Horse::all();
+        $horses = Horse::all();
         return view('expenses.create', compact('horses'));
     }
 
@@ -86,15 +98,32 @@ class ExpenseController extends Controller
     public function chart(Request $request)
     {
         $meses = [
-            'January'   => 'Enero', 'February' => 'Febrero', 'March' => 'Marzo',
-            'April'     => 'Abril', 'May' => 'Mayo', 'June' => 'Junio',
-            'July'      => 'Julio', 'August' => 'Agosto', 'September' => 'Septiembre',
-            'October'   => 'Octubre', 'November' => 'Noviembre', 'December' => 'Diciembre'
+            'January'   => 'Enero',
+            'February' => 'Febrero',
+            'March' => 'Marzo',
+            'April'     => 'Abril',
+            'May' => 'Mayo',
+            'June' => 'Junio',
+            'July'      => 'Julio',
+            'August' => 'Agosto',
+            'September' => 'Septiembre',
+            'October'   => 'Octubre',
+            'November' => 'Noviembre',
+            'December' => 'Diciembre'
         ];
         $meses_abrev = [
-            'Jan' => 'Ene', 'Feb' => 'Feb', 'Mar' => 'Mar', 'Apr' => 'Abr',
-            'May' => 'May', 'Jun' => 'Jun', 'Jul' => 'Jul', 'Aug' => 'Ago',
-            'Sep' => 'Sep', 'Oct' => 'Oct', 'Nov' => 'Nov', 'Dec' => 'Dic'
+            'Jan' => 'Ene',
+            'Feb' => 'Feb',
+            'Mar' => 'Mar',
+            'Apr' => 'Abr',
+            'May' => 'May',
+            'Jun' => 'Jun',
+            'Jul' => 'Jul',
+            'Aug' => 'Ago',
+            'Sep' => 'Sep',
+            'Oct' => 'Oct',
+            'Nov' => 'Nov',
+            'Dec' => 'Dic'
         ];
 
         // === Bar Chart (Current month + 12 previous months) ===
@@ -132,7 +161,7 @@ class ExpenseController extends Controller
 
         // === Pie Chart (Date Range) ===
         $availableMonths = Expense::selectRaw('DISTINCT YEAR(date) as year, MONTH(date) as month')
-            ->orderByRaw('YEAR(date) DESC, MONTH(date) DESC')
+            ->orderByRaw('YEAR(date) ASC, MONTH(date) ASC')
             ->get()
             ->mapWithKeys(function ($item) use ($meses) {
                 $date = Carbon::createFromDate($item->year, $item->month, 1);
@@ -170,5 +199,110 @@ class ExpenseController extends Controller
             'startMonth',
             'endMonth'
         ));
+    }
+    public function summary(Request $request)
+    {
+        $meses = [
+            'January'   => 'Enero',
+            'February' => 'Febrero',
+            'March' => 'Marzo',
+            'April'     => 'Abril',
+            'May' => 'Mayo',
+            'June' => 'Junio',
+            'July'      => 'Julio',
+            'August' => 'Agosto',
+            'September' => 'Septiembre',
+            'October'   => 'Octubre',
+            'November' => 'Noviembre',
+            'December' => 'Diciembre'
+        ];
+
+        $availableMonths = Expense::selectRaw('DISTINCT YEAR(date) as year, MONTH(date) as month')
+            ->orderByRaw('YEAR(date) ASC, MONTH(date) ASC')
+            ->get()
+            ->mapWithKeys(function ($item) use ($meses) {
+                $date = Carbon::createFromDate($item->year, $item->month, 1);
+                $monthName = $date->format('F');
+                $year = $date->format('Y');
+                return [$date->format('Y-m') => $meses[$monthName] . ' ' . $year];
+            });
+
+        $query = DB::table('expenses')
+            ->select('category', DB::raw('SUM(amount) as total_amount'))
+            ->groupBy('category')
+            ->orderBy('category', 'asc');
+
+        if ($request->filled('from_month')) {
+            $from = \Carbon\Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+            $query->where('date', '>=', $from);
+        }
+
+        if ($request->filled('to_month')) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+            $query->where('date', '<=', $to);
+        }
+
+        $monthlyCategorySummary = $query->get();
+
+        $totalGeneral = $monthlyCategorySummary->sum('total_amount');
+
+        return view('expenses.summary', compact('monthlyCategorySummary', 'totalGeneral', 'availableMonths'));
+    }
+
+    public function downloadSummaryPdf(Request $request)
+    {
+        $meses = [
+            'January'   => 'Enero',
+            'February' => 'Febrero',
+            'March' => 'Marzo',
+            'April'     => 'Abril',
+            'May' => 'Mayo',
+            'June' => 'Junio',
+            'July'      => 'Julio',
+            'August' => 'Agosto',
+            'September' => 'Septiembre',
+            'October'   => 'Octubre',
+            'November' => 'Noviembre',
+            'December' => 'Diciembre'
+        ];
+
+        $query = DB::table('expenses')
+            ->select('category', DB::raw('SUM(amount) as total_amount'))
+            ->groupBy('category')
+            ->orderBy('category', 'asc');
+
+        $fromMonth = null;
+        $fromMonthFormatted = null;
+        if ($request->filled('from_month')) {
+            $from = Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+            $query->where('date', '>=', $from);
+            $fromMonth = $request->input('from_month');
+            $date = Carbon::createFromFormat('Y-m', $fromMonth);
+            $fromMonthFormatted = $meses[$date->format('F')] . ' ' . $date->format('Y');
+        }
+
+        $toMonth = null;
+        $toMonthFormatted = null;
+        if ($request->filled('to_month')) {
+            $to = Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+            $query->where('date', '<=', $to);
+            $toMonth = $request->input('to_month');
+            $date = Carbon::createFromFormat('Y-m', $toMonth);
+            $toMonthFormatted = $meses[$date->format('F')] . ' ' . $date->format('Y');
+        }
+
+        $monthlyCategorySummary = $query->get();
+        $totalGeneral = $monthlyCategorySummary->sum('total_amount');
+
+        $pdf = Pdf::loadView('expenses.summary_pdf', [
+            'monthlyCategorySummary' => $monthlyCategorySummary,
+            'totalGeneral' => $totalGeneral,
+            'fromMonth' => $fromMonth,
+            'toMonth' => $toMonth,
+            'fromMonthFormatted' => $fromMonthFormatted,
+            'toMonthFormatted' => $toMonthFormatted,
+        ]);
+
+        return $pdf->download('resumen-de-gastos.pdf');
     }
 }
