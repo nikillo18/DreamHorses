@@ -6,14 +6,25 @@ use App\Http\Requests\StoreVetVisitRequest;
 use App\Http\Requests\UpdateVetVisitRequest;
 use App\Models\Horse;
 use App\Models\VetVisit;
+use Illuminate\Http\Request;
 
 class VetVisitController extends Controller
 {
-    public function index()
-    {
-        $visits = VetVisit::with('horse')->latest()->get();
-        return view('vetvisit.index', compact('visits'));
+ public function index(Request $request)
+{
+    $query = VetVisit::with('horse')->latest();
+
+    $horseId = null;
+    if ($request->has('horse_id')) {
+        $horseId = $request->input('horse_id');
+        $query->where('horse_id', $horseId);
     }
+
+    $visits = $query->get();
+
+    return view('vetvisit.index', compact('visits', 'horseId'));
+}
+
 
     public function create()
     {

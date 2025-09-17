@@ -62,4 +62,9 @@ public function photos()
 {
     return $this->hasMany(HorsePhoto::class);
 }
+
+ public function blacksmiths(): HasMany
+ {
+        return $this->hasMany(Blacksmith::class);
+}
 }

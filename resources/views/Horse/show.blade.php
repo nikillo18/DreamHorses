@@ -65,6 +65,9 @@
                             {{ $horse->mother_name }}</p>
                         <p><span class="text-base-content/70 font-semibold">Cuidador:</span>
                             {{ $horse->caretaker->name ?? 'Sin cuidador' }}</p>
+                            <a href="{{ route('race.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Carreras</a>
+                            <a href="{{ route('vet-visits.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Visitas de veterinario</a>
+                            <a href="{{ route('training.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Entrenamientos</a>
                     </div>
                 </div>
             </div>
