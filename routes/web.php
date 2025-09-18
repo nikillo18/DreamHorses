@@ -16,6 +16,7 @@ use App\Models\VetVisit;
 use App\Models\CalendarEvent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BlacksmithController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -158,7 +159,9 @@ Route::post('/caretakers/{caretaker}/reassign', [CaretakerController::class, 're
 
 
 /* Herreria */
+
 Route::get('/blacksmiths', [BlacksmithController::class, 'index'])->name('blacksmiths.index')->middleware('role:boss|caretaker');
+
 Route::get('/blacksmiths/create', [BlacksmithController::class, 'create'])->name('blacksmiths.create')->middleware('role:caretaker');
 Route::post('/blacksmiths', [BlacksmithController::class, 'store'])->name('blacksmiths.store')->middleware('role:caretaker');
 Route::get('/blacksmiths/{blacksmith}/edit', [BlacksmithController::class, 'edit'])->name('blacksmiths.edit')->middleware('role:caretaker');

@@ -23,6 +23,7 @@
             @endif
 
 
+
             <div class="mb-4">
                 <a href="{{ route('vet-visits.create') }}" class="btn btn-success font-bold shadow-sm">
                     Nueva Visita
@@ -121,6 +122,7 @@
                         caballo</a>
                 @endif
             </div>
+
 
             <div class="overflow-x-auto shadow-lg rounded-lg">
                 <table class="table-auto w-full text-sm text-left bg-base-200 text-base-content">

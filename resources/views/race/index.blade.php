@@ -26,6 +26,12 @@
                             Carrera</a>
                     </div>
                 @endrole
+                  <div class="p-6 md:p-2">
+                 @if($horseId)
+        <a href="{{ route('horses.show', $horseId) }}" 
+           class="btn btn-sm btn-secondary mb-4">⬅ Volver al caballo</a>
+    @endif
+    </div>
             </div>
 
             <!-- Buscador -->
@@ -58,7 +64,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($race as $race)
+                        @foreach ($races as $race)
                             <tr
                                 class="border-b border-base-300 hover:bg-base-300">
                                 <td class="p-4 whitespace-nowrap">{{ $race->date }}</td>
@@ -98,3 +104,4 @@
 
     <x-sidebar />
 </div>
+

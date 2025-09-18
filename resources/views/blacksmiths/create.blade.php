@@ -15,15 +15,14 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8">
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
-                <h1 class="text-3xl font-bold text-base-content">✏️ Editar Entrenamiento</h1>
-                <a href="{{ route('training.index') }}"
+                <h1 class="text-3xl font-bold text-base-content"> Crear Herrado</h1>
+                <a href="{{ route('blacksmiths.index') }}"
                     class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver
                     a la Lista</a>
             </div>
-            <form action="{{ route('training.update', $training->id) }}" method="post"
+            <form action="{{ route('blacksmiths.store') }}" method="post"
                 class="space-y-4 bg-base-200 p-6 rounded-lg shadow-md">
                 @csrf
-                @method('PUT')
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Caballos</legend>
                     <select
@@ -31,51 +30,35 @@
                         name="horse_id" id="horse_id" required>
                         <option disabled selected>Elija un Caballo</option>
                         @foreach ($horse as $horses)
-                            <option value="{{ $horses->id }}"
-                                {{ $horses->id == $training->horse_id ? 'selected' : '' }}>
-                                {{ $horses->name }}
-                            </option>
+                            <option value="{{ $horses->id }}">{{ $horses->name }}</option>
                         @endforeach
                     </select>
                 </fieldset>
                 <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Fecha del Entrenamiento</legend>
+                    <legend class="text-base-content/80">Fecha del Herrado</legend>
                     <input type="date"
                         class="input input-bordered w-full"
-                        name="date" value="{{ $training->date }}" required />
+                        name="date" required />
                 </fieldset>
                 <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Distancia</legend>
-                    <input type="number"
-                        class="input input-bordered w-full"
-                        name="distance" placeholder="Distancia Recorrida" value="{{ $training->distance }}" required />
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Tiempo</legend>
-                    <input type="number"
-                        class="input input-bordered w-full"
-                        name="duration_minutes" placeholder="Tiempo" value="{{ $training->duration_minutes }}"
-                        required />
-                </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Tipo de Entrenamiento</legend>
+                    <legend class="text-base-content/80">Nombre del Herrero</legend>
                     <input type="text"
                         class="input input-bordered w-full"
-                        name="type_training" placeholder="Tipo de Entrenamiento" value="{{ $training->type_training }}"
-                        required />
+                        name="name" placeholder="Nombre del Herrero" required />
                 </fieldset>
                 <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Comentarios</legend>
-                    <textarea
-                        class="textarea textarea-bordered h-24 w-full"
-                        name="comments" placeholder="comentarios">{{ $training->comments }}</textarea>
+                    <legend class="text-base-content/80">Tipo de Herradura</legend>
+                    <input type="text"
+                        class="input input-bordered w-full"
+                        name="horseshoe" placeholder="Tipo de Herradura" required />
                 </fieldset>
+              
                 <button type="submit"
-                    class="btn btn-warning font-bold w-full shadow-sm">Actualizar</button>
+                    class="btn btn-success font-bold w-full shadow-sm">Crear</button>
             </form>
         </div>
     </div>
 
-    <x-sidebar />
+    <!-- Menú lateral -->
+  <x-sidebar />
 </div>
-
