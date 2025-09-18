@@ -7,31 +7,36 @@
                     principal</a>
             </li>
             <h3 class="text-base-content/70 text-sm font-semibold">Control</h3>
-            <li class="mb-2"><a href="{{ route('training.index') }}" class="btn btn-primary w-full text-left">
-                    Entrenamientos</a></li>
-            <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-primary w-full text-left">
+            <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-secondary w-full text-left">
                     Caballos</a></li>
-            <li class="mb-2"><a href="{{ route('calendar.index') }}" class="btn btn-primary w-full text-left">
-                    Eventos</a></li>
+            <li class="mb-2"><a href="{{ route('race.index') }}" class="btn btn-secondary w-full text-left">
+                    Carreras</a></li>
             @role('boss')
-                <li><a href="{{ route('caretakers.index') }}" class="btn btn-primary w-full text-left">
+                <li class="mb-2"><a href="{{ route('caretakers.index') }}" class="btn btn-secondary w-full text-left">
                         Cuidadores</a></li>
             @endrole
+
+            <li class="mb-2"><a href="{{ route('training.index') }}" class="btn btn-secondary w-full text-left">
+                    Entrenamientos</a></li>
+
+
+            <li class="mb-2"><a href="{{ route('blacksmiths.index') }}" class="btn btn-secondary w-full text-left">
+                    Herreria</a></li>
+            <li class="mb-2"><a href="{{ route('vet-visits.index') }}" class="btn btn-secondary w-full text-left">
+                    Veterinario</a></li>
         </div>
         <div class="divider"></div>
         <div>
             <h3 class="text-base-content/70 text-sm font-semibold">Gestion</h3>
-            <li class="mb-2"><a href="{{ route('race.index') }}" class="btn btn-secondary w-full text-left">
-                    Carreras</a></li>
+            <li class="mb-2"><a href="{{ route('calendar.index') }}" class="btn btn-secondary w-full text-left">
+                    Eventos</a></li>
             <li class="mb-2"><a href="{{ route('expenses.index') }}" class="btn btn-secondary w-full text-left">
                     Gastos</a></li>
             <li class="mb-2"><a href="{{ route('expenses.chart') }}" class="btn btn-secondary w-full text-left">
                     Gráfico de Gastos</a></li>
             <li class="mb-2"><a href="{{ route('expenses.summary') }}" class="btn btn-secondary w-full text-left">
                     Resumen de Gastos</a></li>
-            <li class="mb-2"><a href="{{ route('vet-visits.index') }}"
-                    class="btn btn-secondary w-full text-left">
-                    Veterinario</a></li>
+
         </div>
 
 
