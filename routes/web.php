@@ -177,4 +177,7 @@ Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'e
 Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update')->middleware('role:boss|caretaker');
 Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:boss|caretaker');
 
+Route::get('/calendarhorse', [CalendarEventController::class, 'calendar']) ->name('calendarhorse')->middleware('role:boss|caretaker');
+
+
 require __DIR__ . '/auth.php';
