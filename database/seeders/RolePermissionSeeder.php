@@ -18,7 +18,7 @@ class RolePermissionSeeder extends Seeder
         // Create roles
         $bossRole = Role::create(['name' => 'boss']);
         $caretakersRole = Role::create(['name' => 'caretaker']);
-        $veterinariansRole = Role::create(['name' => 'veterinarian']);
+        
 
         // horse permissions
        /* $createHorsePermission = Permission::create(['name' => 'create horse']);
