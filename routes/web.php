@@ -169,10 +169,12 @@ Route::put('/blacksmiths/{blacksmith}', [BlacksmithController::class, 'update'])
 Route::delete('/blacksmiths/{blacksmith}', [BlacksmithController::class, 'destroy'])->name('blacksmiths.destroy')->middleware('role:caretaker');
 
 /* Calendar */
+
 Route::get('/calendar', [CalendarEventController::class, 'index'])->name('calendar.index')->middleware('role:boss|caretaker');
 Route::get('/calendar/create', [CalendarEventController::class, 'create'])->name('calendar.create')->middleware('role:boss|caretaker');
 Route::post('/calendar', [CalendarEventController::class, 'store'])->name('calendar.store')->middleware('role:boss|caretaker');
 Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'edit'])->name('calendar.edit')->middleware('role:boss|caretaker');
 Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update')->middleware('role:boss|caretaker');
 Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:boss|caretaker');
+
 require __DIR__ . '/auth.php';

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/main.min.css";
 
 :root {
     color-scheme: dark;
@@ -303,9 +304,54 @@ body {
     border: 1px solid rgba(213, 219, 216, 0.1);
 }
 
-/* Estados activos para navegación */
 .nav-active {
     background-color: rgba(30, 184, 84, 0.1);
     color: #1eb854;
     border-left: 3px solid #1eb854;
 }
+#calendar {
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.fc-toolbar {
+    background: #24352d; 
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.fc-button {
+    background-color: #345244 !important; 
+    border: none !important;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+}
+
+.fc-button:hover {
+    background-color: #12cc3d !important; 
+}
+
+.fc-day-today {
+    background-color:#498d6e !important; 
+    ;
+}
+
+.fc-event {
+    background-color: #498d6e !important; 
+    border: none !important;
+    border-radius: 6px;
+    padding: 4px 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: white !important;
+}
+.fc-event:hover {
+    background-color:#12cc3d !important; 
+    cursor: pointer;
+}   
+
+

@@ -1,0 +1,60 @@
+@vite('resources/css/app.css', 'resources/js/app.js')
+
+<div class="drawer lg:drawer-open">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content bg-base-100 text-base-content">
+        <!-- Botón hamburguesa -->
+        <label for="my-drawer"
+            class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </label>
+<div>
+    <div class="p-6 md:p-1">
+            <h1 class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-6">
+                Calendario de Eventos
+            </h1>
+            </div>
+                @role('caretaker|boss')
+                <form action="{{ route('calendar.index') }}" method="get">
+                    <button type="submit" class="btn btn-success font-bold shadow-sm">
+                        lista de Eventos
+                    </button>
+                    </form>
+                    @endrole
+                </div>
+
+        <div class="p-6">
+            <div id='calendar'></div>
+        </div>
+
+        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.19/index.global.min.js'></script>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+         contentHeight: 'auto',
+        locale: 'es',
+         buttonText: {
+      today: 'Hoy',
+    },
+        events: @json($events),
+        eventContent: function(arg) {
+            let title = arg.event.title;
+            let horse = arg.event.extendedProps.horse;
+            let time = arg.event.extendedProps.time;
+
+            return { html: 'Evento:' + title + '<br>' + 'Caballo: ' + horse + '<br>' + 'Hora: ' + time };
+        }
+    });
+
+    calendar.render();
+});
+        </script>
+    </div>
+
+       <x-sidebar />
+</div>
+
