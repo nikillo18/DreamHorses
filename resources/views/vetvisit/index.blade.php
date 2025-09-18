@@ -23,12 +23,13 @@
             @endif
 
 
-
+            @role('caretaker')
             <div class="mb-4">
                 <a href="{{ route('vet-visits.create') }}" class="btn btn-success font-bold shadow-sm">
                     Nueva Visita
                 </a>
             </div>
+            @endrole
 
             <div class="p-6 md:p-1">
                 @if ($horseId)
@@ -48,9 +49,9 @@
                             <th class="p-4">Diagnóstico</th>
                             <th class="p-4">Tratamiento</th>
                             <th class="p-4">Próxima Visita</th>
-
+                             @role('caretaker')
                             <th class="p-4">Acciones</th>
-
+                             @endrole
                         </tr>
                     </thead>
                     <tbody>
@@ -64,7 +65,7 @@
                                 <td class="p-4 max-w-xs break-words">{{ $visit->treatment }}</td>
                                 <td class="p-4">{{ $visit->next_visit ?? '-' }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">
-
+                                    @role('caretaker')
                                     <a href="{{ route('vet-visits.edit', $visit->id) }}"
                                         class="btn btn-xs btn-warning">Editar</a>
                                     <form action="{{ route('vet-visits.destroy', $visit->id) }}" method="POST"
@@ -73,7 +74,7 @@
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-xs btn-error">Eliminar</button>
                                     </form>
-
+                                    @endrole
                                 </td>
                             </tr>
                         @endforeach
