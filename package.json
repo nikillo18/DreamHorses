@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "cally": "^0.8.0",
-        "chart.js": "^4.5.0"
+        "chart.js": "^4.5.0",
+        "fullcalendar": "^6.1.19"
     }
 }

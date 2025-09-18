@@ -80,7 +80,7 @@ public function calendar()
         return [
             'title' => $event->category,
             'horse' => $event->horse->name,
-            'time' => $event->event_time,
+            'time' => substr($event->event_time, 0, 5), 
             'start' => $event->event_date . 'T' . $event->event_time,
         ];
     });
