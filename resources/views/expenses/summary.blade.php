@@ -24,14 +24,15 @@
 
             <div class="mb-4">
                 <form action="{{ route('expenses.summary') }}" method="GET">
-                    <div class="flex flex-col md:flex-row gap-2">
+                    <div class="flex flex-col md:flex-row gap-2 justify-start items-end">
                         <div class="form-control">
                             <label for="from_month" class="label">
                                 <span class="label-text font-semibold">Desde</span>
                             </label>
                             <select name="from_month" id="from_month" class="select select-bordered w-full max-w-xs">
                                 @foreach ($availableMonths as $value => $label)
-                                    <option value="{{ $value }}" {{ request('from_month') == $value ? 'selected' : '' }}>
+                                    <option value="{{ $value }}"
+                                        {{ request('from_month') == $value ? 'selected' : '' }}>
                                         {{ $label }}
                                     </option>
                                 @endforeach
@@ -43,7 +44,8 @@
                             </label>
                             <select name="to_month" id="to_month" class="select select-bordered w-full max-w-xs">
                                 @foreach ($availableMonths as $value => $label)
-                                    <option value="{{ $value }}" {{ request('to_month') == $value ? 'selected' : '' }}>
+                                    <option value="{{ $value }}"
+                                        {{ request('to_month') == $value ? 'selected' : '' }}>
                                         {{ $label }}
                                     </option>
                                 @endforeach
@@ -63,18 +65,31 @@
             @if ($filtradoPorFecha)
                 <div class="flex justify-between items-center mt-6 mb-2">
                     <h2 class="text-lg font-semibold">Resumen mensual por categoría</h2>
-                    <form action="{{ route('expenses.summary.pdf') }}" method="GET">
-                        <input type="hidden" name="from_month" value="{{ request('from_month') }}">
-                        <input type="hidden" name="to_month" value="{{ request('to_month') }}">
-                        <button type="submit" class="btn btn-secondary">
+                    <div class="flex items-center gap-2">
+                        <form action="{{ route('expenses.summary.pdf') }}" method="GET" class="m-0">
+                            <input type="hidden" name="from_month" value="{{ request('from_month') }}">
+                            <input type="hidden" name="to_month" value="{{ request('to_month') }}">
+                            <button type="submit" class="btn btn-secondary">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                </svg>
+                                Descargar PDF
+                            </button>
+                        </form>
+                        <a href="{{ route('expenses.chart', ['start_month' => request('from_month'), 'end_month' => request('to_month')]) }}"
+                            class="btn btn-info">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                             </svg>
-                            Descargar PDF
-                        </button>
-                    </form>
+                            Ver Gráfico
+                        </a>
+                    </div>
                 </div>
 
                 @if ($monthlyCategorySummary->isNotEmpty())
