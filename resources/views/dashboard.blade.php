@@ -19,7 +19,7 @@
                     <div
                         class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl shadow-xl p-6 w-full max-w-sm flex flex-col gap-4 border border-gray-200 dark:border-gray-700">
                         <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden">
-                            <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : 'https://images.unsplash.com/photo-1615989275591-9fdbfe661ec1?q=80&w=1332&auto=format&fit=crop') }}"
+                            <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('storage/horses/contorno.png')) }}"
                                 alt="Foto de {{ $horse->name }}" class="object-cover w-full h-full">
                         </div>
 
