@@ -23,7 +23,7 @@
             @endif
 
 
-            @role('caretaker')
+            @role('caretaker|admin')
             <div class="mb-4">
                 <a href="{{ route('vet-visits.create') }}" class="btn btn-success font-bold shadow-sm">
                     Nueva Visita
@@ -49,7 +49,7 @@
                             <th class="p-4">Diagnóstico</th>
                             <th class="p-4">Tratamiento</th>
                             <th class="p-4">Próxima Visita</th>
-                             @role('caretaker')
+                             @role('caretaker|admin')
                             <th class="p-4">Acciones</th>
                              @endrole
                         </tr>
@@ -65,7 +65,7 @@
                                 <td class="p-4 max-w-xs break-words">{{ $visit->treatment }}</td>
                                 <td class="p-4">{{ $visit->next_visit ?? '-' }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">
-                                    @role('caretaker')
+                                    @role('caretaker|admin')
                                     <a href="{{ route('vet-visits.edit', $visit->id) }}"
                                         class="btn btn-xs btn-warning">Editar</a>
                                     <form action="{{ route('vet-visits.destroy', $visit->id) }}" method="POST"

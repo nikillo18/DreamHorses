@@ -76,7 +76,7 @@
                 <a href="{{ route('Horseindex') }}"
                     class="btn btn-sm btn-ghost">←
                     Volver</a>
-                    @role('caretaker')
+                    @role('caretaker|admin')
                 <div class="flex gap-2">
                     <a href="{{ route('horses.edit', $horse->id) }}"
                         class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>

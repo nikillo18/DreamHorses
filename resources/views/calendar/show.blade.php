@@ -17,7 +17,7 @@
                 Calendario de Eventos
             </h1>
             </div>
-                @role('caretaker|boss')
+                @role('caretaker|boss|admin')
                 <form action="{{ route('calendar.index') }}" method="get">
                     <button type="submit" class="btn btn-success font-bold shadow-sm">
                         lista de Eventos
