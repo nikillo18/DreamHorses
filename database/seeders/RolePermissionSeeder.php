@@ -6,6 +6,8 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class RolePermissionSeeder extends Seeder
@@ -18,6 +20,16 @@ class RolePermissionSeeder extends Seeder
         // Create roles
         $bossRole = Role::create(['name' => 'boss']);
         $caretakersRole = Role::create(['name' => 'caretaker']);
+        $adminRole = Role::create(['name' => 'admin']);
+
+        // Create admin user
+        $adminUser = User::create([
+            'name' => 'admin',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('admin123'),
+        ]);
+
+        $adminUser->assignRole($adminRole);
         
 
         // horse permissions

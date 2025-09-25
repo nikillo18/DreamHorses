@@ -125,7 +125,7 @@
                 @endif
             @endif
 
-            @role('caretaker')
+            @role('caretaker|admin')
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('expenses.create') }}" class="btn btn-success font-bold">
                         Nuevo Gasto

@@ -46,7 +46,7 @@
                 </form>
             </div>
 
-            @role('caretaker')
+            @role('caretaker|admin')
                 <div class="flex justify-end mb-4">
                     <a href="{{ route('expenses.create') }}" class="btn btn-success font-bold">
                         Nuevo Gasto
@@ -63,7 +63,7 @@
                             <th class="p-4">Categoría</th>
                             <th class="p-4">Descripción</th>
                             <th class="p-4">Monto</th>
-                            @role('caretaker')
+                            @role('caretaker|admin')
                                 <th class="p-4">Acciones</th>
                             @endrole
                         </tr>
@@ -78,7 +78,7 @@
                                 <td class="p-4 text-success font-semibold text-end ">
                                     ${{ number_format($expense->amount, 2) }}</td>
                                 <td class="p-4 flex gap-2">
-                                    @role('caretaker')
+                                    @role('caretaker|admin')
                                         <a href="{{ route('expenses.edit', $expense->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
                                         <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST"

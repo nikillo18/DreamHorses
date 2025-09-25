@@ -11,7 +11,7 @@
                     Caballos</a></li>
             <li class="mb-2"><a href="{{ route('race.index') }}" class="btn btn-secondary w-full text-left">
                     Carreras</a></li>
-            @role('boss')
+            @role('boss|admin')
                 <li class="mb-2"><a href="{{ route('caretakers.index') }}" class="btn btn-secondary w-full text-left">
                         Cuidadores</a></li>
             @endrole

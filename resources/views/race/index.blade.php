@@ -19,7 +19,7 @@
                     class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-2">
                     Lista de Carreras
                 </h1>
-                @role('caretaker')
+                @role('caretaker|admin')
                     <div class="flex justify-start">
                         <a href="{{ route('race.create') }}"
                             class="btn btn-success font-bold shadow-sm">Crear
@@ -58,7 +58,7 @@
                             <th class="p-4">Distancia</th>
                             <th class="p-4">Descripción de la Carrera</th>
                             <th class="p-4">Jockey</th>
-                            @role('caretaker')
+                            @role('caretaker|admin')
                                 <th class="p-4">Acciones</th>
                             @endrole
                         </tr>
@@ -83,7 +83,7 @@
                                 <td class="p-4 max-w-xs break-words">{{ $race->description }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->jockey }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">
-                                    @role('caretaker')
+                                    @role('caretaker|admin')
                                         <a href="{{ route('race.edit', $race->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
                                         <form action="{{ route('race.destroy', $race->id) }}" method="POST">
