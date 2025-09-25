@@ -111,15 +111,36 @@
                     </div>
 
                     {{-- Photos --}}
-                    <div class="form-control md:col-span-2">
-                        <label for="photos" class="label">
-                            <span class="label-text">Fotos del Caballo</span>
-                        </label>
-                        <input type="file" name="photos[]" id="photos" multiple accept="image/*"
-                            class="file-input file-input-bordered w-full" />
-                    </div>
-                </div>
-
+                   <div class="form-control md:col-span-2">
+    <label for="photos" class="label">
+        <span class="label-text">Fotos del Caballo</span>
+    </label>
+    <input type="file" name="photos[]" id="photos" multiple accept="image/*"
+        class="file-input file-input-bordered w-full" onchange="previewImages(event)" />
+    <div id="preview" class="flex flex-wrap gap-2 mt-2"></div>
+</div>
+<script>
+function previewImages(event) {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = '';
+    const files = event.target.files;
+    if (files) {
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = "rounded shadow";
+                img.style.width = "120px";
+                img.style.height = "90px";
+                img.style.objectFit = "cover";
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+}
+</script>
                 <div class="pt-4">
                     <button type="submit" class="btn btn-primary w-full">
                         Guardar Caballo

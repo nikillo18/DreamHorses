@@ -90,6 +90,7 @@ public function update(UpdateHorseRequest $request, Horse $horse)
             $horse->photos()->create(['path' => $path]);
         }
     }
+    
 
     return redirect()->route('horses.show', $horse->id)
                      ->with('success', 'Caballo actualizado correctamente');
