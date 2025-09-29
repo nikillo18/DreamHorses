@@ -7,9 +7,13 @@ use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
 use App\Models\Horse;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Carbon\Carbon;
+use Exception;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log as FacadesLog;
 
 class ExpenseController extends Controller
 {
@@ -294,6 +298,9 @@ class ExpenseController extends Controller
         $monthlyCategorySummary = $query->get();
         $totalGeneral = $monthlyCategorySummary->sum('total_amount');
 
+        // Recibir la imagen del gráfico enviada desde el cliente
+        $chartImage = $request->input('chart_image');
+
         $pdf = Pdf::loadView('expenses.summary_pdf', [
             'monthlyCategorySummary' => $monthlyCategorySummary,
             'totalGeneral' => $totalGeneral,
@@ -301,6 +308,7 @@ class ExpenseController extends Controller
             'toMonth' => $toMonth,
             'fromMonthFormatted' => $fromMonthFormatted,
             'toMonthFormatted' => $toMonthFormatted,
+            'chartImage' => $chartImage,
         ]);
 
         return $pdf->download('resumen-de-gastos.pdf');
