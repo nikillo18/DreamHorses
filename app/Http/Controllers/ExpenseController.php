@@ -31,17 +31,17 @@ class ExpenseController extends Controller
             });
         }
 
-        $expenses = $query->get();
-        if ($request->filled('from_month')) {
-            $from = \Carbon\Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+     $expenses = $query->get();
+        if ($request->filled('from_date')) {
+            $from = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->startOfDay();
             $query->where('date', '>=', $from);
         }
 
-        if ($request->filled('to_month')) {
-            $to = \Carbon\Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+        if ($request->filled('to_date')) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('to_date'))->endOfDay();
             $query->where('date', '<=', $to);
         }
-
+        
         $expenses = $query->get();
         return view('expenses.index', compact('expenses'));
     }

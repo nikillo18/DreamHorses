@@ -32,15 +32,22 @@
                 </form>
             </div>
             <div class="mb-4">
-                <form action="{{ route('expenses.index') }}" method="GET">
-                    <div class="flex flex-col md:flex-row gap-2">
-
-                        <input type="month" name="from_month" value="{{ request('from_month') }}"
-                            class="input input-bordered" />
-
-                        <input type="month" name="to_month" value="{{ request('to_month') }}"
-                            class="input input-bordered" />
-
+              <form action="{{ route('expenses.index') }}" method="GET">
+                    <div class="flex flex-col md:flex-row gap-2 justify-start items-end">
+                        <div class="form-control">
+                            <label for="from_date" class="label">
+                                <span class="label-text font-semibold">Desde</span>
+                            </label>
+                            <input type="date" name="from_date" value="{{ request('from_date') }}"
+                                class="input input-bordered" />
+                        </div>
+                        <div class="form-control">
+                            <label for="to_date" class="label">
+                                <span class="label-text font-semibold">Hasta</span>
+                            </label>
+                            <input type="date" name="to_date" value="{{ request('to_date') }}"
+                                class="input input-bordered" />
+                        </div>
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                 </form>
