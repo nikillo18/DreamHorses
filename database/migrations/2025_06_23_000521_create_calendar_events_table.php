@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignIdFor(Horse::class)->constrained()->onDelete('cascade');
             $table->date('event_date');
             $table->time('event_time');
-            $table->text('description')->nullable();
+            $table->string('description')->nullable();
             $table->string('category');
             $table->timestamps();
         });

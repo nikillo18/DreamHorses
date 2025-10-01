@@ -27,7 +27,7 @@ class StoreCalendarEventRequest extends FormRequest
             'event_date' => 'required|date',
             'event_time' => 'required|date_format:H:i',
             'category' => 'required|string|max:50',
-            'description' => 'nullable|text|max:150',
+            'description' => 'nullable|string|max:150',
         ];
     }
 }
