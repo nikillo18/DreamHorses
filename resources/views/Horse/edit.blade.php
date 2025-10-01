@@ -107,9 +107,32 @@
 
                 <fieldset class="fieldset mt-6">
                     <legend class="text-base-content/80">Agregar nuevas fotos:</legend>
-                    <input type="file" name="photos[]" multiple accept="image/*"
-                        class="file-input file-input-bordered w-full" />
-                </fieldset>
+                      <input type="file" name="photos[]" id="photos" multiple accept="image/*"
+        class="file-input file-input-bordered w-full" onchange="previewImages(event)" />
+    <div id="preview" class="flex flex-wrap gap-2 mt-2"></div>
+</fieldset>
+<script>
+function previewImages(event) {
+    const preview = document.getElementById('preview');
+    preview.innerHTML = '';
+    const files = event.target.files;
+    if (files) {
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = "rounded shadow";
+                img.style.width = "120px";
+                img.style.height = "90px";
+                img.style.objectFit = "cover";
+                preview.appendChild(img);
+            }
+            reader.readAsDataURL(file);
+        });
+    }
+}
+</script>
 
 
                 <button type="submit"
