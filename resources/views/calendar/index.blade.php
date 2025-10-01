@@ -23,7 +23,7 @@
                         Calendario
                     </button>
                 </form>
-                @role('caretaker|boss')
+                @role('caretaker|boss|admin')
                 <form action="{{ route('calendar.create') }}" method="get">
                     <button type="submit" class="btn btn-success font-bold shadow-sm">
                         Crear Evento
@@ -42,7 +42,7 @@
                             <th class="p-4">Hora</th>
                             <th class="p-4">Tipo de Evento</th>
                             <th class="p-4">Descripción</th>
-                            @role('caretaker|boss')
+                            @role('caretaker|boss|admin')
                                 <th class="p-4">Acciones</th>
                             @endrole
                         </tr>
@@ -59,7 +59,7 @@
                                 <td class="p-4 whitespace-nowrap">{{ $event->category }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $event->description }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">
-                                    @role('caretaker|boss')
+                                    @role('caretaker|boss|admin')
                                         <a href="{{ route('calendar.edit', $event) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
                                         <form action="{{ route('calendar.destroy', $event) }}" method="POST" class="w-full"

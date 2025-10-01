@@ -111,11 +111,11 @@
                     </div>
 
                     {{-- Photos --}}
-                   <div class="form-control md:col-span-2">
-    <label for="photos" class="label">
-        <span class="label-text">Fotos del Caballo</span>
-    </label>
-    <input type="file" name="photos[]" id="photos" multiple accept="image/*"
+                    <div class="form-control md:col-span-2">
+                        <label for="photos" class="label">
+                            <span class="label-text">Fotos del Caballo</span>
+                        </label>
+                      <input type="file" name="photos[]" id="photos" multiple accept="image/*"
         class="file-input file-input-bordered w-full" onchange="previewImages(event)" />
     <div id="preview" class="flex flex-wrap gap-2 mt-2"></div>
 </div>
@@ -141,6 +141,10 @@ function previewImages(event) {
     }
 }
 </script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
                 <div class="pt-4">
                     <button type="submit" class="btn btn-primary w-full">
                         Guardar Caballo

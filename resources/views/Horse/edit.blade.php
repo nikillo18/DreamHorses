@@ -105,9 +105,9 @@
                 </div>
 
 
-               <fieldset class="fieldset mt-6">
-    <legend class="text-base-content/80">Agregar nuevas fotos:</legend>
-    <input type="file" name="photos[]" id="photos" multiple accept="image/*"
+                <fieldset class="fieldset mt-6">
+                    <legend class="text-base-content/80">Agregar nuevas fotos:</legend>
+                      <input type="file" name="photos[]" id="photos" multiple accept="image/*"
         class="file-input file-input-bordered w-full" onchange="previewImages(event)" />
     <div id="preview" class="flex flex-wrap gap-2 mt-2"></div>
 </fieldset>
