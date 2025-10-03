@@ -9,7 +9,6 @@ use App\Models\Horse;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Carbon\Carbon;
-use Exception;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,7 +21,10 @@ class ExpenseController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Expense::with('horse')->latest();
+        $sortBy = $request->input('sort_by', 'date');
+        $sortOrder = $request->input('sort_order', 'desc');
+
+        $query = Expense::with('horse');
 
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
@@ -31,7 +33,7 @@ class ExpenseController extends Controller
             });
         }
 
-        $expenses = $query->get();
+
         if ($request->filled('from_date')) {
             $from = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->startOfDay();
             $query->where('date', '>=', $from);
@@ -42,8 +44,22 @@ class ExpenseController extends Controller
             $query->where('date', '<=', $to);
         }
 
+        if ($sortBy === 'horse') {
+            $query->join('horses', 'expenses.horse_id', '=', 'horses.id')
+                ->select('expenses.*')
+                ->orderBy('horses.name', $sortOrder);
+        } else {
+            $validSortColumns = ['date', 'category', 'description', 'amount'];
+            if (in_array($sortBy, $validSortColumns)) {
+                $query->orderBy($sortBy, $sortOrder);
+            } else {
+                // default sort
+                $query->orderBy('date', 'desc');
+            }
+        }
+
         $expenses = $query->get();
-        return view('expenses.index', compact('expenses'));
+        return view('expenses.index', compact('expenses', 'sortBy', 'sortOrder'));
     }
 
     /**

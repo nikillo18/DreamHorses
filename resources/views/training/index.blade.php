@@ -52,7 +52,7 @@
                                 <td class="p-4 whitespace-nowrap">{{ $training->horse->name }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->distance }} km</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->duration_minutes }} minutos</td>
-                                <td class="p-4 whitespace-nowrap">{{ $training->date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($training->date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->type_training }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $training->comments }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">

@@ -31,14 +31,14 @@
                 @csrf
                 @method('PUT')
 
-                <div class="mb-4">
+                <div>
                     <label for="date" class="block font-semibold mb-1 text-base-content/80">Fecha del
                         Gasto</label>
                     <input type="date" name="date" id="date" class="input input-bordered w-full"
                         value="{{ old('date', $expense->date) }}" required>
                 </div>
 
-                <div class="mb-4">
+                <div>
                     <label for="category" class="block font-semibold mb-1 text-base-content/80">Categoría</label>
                     <select name="category" class="select select-bordered w-full" required>
                         <option disabled>Seleccione una categoría</option>
@@ -51,7 +51,6 @@
                         <option value="Equipamiento"
                             {{ old('category', $expense->category) == 'Equipamiento' ? 'selected' : '' }}>
                             Equipamiento</option>
-
                         <option value="Herrero"
                             {{ old('category', $expense->category) == 'Herrero' ? 'selected' : '' }}>Herrero</option>
                         <option value="Entrenamiento"
@@ -59,21 +58,21 @@
                             Entrenamiento</option>
                         <option value="Otros" {{ old('category', $expense->category) == 'Otros' ? 'selected' : '' }}>
                             Otros</option>
+                    </select>
                 </div>
 
-                <div class="mb-4">
+                <div>
                     <label for="description" class="block font-semibold mb-1 text-base-content/80">Descripción</label>
                     <textarea name="description" id="description" rows="3" class="textarea textarea-bordered w-full" required>{{ old('description', $expense->description) }}</textarea>
                 </div>
 
-                <div class="mb-4">
+                <div>
                     <label for="amount" class="block font-semibold mb-1 text-base-content/80">Monto$</label>
                     <input type="number" name="amount" id="amount" class="input input-bordered w-full"
                         value="{{ old('amount', $expense->amount) }}" required>
                 </div>
 
-
-                <div class="mb-4">
+                <div>
                     <label for="horse_id" class="block font-semibold mb-1 text-base-content/80">Caballo</label>
                     <select name="horse_id" id="horse_id" class="select select-bordered w-full" required>
                         @foreach ($horses as $horse)

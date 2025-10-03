@@ -41,7 +41,7 @@
                         @foreach ($blacksmiths as $blacksmith)
                             <tr class="border-b border-base-300 hover:bg-base-300">
                                 <td class="p-4 whitespace-nowrap">{{ $blacksmith->horse->name }}</td>
-                                <td class="p-4 whitespace-nowrap">{{ $blacksmith->date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($blacksmith->date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $blacksmith->name }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $blacksmith->horseshoe }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">

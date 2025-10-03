@@ -55,7 +55,7 @@
                                 class="border-b border-base-300 hover:bg-base-300">
                                 <td class="p-4  break-words">{{ $event->title }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $event->horse->name }}</td>
-                                <td class="p-4 whitespace-nowrap">{{ $event->event_date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($event->event_date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $event->event_time }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $event->category }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $event->description }}</td>

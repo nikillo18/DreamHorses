@@ -2,7 +2,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-base-100 text-base-content" x-data>
+    <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
         <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -61,11 +61,39 @@
                 <table class="table-auto w-full text-sm text-left text-base-content">
                     <thead class="bg-base-300 text-base-content/80 uppercase">
                         <tr>
-                            <th class="p-4">Fecha</th>
-                            <th class="p-4">Caballo</th>
-                            <th class="p-4">Categoría</th>
-                            <th class="p-4">Descripción</th>
-                            <th class="p-4">Monto</th>
+                            @php
+                                $columns = [
+                                    'date' => 'Fecha',
+                                    'horse' => 'Caballo',
+                                    'category' => 'Categoría',
+                                    'description' => 'Descripción',
+                                    'amount' => 'Monto',
+                                ];
+                            @endphp
+                            @foreach ($columns as $column => $displayName)
+                                <th class="p-4">
+                                    <a href="{{ route('expenses.index', array_merge(request()->query(), ['sort_by' => $column, 'sort_order' => $sortBy == $column && $sortOrder == 'asc' ? 'desc' : 'asc'])) }}"
+                                        class="flex items-center gap-1">
+                                        {{ $displayName }}
+                                        @if ($sortBy == $column)
+                                            @if ($sortOrder == 'asc')
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M5 15l7-7 7 7" />
+                                                </svg>
+                                            @else
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M19 9l-7 7-7-7" />
+                                                </svg>
+                                            @endif
+                                        @endif
+                                    </a>
+                                </th>
+                            @endforeach
+
                             @role('caretaker|admin')
                                 <th class="p-4">Acciones</th>
                             @endrole
@@ -74,7 +102,7 @@
                     <tbody>
                         @forelse ($expenses as $expense)
                             <tr class="border-b border-base-300 hover:bg-base-300">
-                                <td class="p-4">{{ $expense->date }}</td>
+                                <td class="p-4">{{ \Carbon\Carbon::parse($expense->date)->format('d/m/Y') }}</td>
                                 <td class="p-4">{{ $expense->horse->name }}</td>
                                 <td class="p-4">{{ $expense->category }}</td>
                                 <td class="p-4">{{ $expense->description }}</td>

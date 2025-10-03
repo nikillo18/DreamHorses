@@ -68,7 +68,7 @@
                         @foreach ($races as $race)
                             <tr
                                 class="border-b border-base-300 hover:bg-base-300">
-                                <td class="p-4 whitespace-nowrap">{{ $race->date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($race->date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->horse->name }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->hipodromo }}</td>
                                 <td class="p-4 whitespace-nowrap">

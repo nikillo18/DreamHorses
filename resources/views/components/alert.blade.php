@@ -7,6 +7,7 @@
     $baseClasses = 'alert shadow-lg my-4';
     $typeClasses = '';
     $icon = '';
+    $alertId = 'alert-' . uniqid();
 
     switch ($type) {
         case 'success':
@@ -33,9 +34,7 @@
     }
 @endphp
 
-<div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" x-transition:leave="transition ease-in duration-300"
-    x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" role="alert"
-    {{ $attributes->merge(['class' => "$baseClasses $typeClasses"]) }}>
+<div id="{{ $alertId }}" role="alert" {{ $attributes->merge(['class' => "$baseClasses $typeClasses"]) }}>
     {!! $icon !!}
     <div>
         @if ($message)
@@ -44,3 +43,18 @@
         {{ $slot }}
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const alertElement = document.getElementById('{{ $alertId }}');
+        if (alertElement) {
+            setTimeout(() => {
+                alertElement.style.transition = 'opacity 300ms ease-in-out';
+                alertElement.style.opacity = 0;
+                setTimeout(() => {
+                    alertElement.style.display = 'none';
+                }, 300);
+            }, 5000);
+        }
+    });
+</script>

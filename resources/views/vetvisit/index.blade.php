@@ -57,10 +57,10 @@
                                 <td class="p-4">{{ $visit->horse->name }}</td>
                                 <td class="p-4">{{ $visit->vet_name }}</td>
                                 <td class="p-4">{{ $visit->vet_phone ?? '-' }}</td>
-                                <td class="p-4">{{ $visit->visit_date }}</td>
+                                <td class="p-4">{{ \Carbon\Carbon::parse($visit->visit_date)->format('d/m/Y') }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $visit->diagnosis }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $visit->treatment }}</td>
-                                <td class="p-4">{{ $visit->next_visit ?? '-' }}</td>
+                                <td class="p-4">{{ $visit->next_visit ? \Carbon\Carbon::parse($visit->next_visit)->format('d/m/Y') : '-' }}</td>
                                 <td class="p-4 flex flex-col sm:flex-row gap-2">
                                     @role('caretaker|admin')
                                     <a href="{{ route('vet-visits.edit', $visit->id) }}"

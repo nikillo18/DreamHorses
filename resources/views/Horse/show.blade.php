@@ -54,7 +54,7 @@
                             {{ $horse->number_microchip }}
                         </p>
                         <p><span class="text-base-content/70 font-semibold">Nacimiento:</span>
-                            {{ $horse->birth_date }}</p>
+                            {{ \Carbon\Carbon::parse($horse->birth_date)->format('d/m/Y') }}</p>
                         <p><span class="text-base-content/70 font-semibold">Padre:</span>
                             {{ $horse->father_name }}</p>
                         <p><span class="text-base-content/70 font-semibold">Madre:</span>
