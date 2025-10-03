@@ -15,11 +15,7 @@
         <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4"> Resumen de Gastos</h2>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <div class="mb-4">
                 <form action="{{ route('expenses.summary') }}" method="GET">

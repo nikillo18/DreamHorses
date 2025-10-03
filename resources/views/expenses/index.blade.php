@@ -2,7 +2,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-base-100 text-base-content">
+    <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
         <label for="my-drawer" class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
@@ -15,11 +15,7 @@
         <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4"> Lista de Gastos</h2>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <!-- Buscador -->
             <div class="mb-4">
@@ -88,12 +84,10 @@
                                     @role('caretaker|admin')
                                         <a href="{{ route('expenses.edit', $expense->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST"
-                                            onsubmit="return confirm('¿Estás seguro de eliminar este gasto?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
+                                        <div>
+                                            <button class="btn btn-xs btn-error" onclick="document.getElementById('modal_expense_{{ $expense->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_expense_' . $expense->id" :action="route('expenses.destroy', $expense->id)" />
+                                        </div>
                                     @endrole
                                 </td>
                             </tr>
@@ -110,5 +104,7 @@
     </div>
 
     <x-sidebar />
+
+
 </div>
 

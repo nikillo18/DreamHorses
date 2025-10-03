@@ -31,7 +31,7 @@ class ExpenseController extends Controller
             });
         }
 
-     $expenses = $query->get();
+        $expenses = $query->get();
         if ($request->filled('from_date')) {
             $from = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->startOfDay();
             $query->where('date', '>=', $from);
@@ -41,7 +41,7 @@ class ExpenseController extends Controller
             $to = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('to_date'))->endOfDay();
             $query->where('date', '<=', $to);
         }
-        
+
         $expenses = $query->get();
         return view('expenses.index', compact('expenses'));
     }
@@ -87,7 +87,7 @@ class ExpenseController extends Controller
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         $expense->update($request->validated());
-        return redirect()->route('expenses.index')->with('success', 'Gastos subidos exitosamente .');
+        return redirect()->route('expenses.index')->with('success', 'Gastos Actualizado exitosamente .');
     }
 
     /**

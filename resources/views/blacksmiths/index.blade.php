@@ -48,16 +48,13 @@
                                     @role('caretaker|admin')
                                         <a href="{{ route('blacksmiths.edit', $blacksmith->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('blacksmiths.destroy', $blacksmith->id) }}" method="POST"
-                                            class="w-full">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
-
-                                    </td>
-                                </tr>
-                            @endrole
+                                        <div>
+                                            <button class="btn btn-xs btn-error" onclick="document.getElementById('modal_blacksmith_{{ $blacksmith->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_blacksmith_' . $blacksmith->id" :action="route('blacksmiths.destroy', $blacksmith->id)" />
+                                        </div>
+                                    @endrole
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

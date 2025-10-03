@@ -2,7 +2,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-base-100 text-base-content">
+    <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
@@ -15,11 +15,7 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <div class="card bg-base-200 shadow-xl p-6">
                 <div class="flex flex-col md:flex-row gap-6">
@@ -80,13 +76,12 @@
                 <div class="flex gap-2">
                     <a href="{{ route('horses.edit', $horse->id) }}"
                         class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>
-                    <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
-                        onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
-                            Eliminar</button>
-                    </form>
+                    <div>
+                        <button class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900" onclick="document.getElementById('modal_horse_{{ $horse->id }}').showModal()">
+                            Eliminar
+                        </button>
+                        <x-delete-modal :id="'modal_horse_' . $horse->id" :action="route('horses.destroy', $horse->id)" />
+                    </div>
                 </div>
                 @endrole
             </div>
@@ -94,4 +89,6 @@
     </div>
 
     <x-sidebar />
+
+
 </div>
