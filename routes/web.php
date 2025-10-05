@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $horses = Horse::with('caretaker')->paginate(6);
+    $horses = Horse::all();
     $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
     $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
     $nextCalendarEvents = CalendarEvent::where('event_date', '>=', now())->orderBy('event_date')->get();

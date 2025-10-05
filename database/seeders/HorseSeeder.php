@@ -6,6 +6,7 @@ use App\Models\Horse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class HorseSeeder extends Seeder
 {
@@ -21,11 +22,11 @@ class HorseSeeder extends Seeder
                 'color' => fake()->colorName(),
                 'birth_date' => fake()->date(),
                 'gender' => fake()->randomElement(['male', 'female']),
-                'photo_path' => 'horses\bzqxTkd9TrFZbIC0uIQCfIptTyN05TSKyBnMI4cE.png',
+                'photo_path' => 'horses/580b57fbd9996e24bc43bc2a.png',
                 'number_microchip' => '123456789012345',
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 1,
+               
             ],
             [
                 'name' => fake()->name(),
@@ -37,7 +38,7 @@ class HorseSeeder extends Seeder
                 'number_microchip' => fake()->unique()->numerify('###########'),
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 2,
+
             ],
             [
                 'name' => fake()->name(),
@@ -49,7 +50,7 @@ class HorseSeeder extends Seeder
                 'number_microchip' => fake()->unique()->numerify('###########'),
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 3,
+                
             ],
             [
                 'name' => fake()->name(),
@@ -57,11 +58,11 @@ class HorseSeeder extends Seeder
                 'color' => fake()->colorName(),
                 'birth_date' => fake()->date(),
                 'gender' => fake()->randomElement(['male', 'female']),
-                'photo_path' => 'horses\caras de caballo 3.png',
+                'photo_path' => 'horses/5a02c1e918e87004f1ca439f.png',
                 'number_microchip' => fake()->unique()->numerify('###########'),
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 2,
+                
             ],
         ]);
     }

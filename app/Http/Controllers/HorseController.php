@@ -5,27 +5,48 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreHorseRequest;
 use App\Http\Requests\UpdateHorseRequest;
 use App\Models\Horse;
-use App\Models\Caretaker;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 
 class HorseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
 
-        $horses = Horse::paginate(6);
-        return view('Horse.index', compact('horses'));
-    }
+public function index()
+{
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
+
+    if ($user && $user->hasRole('admin')) {
+        $horses = Horse::with(['boss', 'caretaker'])->latest()->paginate(6);
+    } elseif ($user && ($user->hasRole('boss') || $user->hasRole('caretaker'))) {
+        $horses = Horse::with(['boss', 'caretaker'])
+            ->when($user->hasRole('boss'), function ($query) use ($user) {
+                $query->where('boss_id', $user->id);
+            })
+            ->when($user->hasRole('caretaker'), function ($query) use ($user) {
+                $query->orWhere('caretaker_id', $user->id);
+            })
+            ->latest()
+            ->paginate(6);
+    } 
+
+    return view('Horse.index', compact('horses'));
+}
+
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        $caretakers = Caretaker::all();
+        $caretakers = User::role('caretaker')->get();
         return view('Horse.create', compact('caretakers'));
 
     }
@@ -35,12 +56,29 @@ class HorseController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(StoreHorseRequest $request)
-
-    {
-   $data = $request->validated();
+{
+    $data = $request->validated();
 
     if ($request->hasFile('photo')) {
         $data['photo_path'] = $request->file('photo')->store('horses', 'public');
+    }
+    /** @var \App\Models\User $user */
+
+    $user = Auth::user();
+
+    // 👑 Si es jefe, se asigna como boss
+    if ($user->hasRole('boss')) {
+        $data['boss_id'] = $user->id;
+    }
+
+    // 🧤 Si es cuidador, se asigna como caretaker
+    if ($user->hasRole('caretaker')) {
+        $data['caretaker_id'] = $user->id;
+    }
+
+    // 🧠 Si el jefe selecciona un cuidador en el formulario
+    if ($user->hasRole('boss') && $request->filled('caretaker_id')) {
+        $data['caretaker_id'] = $request->input('caretaker_id');
     }
 
     $horse = Horse::create($data);
@@ -52,8 +90,8 @@ class HorseController extends Controller
         }
     }
 
-    return redirect()->route('Horseindex')->with('success', 'Caballo creado correctamente con fotos.');
-    }
+    return redirect()->route('Horseindex')->with('success', 'Caballo creado correctamente.');
+}
 
     /**
      * Display the specified resource.
@@ -69,8 +107,8 @@ class HorseController extends Controller
      */
     public function edit(Horse $horse)
 {
-       $caretakers = Caretaker::all();
-    return view('Horse.edit', compact('horse', 'caretakers'));
+       $users = User::all();
+    return view('Horse.edit', compact('horse', 'users'));
 }
 
 public function update(UpdateHorseRequest $request, Horse $horse)
@@ -96,8 +134,17 @@ public function update(UpdateHorseRequest $request, Horse $horse)
                      ->with('success', 'Caballo actualizado correctamente');
 }
 
+
 public function destroy(Horse $horse)
 {
+    foreach ($horse->photos as $photo) {
+        Storage::disk('public')->delete($photo->path);
+        $photo->delete();
+    }
+    if ($horse->photo_path ?? false) {
+        Storage::disk('public')->delete($horse->photo_path);
+    }
+
     $horse->delete();
     return redirect()->route('Horseindex')->with('success', 'Caballo eliminado correctamente');
 }

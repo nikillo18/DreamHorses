@@ -10,7 +10,6 @@
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
-        @if ($role === 'caretaker')
             <div class="mt-4">
                 <label for="phone" class="label">{{ __('Teléfono') }}</label>
                 <input id="phone" class="input input-bordered w-full" type="text" name="phone" :value="old('phone')" required />
@@ -22,7 +21,7 @@
                 <input id="address" class="input input-bordered w-full" type="text" name="address" :value="old('address')" required />
                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
             </div>
-        @endif
+        
 
         <div class="mt-4">
             <label for="email" class="label">{{ __('Correo electrónico') }}</label>

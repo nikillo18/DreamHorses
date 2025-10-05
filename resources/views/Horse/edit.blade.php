@@ -78,12 +78,12 @@
 
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Cuidador</legend>
-                        <select name="caretaker_id"
+                        <select name="user_id"
                             class="select select-bordered w-full">
-                            @foreach ($caretakers as $caretaker)
-                                <option value="{{ $caretaker->id }}"
-                                    {{ $horse->caretaker_id == $caretaker->id ? 'selected' : '' }}>
-                                    {{ $caretaker->name }}
+                            @foreach ($users as $user)
+                                <option value="{{ $user->id }}"
+                                    {{ $horse->user_id == $user->id ? 'selected' : '' }}>
+                                    {{ $user->name }}
                                 </option>
                             @endforeach
                         </select>

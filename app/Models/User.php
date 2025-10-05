@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'address'
     ];
 
     /**
@@ -39,11 +41,18 @@ class User extends Authenticatable
      *
      * @return array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
-    }
+  protected $casts = [
+    'email_verified_at' => 'datetime',
+    'password' => 'hashed',
+];
+
+  public function horsesCaretaker()
+{
+    return $this->hasMany(Horse::class, 'caretaker_id');
+}
+public function horsesBoss()
+{
+    return $this->hasMany(Horse::class, 'boss_id');
+}
+
 }
