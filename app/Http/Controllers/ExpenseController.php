@@ -21,9 +21,6 @@ class ExpenseController extends Controller
      */
     public function index(Request $request)
     {
-        $sortBy = $request->input('sort_by', 'date');
-        $sortOrder = $request->input('sort_order', 'desc');
-
         $query = Expense::with('horse');
 
         if ($request->has('search')) {
@@ -44,22 +41,10 @@ class ExpenseController extends Controller
             $query->where('date', '<=', $to);
         }
 
-        if ($sortBy === 'horse') {
-            $query->join('horses', 'expenses.horse_id', '=', 'horses.id')
-                ->select('expenses.*')
-                ->orderBy('horses.name', $sortOrder);
-        } else {
-            $validSortColumns = ['date', 'category', 'description', 'amount'];
-            if (in_array($sortBy, $validSortColumns)) {
-                $query->orderBy($sortBy, $sortOrder);
-            } else {
-                // default sort
-                $query->orderBy('date', 'desc');
-            }
-        }
+        $query->orderBy('date', 'desc');
 
         $expenses = $query->get();
-        return view('expenses.index', compact('expenses', 'sortBy', 'sortOrder'));
+        return view('expenses.index', compact('expenses'));
     }
 
     /**
