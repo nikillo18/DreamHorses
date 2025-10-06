@@ -64,6 +64,10 @@
                             <a href="{{ route('race.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Carreras</a>
                             <a href="{{ route('vet-visits.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Visitas de veterinario</a>
                             <a href="{{ route('training.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Entrenamientos</a>
+                             <a href="{{ route('expenses.index', ['horse_id' => $horse->id]) }}"
+                            class="btn btn-sm btn-primary">Gastos</a>
+                        <a href="{{ route('blacksmiths.index', ['horse_id' => $horse->id]) }}"
+                            class="btn btn-sm btn-primary">Herrero</a>
                     </div>
                 </div>
             </div>

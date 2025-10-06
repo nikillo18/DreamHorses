@@ -23,6 +23,12 @@ class ExpenseController extends Controller
     {
         $query = Expense::with('horse');
 
+        $horseId = null;
+        if ($request->has('horse_id')) {
+            $horseId = $request->input('horse_id');
+            $query->where('horse_id', $horseId);
+        }
+
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
             $query->whereHas('horse', function ($q) use ($searchTerm) {
@@ -44,7 +50,7 @@ class ExpenseController extends Controller
         $query->orderBy('date', 'desc');
 
         $expenses = $query->get();
-        return view('expenses.index', compact('expenses'));
+        return view('expenses.index', compact('expenses', 'horseId'));
     }
 
     /**
@@ -252,6 +258,36 @@ class ExpenseController extends Controller
         $totalGeneral = $monthlyCategorySummary->sum('total_amount');
 
         return view('expenses.summary', compact('monthlyCategorySummary', 'totalGeneral', 'availableMonths'));
+    }
+
+    public function downloadPdf(Request $request)
+    {
+        $query = Expense::with('horse');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->whereHas('horse', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->filled('from_date')) {
+            $from = Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->startOfDay();
+            $query->where('date', '>=', $from);
+        }
+
+        if ($request->filled('to_date')) {
+            $to = Carbon::createFromFormat('Y-m-d', $request->input('to_date'))->endOfDay();
+            $query->where('date', '<=', $to);
+        }
+
+        $query->orderBy('date', 'desc');
+
+        $expenses = $query->get();
+
+        $pdf = Pdf::loadView('expenses.pdf', compact('expenses'));
+
+        return $pdf->download('lista_de_gastos.pdf');
     }
 
     public function downloadSummaryPdf(Request $request)

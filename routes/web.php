@@ -132,6 +132,7 @@ Route::get('/expenses/chart', [ExpenseController::class, 'chart'])->name('expens
 Route::get('/expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary')->middleware('role:boss|caretaker|admin');
 Route::post('expenses/summary/pdf', [ExpenseController::class, 'downloadSummaryPdf'])->name('expenses.summary.pdf')->middleware('role:boss|caretaker|admin');
 
+Route::get('/expenses/pdf', [ExpenseController::class, 'downloadPdf'])->name('expenses.pdf');
 
 Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create')->middleware('role:caretaker|admin');
 Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store')->middleware('role:caretaker|admin');

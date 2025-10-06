@@ -48,6 +48,16 @@
                     </div>
                 </form>
             </div>
+            <form action="{{ route('expenses.pdf') }}" method="GET" target="_blank" class="flex justify-end mb-4">
+                <input type="hidden" name="search" value="{{ request('search') }}">
+                <input type="hidden" name="from_date" value="{{ request('from_date') }}">
+                <input type="hidden" name="to_date" value="{{ request('to_date') }}">
+
+                <button type="submit" class="btn btn-outline btn-primary">
+                    Descargar PDF
+                </button>
+            </form>
+
 
             @role('caretaker|admin')
                 <div class="flex justify-end mb-4">
@@ -73,7 +83,8 @@
                             @endphp
                             @foreach ($columns as $columnKey => $columnData)
                                 <th class="p-4 cursor-pointer sortable-header" data-column-index="{{ $i }}"
-                                    data-column-name="{{ $columnKey }}" data-column-type="{{ $columnData['type'] }}">
+                                    data-column-name="{{ $columnKey }}"
+                                    data-column-type="{{ $columnData['type'] }}">
                                     <div class="flex items-center gap-1">
                                         {{ $columnData['name'] }}
                                         <span class="sort-icon"></span>
