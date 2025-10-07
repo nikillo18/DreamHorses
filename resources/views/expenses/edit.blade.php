@@ -14,16 +14,16 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8 max-w-3xl mx-auto">
             <h2 class="text-2xl font-bold text-base-content mb-6"> Editar Gasto</h2>
-            <a href="{{ route('expenses.index') }}" class="btn btn-ghost mt-4 sm:mt-0">Volver
+            <a href="{{ route('expenses.index') }}" class="btn btn-success font-bold">Volver
                 a la Lista</a>
             @if ($errors->any())
-                <div class="alert alert-error">
+                <x-alert type="error">
                     <ul class="list-disc list-inside text-sm">
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                </div>
+                </x-alert>
             @endif
 
             <form action="{{ route('expenses.update', $expense->id) }}" method="POST"
@@ -51,7 +51,6 @@
                         <option value="Equipamiento"
                             {{ old('category', $expense->category) == 'Equipamiento' ? 'selected' : '' }}>
                             Equipamiento</option>
-                        
                         <option value="Herrero"
                             {{ old('category', $expense->category) == 'Herrero' ? 'selected' : '' }}>Herrero</option>
                         <option value="Entrenamiento"
@@ -59,6 +58,7 @@
                             Entrenamiento</option>
                         <option value="Otros" {{ old('category', $expense->category) == 'Otros' ? 'selected' : '' }}>
                             Otros</option>
+                    </select>
                 </div>
 
                 <div>
@@ -67,10 +67,9 @@
                 </div>
 
                 <div>
-                    <label for="amount" class="block font-semibold mb-1 text-base-content/80">Monto
-                        ($)</label>
-                    <input type="number" name="amount" id="amount" step="0.01"
-                        class="input input-bordered w-full" value="{{ old('amount', $expense->amount) }}" required>
+                    <label for="amount" class="block font-semibold mb-1 text-base-content/80">Monto$</label>
+                    <input type="number" name="amount" id="amount" class="input input-bordered w-full"
+                        value="{{ old('amount', $expense->amount) }}" required>
                 </div>
 
                 <div>

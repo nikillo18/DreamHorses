@@ -6,16 +6,23 @@ use App\Models\Blacksmith;
 use App\Http\Requests\StoreBlacksmithRequest;
 use App\Http\Requests\UpdateBlacksmithRequest;
 use App\Models\Horse;
+use Illuminate\Http\Request;
 
 class BlacksmithController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blacksmiths = Blacksmith::all();
-        return view('blacksmiths.index', compact('blacksmiths'));
+        $query = Blacksmith::with('horse');
+        $horseId = null;
+        if ($request->has('horse_id')) {
+            $horseId = $request->input('horse_id');
+            $query->where('horse_id', $horseId);
+        }
+        $blacksmiths = $query->get();
+        return view('blacksmiths.index', compact('blacksmiths', 'horseId'));
     }
 
     /**
@@ -23,7 +30,7 @@ class BlacksmithController extends Controller
      */
     public function create()
     {
-         $horse = Horse::all();
+        $horse = Horse::all();
 
         return view('blacksmiths.create', compact('horse'));
     }

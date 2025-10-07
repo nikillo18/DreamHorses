@@ -130,8 +130,9 @@ Route::delete('/race/{race}', [RaceController::class, 'destroy'])->name('race.de
 Route::get('/expenses', [ExpenseController::class, 'index'])->name('expenses.index')->middleware('role:boss|caretaker|admin');
 Route::get('/expenses/chart', [ExpenseController::class, 'chart'])->name('expenses.chart')->middleware('role:boss|caretaker|admin');
 Route::get('/expenses/summary', [ExpenseController::class, 'summary'])->name('expenses.summary')->middleware('role:boss|caretaker|admin');
-Route::get('/expenses/summary/pdf', [ExpenseController::class, 'downloadSummaryPdf'])->name('expenses.summary.pdf')->middleware('role:boss|caretaker|admin');
+Route::post('expenses/summary/pdf', [ExpenseController::class, 'downloadSummaryPdf'])->name('expenses.summary.pdf')->middleware('role:boss|caretaker|admin');
 
+Route::get('/expenses/pdf', [ExpenseController::class, 'downloadPdf'])->name('expenses.pdf');
 
 Route::get('/expenses/create', [ExpenseController::class, 'create'])->name('expenses.create')->middleware('role:caretaker|admin');
 Route::post('/expenses', [ExpenseController::class, 'store'])->name('expenses.store')->middleware('role:caretaker|admin');
@@ -177,7 +178,7 @@ Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'e
 Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update')->middleware('role:boss|caretaker|admin');
 Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:boss|caretaker|admin');
 
-Route::get('/calendarhorse', [CalendarEventController::class, 'calendar']) ->name('calendarhorse')->middleware('role:boss|caretaker|admin');
+Route::get('/calendarhorse', [CalendarEventController::class, 'calendar'])->name('calendarhorse')->middleware('role:boss|caretaker|admin');
 
 
 require __DIR__ . '/auth.php';

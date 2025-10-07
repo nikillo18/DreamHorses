@@ -2,7 +2,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-base-100 text-base-content">
+    <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
@@ -19,6 +19,7 @@
                     class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-2">
                     Lista de Carreras
                 </h1>
+                <x-session-alert />
                 @role('caretaker|admin')
                     <div class="flex justify-start">
                         <a href="{{ route('race.create') }}"
@@ -67,7 +68,7 @@
                         @foreach ($races as $race)
                             <tr
                                 class="border-b border-base-300 hover:bg-base-300">
-                                <td class="p-4 whitespace-nowrap">{{ $race->date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($race->date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->horse->name }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $race->hipodromo }}</td>
                                 <td class="p-4 whitespace-nowrap">
@@ -86,12 +87,10 @@
                                     @role('caretaker|admin')
                                         <a href="{{ route('race.edit', $race->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('race.destroy', $race->id) }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
+                                        <div>
+                                            <button class="btn btn-xs btn-error" onclick="document.getElementById('modal_race_{{ $race->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_race_' . $race->id" :action="route('race.destroy', $race->id)" />
+                                        </div>
                                     @endrole
                                 </td>
                             </tr>
@@ -103,5 +102,7 @@
     </div>
 
     <x-sidebar />
+
+
 </div>
 

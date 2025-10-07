@@ -18,11 +18,7 @@
                 Listado de Caballos
             </h2>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
             @role('caretaker|boss|admin')
                 <div class="mb-4">
                     <a href="{{ route('CreateHorse') }}"

@@ -92,12 +92,12 @@ public function update(UpdateHorseRequest $request, Horse $horse)
     }
 
     return redirect()->route('horses.show', $horse->id)
-                     ->with('success', 'Caballo actualizado correctamente');
+                     ->with('info', 'Caballo actualizado correctamente');
 }
 
 public function destroy(Horse $horse)
 {
     $horse->delete();
-    return redirect()->route('Horseindex')->with('success', 'Caballo eliminado correctamente');
+    return redirect()->route('Horseindex')->with('error', 'Caballo eliminado correctamente ');
 }
 }
