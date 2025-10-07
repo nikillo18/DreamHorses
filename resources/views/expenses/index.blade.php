@@ -18,7 +18,7 @@
             <x-session-alert />
 
             <!-- Buscador -->
-            <div class="mb-4">
+            <div class="mb-2">
                 <form action="{{ route('expenses.index') }}" method="GET">
                     <div class="flex">
                         <input type="text" name="search" placeholder="Buscar por caballo..."
@@ -27,7 +27,7 @@
                     </div>
                 </form>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <form action="{{ route('expenses.index') }}" method="GET">
                     <div class="flex flex-col md:flex-row gap-2 justify-start items-end">
                         <div class="form-control">
@@ -48,25 +48,25 @@
                     </div>
                 </form>
             </div>
-            <form action="{{ route('expenses.pdf') }}" method="GET" target="_blank" class="flex justify-end mb-4">
-                <input type="hidden" name="search" value="{{ request('search') }}">
-                <input type="hidden" name="from_date" value="{{ request('from_date') }}">
-                <input type="hidden" name="to_date" value="{{ request('to_date') }}">
-
-                <button type="submit" class="btn btn-outline btn-primary">
-                    Descargar PDF
-                </button>
-            </form>
-
-
-            @role('caretaker|admin')
-                <div class="flex justify-end mb-4">
-                    <a href="{{ route('expenses.create') }}" class="btn btn-success font-bold">
-                        Nuevo Gasto
-                    </a>
+            <div class="flex gap-4 mb-4 justify-end">
+                <div class="flex">
+                    <form action="{{ route('expenses.pdf') }}" method="GET" target="_blank">
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        <input type="hidden" name="from_date" value="{{ request('from_date') }}">
+                        <input type="hidden" name="to_date" value="{{ request('to_date') }}">
+                        <button type="submit" class="btn btn-outline btn-primary">
+                            Descargar PDF
+                        </button>
+                    </form>
                 </div>
-            @endrole
-
+                @role('caretaker|admin')
+                    <div class="flex">
+                        <a href="{{ route('expenses.create') }}" class="btn btn-success font-bold">
+                            Nuevo Gasto
+                        </a>
+                    </div>
+                @endrole
+            </div>
             <div class="overflow-x-auto bg-base-200 rounded-lg shadow-lg">
                 <table id="expenses-table" class="table-auto w-full text-sm text-left text-base-content">
                     <thead class="bg-base-300 text-base-content/80 uppercase">
