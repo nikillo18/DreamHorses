@@ -6,6 +6,7 @@ use App\Http\Requests\StoreRaceRequest;
 use App\Http\Requests\UpdateRaceRequest;
 use App\Models\Horse;
 use App\Models\Race;
+use App\Traits\FiltersByUserRole;
 
 use Illuminate\Http\Request;
 
@@ -16,9 +17,13 @@ class RaceController extends Controller
     /**
      * Display a listing of the resource.
      */
+    use FiltersByUserRole;
+
     public function index(Request $request)
 {
     $query = Race::with('horse')->latest();
+
+    $query = $this->filterByUserRole($query);
 
     $horseId = null;
     if ($request->has('horse_id')) {
@@ -42,7 +47,7 @@ class RaceController extends Controller
      */
     public function create()
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('race.create', compact('horse'));
     }
 
@@ -69,7 +74,7 @@ class RaceController extends Controller
      */
     public function edit(Race $race)
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('race.edit', compact('race', 'horse'));
     }
 

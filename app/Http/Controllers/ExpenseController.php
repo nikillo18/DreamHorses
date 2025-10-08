@@ -10,15 +10,20 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Traits\FiltersByUserRole;
 
 class ExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+        use FiltersByUserRole;
+
     public function index(Request $request)
     {
         $query = Expense::with('horse')->latest();
+
+        $query = $this->filterByUserRole($query);
 
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
@@ -47,7 +52,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $horses = Horse::all();
+        $horses = $this->getUserHorses();
         return view('expenses.create', compact('horses'));
     }
 
@@ -73,7 +78,7 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        $horses = Horse::all();
+        $horses = $this->getUserHorses();
         return view('expenses.edit', compact('expense', 'horses'));
     }
 

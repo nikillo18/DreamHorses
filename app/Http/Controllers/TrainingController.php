@@ -7,15 +7,21 @@ use App\Http\Requests\UpdateTrainingRequest;
 use App\Models\Horse;
 use App\Models\Training;
 use Illuminate\Http\Request;
+use App\Traits\FiltersByUserRole; 
 
 class TrainingController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    use FiltersByUserRole; // 👈 activa el trait
    public function index(Request $request)
 {
+    
     $query = Training::with(['horse'])->latest();
+    
+    $query = $this->filterByUserRole($query);
+
 
     $horseId = null;
     if ($request->has('horse_id')) {
@@ -33,7 +39,7 @@ class TrainingController extends Controller
      */
     public function create()
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('training.create', compact('horse'));
     }
 
@@ -63,7 +69,7 @@ class TrainingController extends Controller
     public function edit(Training $training)
     {
 
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('training.edit', compact('training', 'horse'));
     }
 
