@@ -6,6 +6,9 @@
             <li class="mb-2"><a href="{{ route('dashboard') }}" class="btn btn-primary w-full text-left">Panel
                     principal</a>
             </li>
+             <li class="mb-2"><a href="{{ route('studs.index') }}" class="btn btn-primary w-full text-left">Studs
+                    </a>
+            </li>
             <h3 class="text-base-content/70 text-sm font-semibold">Control</h3>
             <li class="mb-2"><a href="{{ route('Horseindex') }}" class="btn btn-secondary w-full text-left">
                     Caballos</a></li>

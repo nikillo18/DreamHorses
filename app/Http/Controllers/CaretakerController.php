@@ -7,42 +7,90 @@ use App\Http\Requests\UpdateCaretakerRequest;
 use App\Models\Caretaker;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class CaretakerController extends Controller
 {
-    public function index()
-    {
-        $caretakers = User::role('caretaker')->get();
+   public function index()
+{
+    /** @var \App\Models\User $user */
+$user = Auth::user();
+
+        if ($user->hasRole('admin')) {
+            $caretakers = User::role('caretaker')->get();
+        }
+        elseif ($user->hasRole('boss')) {
+            $caretakers = User::whereHas('studs', function ($q) use ($user) {
+                $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+            })
+            ->role('caretaker')
+            ->get();
+        }
+        elseif ($user->hasRole('caretaker')) {
+            $caretakers = User::whereHas('studs', function ($q) use ($user) {
+                $q->whereIn('stud_id', $user->studs->pluck('id'));
+            })
+            ->where('id', '!=', $user->id)
+            ->role('caretaker')
+            ->get();
+        } else {
+            $caretakers = collect(); 
+        }
+
         return view('caretakers.index', compact('caretakers'));
-    }
+    
+}
+
 
     public function show(User $caretaker)
+{
+    /** @var \App\Models\User $user */
+    $user = Auth::user();
 
-    {
-         $caretaker->load('horsesCaretaker');
-        $otherCaretakers = User::where('id', '!=', $caretaker->id)->get();
+    // Cargamos los caballos del cuidador actual
+    $caretaker->load('horsesCaretaker');
 
-        return view('caretakers.show', compact('caretaker', 'otherCaretakers'));
+    // Si el usuario es jefe, solo puede ver los cuidadores de sus studs contratados
+    if ($user->hasRole('boss')) {
+        $availableCaretakers = User::whereHas('studs', function ($q) use ($user) {
+                $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+            })
+            ->where('id', '!=', $caretaker->id)
+            ->role('caretaker')
+            ->get();
     }
+    // Si el usuario es admin, ve todos
+    elseif ($user->hasRole('admin')) {
+        $availableCaretakers = User::role('caretaker')
+            ->where('id', '!=', $caretaker->id)
+            ->get();
+    }
+    // Si es cuidador, no puede reasignar
+    else {
+        $availableCaretakers = collect();
+    }
+
+    return view('caretakers.show', compact('caretaker', 'availableCaretakers'));
+}
+
 
     public function destroy(User $caretaker)
     {
-        $caretaker->delete();
-        return redirect()->route('caretakers.index')->with('success', 'Cuidador eliminado correctamente.');
+  
     }
 
     public function reassign(Request $request, User $caretaker)
-    {
-        $request->validate([
-            'new_caretaker_id' => 'required|exists:users,id'
-        ]);
+   {
+    $request->validate([
+        'new_caretaker_id' => 'required|exists:users,id'
+    ]);
 
-        $caretaker->horsesCaretaker()->update([
-            'caretaker_id' => $request->new_caretaker_id
-        ]);
+    $caretaker->horsesCaretaker()->update([
+        'caretaker_id' => $request->new_caretaker_id
+    ]);
 
-        $caretaker->delete();
+    return redirect()->route('caretakers.index')->with('success', 'Caballos reasignados correctamente.');
+  }
 
-        return redirect()->route('caretakers.index')->with('success', 'Caballos reasignados y cuidador eliminado.');
-    }
 }

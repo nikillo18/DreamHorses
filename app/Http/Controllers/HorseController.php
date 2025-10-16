@@ -45,8 +45,18 @@ public function index()
      */
     public function create()
     {
-        $caretakers = User::role('caretaker')->get();
-        return view('Horse.create', compact('caretakers'));
+        /** @var \App\Models\User $user */
+$user = Auth::user();
+
+if ($user->hasRole('admin')) {
+    $caretakers = User::role('caretaker')->get();
+} elseif ($user->hasRole('boss')) {
+    $caretakers = User::whereHas('studs', function ($q) use ($user) {
+        $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+    })->role('caretaker')->get();
+} else {
+    $caretakers = collect(); 
+}  return view('Horse.create', compact('caretakers'));
 
     }
 
@@ -65,17 +75,14 @@ public function index()
 
     $user = Auth::user();
 
-    // 👑 Si es jefe, se asigna como boss
     if ($user->hasRole('boss')) {
         $data['boss_id'] = $user->id;
     }
 
-    // 🧤 Si es cuidador, se asigna como caretaker
     if ($user->hasRole('caretaker')) {
         $data['caretaker_id'] = $user->id;
     }
 
-    // 🧠 Si el jefe selecciona un cuidador en el formulario
     if ($user->hasRole('boss') && $request->filled('caretaker_id')) {
         $data['caretaker_id'] = $request->input('caretaker_id');
     }

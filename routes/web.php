@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BlacksmithController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StudController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -115,6 +117,21 @@ Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update
 Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:boss|caretaker|admin');
 
 Route::get('/calendarhorse', [CalendarEventController::class, 'calendar']) ->name('calendarhorse')->middleware('role:boss|caretaker|admin');
+
+    Route::get('/studs', [StudController::class, 'index'])->name('studs.index');
+    Route::get('/studs/create', [StudController::class, 'create'])->name('studs.create');
+    Route::post('/studs', [StudController::class, 'store'])->name('studs.store');
+    Route::get('/studs/{stud}', [StudController::class, 'show'])->name('studs.show');
+    Route::get('/studs/{stud}/edit', [StudController::class, 'edit'])->name('studs.edit');
+    Route::put('/studs/{stud}', [StudController::class, 'update'])->name('studs.update');
+
+    Route::post('/studs/{stud}/join', [StudController::class, 'join'])->name('studs.join');
+    Route::post('/studs/{stud}/leave', [StudController::class, 'leave'])->name('studs.leave');
+    Route::post('/studs/{stud}/kick', [StudController::class, 'kick'])->name('studs.kick');
+    Route::delete('/studs/{stud}', [StudController::class, 'destroy'])->name('studs.destroy');
+    
+    Route::post('/studs/{stud}/hire', [StudController::class, 'hire'])->name('studs.hire');
+Route::post('/studs/{stud}/fire', [StudController::class, 'fire'])->name('studs.fire');
 
 
 require __DIR__ . '/auth.php';

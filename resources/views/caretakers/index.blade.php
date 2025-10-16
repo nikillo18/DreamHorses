@@ -42,16 +42,6 @@
                                         class="btn btn-xs btn-info">
                                         Ver caballos
                                     </a>
-
-                                    <form action="{{ route('caretakers.destroy', $caretaker->id) }}" method="POST"
-                                        onsubmit="return confirm('¿Estás seguro de eliminar este cuidador?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                            class="btn btn-xs btn-error">
-                                            Eliminar
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach

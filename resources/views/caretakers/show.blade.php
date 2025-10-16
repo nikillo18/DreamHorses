@@ -52,13 +52,19 @@
                         <label for="new_caretaker_id" class="font-semibold">Nuevo cuidador:</label>
                         <select name="new_caretaker_id" required class="select select-bordered w-full">
                             <option disabled selected>Seleccione un cuidador</option>
-                            @foreach ($otherCaretakers as $c)
-                                <option value="{{ $c->id }}">{{ $c->name }}</option>
-                            @endforeach
+                          @foreach ($availableCaretakers as $c)
+                        <option value="{{ $c->id }}">
+                         {{ $c->name }}
+                         @if($c->studs->isNotEmpty())
+                         — Studs: {{ $c->studs->pluck('name')->join(', ') }}
+                         @endif
+                         </option>
+                          @endforeach
+
                         </select>
 
                         <button type="submit" class="btn btn-warning font-bold">
-                            Reasignar caballos y eliminar cuidador
+                            Reasignar caballos
                         </button>
                     </form>
                 @else
@@ -74,7 +80,5 @@
             </div>
         </div>
     </div>
-
-
-    <x-sidebar />
+ <x-sidebar />
 </div>
