@@ -6,6 +6,7 @@ use App\Models\Horse;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 class HorseSeeder extends Seeder
 {
@@ -21,11 +22,11 @@ class HorseSeeder extends Seeder
                 'color' => fake()->colorName(),
                 'birth_date' => fake()->date(),
                 'gender' => fake()->randomElement(['male', 'female']),
-                'photo_path' => 'horses\3f0e0MMRZNkRVx8vxYY5Yl4YP8wDRdslbw3h37Kk.png',
+                'photo_path' => 'horses/580b57fbd9996e24bc43bc2a.png',
                 'number_microchip' => '123456789012345',
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 1,
+               
             ],
             [
                 'name' => fake()->name(),
@@ -33,11 +34,11 @@ class HorseSeeder extends Seeder
                 'color' => fake()->colorName(),
                 'birth_date' => fake()->date(),
                 'gender' => fake()->randomElement(['male', 'female']),
-                'photo_path' => 'horses\KtzZ0gvgAVFbXTkF450SxTgdDpMU7B45VptoFwA1.png',
+                'photo_path' => 'horses\imgane de caballo.png',
                 'number_microchip' => fake()->unique()->numerify('###########'),
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 2,
+
             ],
             [
                 'name' => fake()->name(),
@@ -45,11 +46,11 @@ class HorseSeeder extends Seeder
                 'color' => fake()->colorName(),
                 'birth_date' => fake()->date(),
                 'gender' => fake()->randomElement(['male', 'female']),
-                'photo_path' => 'horses\VMTkZn56cAAKpu4T8R5xaecr5E915W1WeJDXeqHv.png',
+                'photo_path' => 'horses\caras de caballo 3.png',
                 'number_microchip' => fake()->unique()->numerify('###########'),
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 3,
+                
             ],
             [
                 'name' => fake()->name(),
@@ -57,11 +58,11 @@ class HorseSeeder extends Seeder
                 'color' => fake()->colorName(),
                 'birth_date' => fake()->date(),
                 'gender' => fake()->randomElement(['male', 'female']),
-                'photo_path' => 'horses\DTGIHmooqjvLu50xZldLUrvKaBr2n7lQjElMMKM0.png',
+                'photo_path' => 'horses/5a02c1e918e87004f1ca439f.png',
                 'number_microchip' => fake()->unique()->numerify('###########'),
                 'father_name' => fake()->name(),
                 'mother_name' => fake()->name(),
-                'caretaker_id' => 2,
+                
             ],
         ]);
     }

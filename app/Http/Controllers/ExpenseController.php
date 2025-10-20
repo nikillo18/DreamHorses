@@ -12,13 +12,15 @@ use Carbon\Carbon;
 use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log as FacadesLog;
+use App\Traits\FiltersByUserRole;
 
 class ExpenseController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+        use FiltersByUserRole;
+
     public function index(Request $request)
     {
         $query = Expense::with('horse');
@@ -28,6 +30,8 @@ class ExpenseController extends Controller
             $horseId = $request->input('horse_id');
             $query->where('horse_id', $horseId);
         }
+
+        $query = $this->filterByUserRole($query);
 
         if ($request->has('search')) {
             $searchTerm = $request->input('search');
@@ -58,7 +62,7 @@ class ExpenseController extends Controller
      */
     public function create()
     {
-        $horses = Horse::all();
+        $horses = $this->getUserHorses();
         return view('expenses.create', compact('horses'));
     }
 
@@ -84,7 +88,7 @@ class ExpenseController extends Controller
      */
     public function edit(Expense $expense)
     {
-        $horses = Horse::all();
+        $horses = $this->getUserHorses();
         return view('expenses.edit', compact('expense', 'horses'));
     }
 

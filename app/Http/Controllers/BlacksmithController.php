@@ -13,16 +13,12 @@ class BlacksmithController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    use FiltersByUserRole; 
+    public function index()
     {
-        $query = Blacksmith::with('horse');
-        $horseId = null;
-        if ($request->has('horse_id')) {
-            $horseId = $request->input('horse_id');
-            $query->where('horse_id', $horseId);
-        }
-        $blacksmiths = $query->get();
-        return view('blacksmiths.index', compact('blacksmiths', 'horseId'));
+     $blacksmiths = $this->filterByUserRole(Blacksmith::with('horse')->latest())->paginate(6);
+
+    return view('blacksmiths.index', compact('blacksmiths'));
     }
 
     /**
@@ -30,7 +26,7 @@ class BlacksmithController extends Controller
      */
     public function create()
     {
-        $horse = Horse::all();
+         $horse = $this->getUserHorses();
 
         return view('blacksmiths.create', compact('horse'));
     }
@@ -60,7 +56,7 @@ class BlacksmithController extends Controller
      */
     public function edit(Blacksmith $blacksmith)
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('blacksmiths.edit', compact('blacksmith', 'horse'));
     }
 

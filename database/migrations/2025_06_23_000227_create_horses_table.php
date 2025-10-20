@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Caretaker;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('mother_name');
             $table->string('photo_path')->nullable();
             $table->string('number_microchip')->nullable();
-            $table->foreignIdFor(Caretaker::class);
+            $table->foreignId('boss_id')->nullable()->constrained('users')->onDelete('set null');
+            $table->foreignId('caretaker_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();
         });
     }

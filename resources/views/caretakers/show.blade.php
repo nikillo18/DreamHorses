@@ -21,7 +21,7 @@
             <div class="bg-base-200 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-semibold mb-4"> Caballos a su cuidado</h3>
 
-                @if ($caretaker->horses->count())
+                @if ($caretaker->horsesCaretaker->count())
                     <table class="table-auto w-full text-sm text-left text-base-content">
                         <thead class="bg-base-300 text-base-content/80 uppercase">
                             <tr>
@@ -30,7 +30,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($caretaker->horses as $horse)
+                            @foreach ($caretaker->horsesCaretaker as $horse)
                                 <tr
                                     class="border-b border-base-300 hover:bg-base-300">
                                     <td class="p-4">{{ $horse->name }}</td>
@@ -46,19 +46,25 @@
             <div class="bg-base-200 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-semibold mb-4"> Reasignar Caballos</h3>
 
-                @if ($caretaker->horses->count())
+                @if ($caretaker->horsesCaretaker->count())
                     <form action="{{ route('caretakers.reassign', $caretaker->id) }}" method="POST" class="space-y-4">
                         @csrf
                         <label for="new_caretaker_id" class="font-semibold">Nuevo cuidador:</label>
                         <select name="new_caretaker_id" required class="select select-bordered w-full">
                             <option disabled selected>Seleccione un cuidador</option>
-                            @foreach ($otherCaretakers as $c)
-                                <option value="{{ $c->id }}">{{ $c->name }}</option>
-                            @endforeach
+                          @foreach ($availableCaretakers as $c)
+                        <option value="{{ $c->id }}">
+                         {{ $c->name }}
+                         @if($c->studs->isNotEmpty())
+                         — Studs: {{ $c->studs->pluck('name')->join(', ') }}
+                         @endif
+                         </option>
+                          @endforeach
+
                         </select>
 
                         <button type="submit" class="btn btn-warning font-bold">
-                            Reasignar caballos y eliminar cuidador
+                            Reasignar caballos
                         </button>
                     </form>
                 @else
@@ -74,7 +80,5 @@
             </div>
         </div>
     </div>
-
-
-    <x-sidebar />
+ <x-sidebar />
 </div>

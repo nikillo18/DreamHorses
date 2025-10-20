@@ -27,10 +27,12 @@ class RolePermissionSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('admin123'),
+        'phone' => '123456789',
+        'address' => 'Admin Address'
         ]);
 
+
         $adminUser->assignRole($adminRole);
-        
 
         // horse permissions
        /* $createHorsePermission = Permission::create(['name' => 'create horse']);

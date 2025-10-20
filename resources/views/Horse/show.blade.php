@@ -76,18 +76,23 @@
                 <a href="{{ route('Horseindex') }}"
                     class="btn btn-sm btn-ghost">←
                     Volver</a>
-                    @role('caretaker|admin')
                 <div class="flex gap-2">
+                    @role('caretaker|admin|boss')
                     <a href="{{ route('horses.edit', $horse->id) }}"
                         class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>
-                    <div>
-                        <button class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900" onclick="document.getElementById('modal_horse_{{ $horse->id }}').showModal()">
-                            Eliminar
-                        </button>
-                        <x-delete-modal :id="'modal_horse_' . $horse->id" :action="route('horses.destroy', $horse->id)" />
-                    </div>
+                        @endrole
+
+                        @role('boss|admin')
+                    <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
+                        onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
+                            Eliminar</button>
+                    </form>
+                       @endrole
                 </div>
-                @endrole
+                
             </div>
         </div>
     </div>

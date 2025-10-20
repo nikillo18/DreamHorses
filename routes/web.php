@@ -9,82 +9,21 @@ use App\Http\Controllers\VetVisitController;
 use App\Http\Controllers\HorsePhotoController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\CaretakerController;
-use App\Models\Expense;
-use App\Models\Horse;
-use App\Models\Race;
-use App\Models\VetVisit;
-use App\Models\CalendarEvent;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\BlacksmithController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\StudController;
+
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    $horses = Horse::with('caretaker')->paginate(6);
-    $nextRaces = Race::where('date', '>=', now())->orderBy('date')->get();
-    $nextVetVisits = VetVisit::where('visit_date', '>=', now())->orderBy('visit_date')->get();
-    $nextCalendarEvents = CalendarEvent::where('event_date', '>=', now())->orderBy('event_date')->get();
 
-    $events = $nextRaces->take(5)->map(function ($race) {
-        return (object) [
-            'horse_id' => $race->horse_id,
-            'event_date' => $race->date,
-            'title' => $race->name,
-            'category' => 'Carrera',
-        ];
-    })->concat($nextVetVisits->map(function ($visit) {
-        return (object) [ // Take only the next 5 events
-            'horse_id' => $visit->horse_id,
-            'event_date' => $visit->visit_date,
-            'title' => $visit->reason,
-            'category' => 'Visita Veterinaria',
-        ];
-    }))->concat($nextCalendarEvents->map(function ($event) {
-        return (object) [
-            'horse_id' => $event->horse_id,
-            'event_date' => $event->event_date,
-            'title' => $event->title,
-            'category' => $event->category,
-        ];
-    }))->sortBy('event_date')->take(5);
-
-    $expenses = Expense::selectRaw('horse_id, SUM(amount) as total')
-        ->groupBy('horse_id')->get()->keyBy('horse_id');
-
-    $vetVisitAlerts = VetVisit::whereBetween('visit_date', [now(), now()->addDays(7)])->get()->map(function ($visit) {
-        return (object) [
-            'horse_id' => $visit->horse_id,
-            'event_date' => $visit->visit_date,
-            'title' => $visit->reason,
-            'category' => 'Visita Veterinaria',
-        ];
-    });
-
-    $raceAlerts = Race::whereBetween('date', [now(), now()->addDays(7)])->get()->map(function ($race) {
-        return (object) [
-            'horse_id' => $race->horse_id,
-            'event_date' => $race->date,
-            'title' => $race->name,
-            'category' => 'Carrera',
-        ];
-    });
-
-    $calendarEventAlerts = CalendarEvent::whereBetween('event_date', [now(), now()->addDays(7)])->get()->map(function ($event) {
-        return (object) [
-            'horse_id' => $event->horse_id,
-            'event_date' => $event->event_date,
-            'title' => $event->title,
-            'category' => $event->category,
-        ];
-    });
-
-    $alerts = $vetVisitAlerts->concat($raceAlerts)->concat($calendarEventAlerts);
-
-    return view('dashboard', compact('horses', 'events', 'expenses', 'alerts'));
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -109,13 +48,13 @@ Route::put('/vet-visits/{vetVisit}', [VetVisitController::class, 'update'])->nam
 Route::delete('/vet-visits/{vetVisit}', [VetVisitController::class, 'destroy'])->name('vet-visits.destroy')->middleware('role:caretaker|admin');
 
 /* Horse */
-Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse')->middleware('role:caretaker|boss|admin');
-Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse')->middleware('role:caretaker|boss|admin');
+Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse')->middleware('role:boss|admin');
+Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse')->middleware('role:caretaker|boss|admin|');
 Route::get('Horseindex', [HorseController::class, 'index'])->name('Horseindex')->middleware('role:boss|caretaker|admin');
 Route::get('horses/{horse}', [HorseController::class, 'show'])->name('horses.show')->middleware('role:boss|caretaker|admin');
 Route::get('horses/{horse}/edit', [HorseController::class, 'edit'])->name('horses.edit')->middleware('role:boss|caretaker|admin');
 Route::put('horses/{horse}', [HorseController::class, 'update'])->name('horses.update')->middleware('role:boss|caretaker|admin');
-Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy')->middleware('role:boss|caretaker|admin');
+Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy')->middleware('role:boss|admin');
 Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name('photos.destroy')->middleware('role:boss|caretaker|admin');
 
 /* Race */
@@ -179,6 +118,21 @@ Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update
 Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:boss|caretaker|admin');
 
 Route::get('/calendarhorse', [CalendarEventController::class, 'calendar'])->name('calendarhorse')->middleware('role:boss|caretaker|admin');
+
+    Route::get('/studs', [StudController::class, 'index'])->name('studs.index');
+    Route::get('/studs/create', [StudController::class, 'create'])->name('studs.create');
+    Route::post('/studs', [StudController::class, 'store'])->name('studs.store');
+    Route::get('/studs/{stud}', [StudController::class, 'show'])->name('studs.show');
+    Route::get('/studs/{stud}/edit', [StudController::class, 'edit'])->name('studs.edit');
+    Route::put('/studs/{stud}', [StudController::class, 'update'])->name('studs.update');
+
+    Route::post('/studs/{stud}/join', [StudController::class, 'join'])->name('studs.join');
+    Route::post('/studs/{stud}/leave', [StudController::class, 'leave'])->name('studs.leave');
+    Route::post('/studs/{stud}/kick', [StudController::class, 'kick'])->name('studs.kick');
+    Route::delete('/studs/{stud}', [StudController::class, 'destroy'])->name('studs.destroy');
+    
+    Route::post('/studs/{stud}/hire', [StudController::class, 'hire'])->name('studs.hire');
+Route::post('/studs/{stud}/fire', [StudController::class, 'fire'])->name('studs.fire');
 
 
 require __DIR__ . '/auth.php';

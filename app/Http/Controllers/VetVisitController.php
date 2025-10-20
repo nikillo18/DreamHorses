@@ -7,29 +7,33 @@ use App\Http\Requests\UpdateVetVisitRequest;
 use App\Models\Horse;
 use App\Models\VetVisit;
 use Illuminate\Http\Request;
+use App\Traits\FiltersByUserRole; // 👈 Importante
 
 class VetVisitController extends Controller
 {
- public function index(Request $request)
-{
-    $query = VetVisit::with('horse')->latest();
+    use FiltersByUserRole; // 👈 activa el trait
 
-    $horseId = null;
-    if ($request->has('horse_id')) {
-        $horseId = $request->input('horse_id');
-        $query->where('horse_id', $horseId);
+    public function index(Request $request)
+    {
+        $query = VetVisit::with('horse')->latest();
+
+        $query = $this->filterByUserRole($query);
+
+        $horseId = null;
+        if ($request->filled('horse_id')) {
+            $horseId = $request->input('horse_id');
+            $query->where('horse_id', $horseId);
+        }
+
+        $visits = $query->paginate(6);
+
+        return view('VetVisit.index', compact('visits', 'horseId'));
     }
-
-    $visits = $query->get();
-
-    return view('vetvisit.index', compact('visits', 'horseId'));
-}
-
 
     public function create()
     {
-        $horses = Horse::all(); // Para el select de caballos
-        return view('vetvisit.create', compact('horses'));
+      $horses = $this->getUserHorses();        
+     return view('VetVisit.create', compact('horses'));
     }
 
     public function store(StoreVetVisitRequest $request)
@@ -40,8 +44,8 @@ class VetVisitController extends Controller
 
     public function edit(VetVisit $vetVisit)
     {
-         $horses = Horse::all();
-    return view('vetvisit.edit', compact('vetVisit', 'horses'));
+      $horses = $this->getUserHorses();        
+        return view('VetVisit.edit', compact('vetVisit', 'horses'));
     }
 
     public function update(UpdateVetVisitRequest $request, VetVisit $vetVisit)

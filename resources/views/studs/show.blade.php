@@ -1,0 +1,70 @@
+@vite('resources/css/app.css', 'resources/js/app.js')
+
+<div class="drawer lg:drawer-open">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content bg-base-100 text-base-content">
+        <!-- Botón hamburguesa -->
+        <label for="my-drawer"
+            class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </label>
+
+        <!-- Contenido principal -->
+        <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
+            
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <div class="card bg-base-200 shadow-xl p-6">
+                <h1 class="text-3xl font-bold text-primary mb-4">{{ $stud->name }}</h1>
+
+                <div class="space-y-2">
+                    <p><span class="text-base-content/70 font-semibold">Dirección:</span> {{ $stud->address }}</p>
+                    <p><span class="text-base-content/70 font-semibold">Teléfono:</span> {{ $stud->phone }}</p>
+                    <p><span class="text-base-content/70 font-semibold">Propietario:</span> {{ $stud->owner->name }}</p>
+                </div>
+            </div>
+
+            <div class="card bg-base-200 shadow-xl p-6">
+                <h2 class="text-xl font-semibold mb-4 text-base-content">Cuidadores del Stud</h2>
+
+                @forelse($stud->caretakers as $caretaker)
+                    <div class="flex justify-between items-center bg-base-100 p-3 rounded-lg shadow-sm mb-2">
+                        <span>{{ $caretaker->name }}</span>
+
+                        <div class="flex gap-2">
+                            @if(auth()->id() === $stud->owner_id && $caretaker->id !== $stud->owner_id)
+                                <form action="{{ route('studs.kick', $stud->id) }}" method="POST" class="inline">
+                                    @csrf
+                                    @role('caretaker|admin')
+                                    <input type="hidden" name="caretaker_id" value="{{ $caretaker->id }}">
+                                    <button type="submit" class="btn btn-xs btn-error">Despedir</button>
+                                    @endrole
+                                </form>
+                            @elseif(auth()->id() === $caretaker->id && $caretaker->id !== $stud->owner_id)
+                           <form action="{{ route('studs.leave', $stud->id) }}" method="POST" class="inline">
+                             @csrf
+                               <button type="submit" class="btn btn-xs btn-warning">Renunciar</button>
+                            </form>
+                          @endif
+                        </div>
+                    </div>
+                @empty
+                    <p class="text-sm text-base-content/70">No hay cuidadores en este stud.</p>
+                @endforelse
+            </div>
+
+            <div class="flex justify-between">
+                <a href="{{ route('studs.index') }}" class="btn btn-sm btn-ghost">← Volver</a>
+            </div>
+        </div>
+    </div>
+
+    <x-sidebar />
+</div>

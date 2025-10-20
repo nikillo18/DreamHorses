@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
 
 
         $this->call([
-            CaretakerSeeder::class,
             HorseSeeder::class,
             CalendarEventSeeder::class,
             TrainingSeeder::class,
@@ -29,8 +28,8 @@ class DatabaseSeeder extends Seeder
             FoodSeeder::class,
             RaceSeeder::class,
             VetVisitSeeder::class,
-            HorseSeeder::class,
             BlacksmithSeeder::class,
+            UserSeeder::class,
 
         ]);
     }

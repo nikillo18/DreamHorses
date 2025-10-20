@@ -38,11 +38,6 @@
                                         class="btn btn-xs btn-info">
                                         Ver caballos
                                     </a>
-
-                                    <div>
-                                        <button class="btn btn-xs btn-error" onclick="document.getElementById('modal_{{ $caretaker->id }}').showModal()">Eliminar</button>
-                                        <x-delete-modal :id="'modal_' . $caretaker->id" :action="route('caretakers.destroy', $caretaker->id)" body="¿Estás seguro de eliminar este cuidador? Si este cuidador tiene caballos asignados, deberás reasignarlos." />
-                                    </div>
                                 </td>
                             </tr>
                         @endforeach

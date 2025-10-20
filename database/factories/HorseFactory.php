@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Caretaker;
 use App\Models\Horse;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,7 +27,7 @@ class HorseFactory extends Factory
             'gender' => $this->faker->randomElement(['macho', 'hembra']),
             'father_name' => $this->faker->name(),
             'mother_name' => $this->faker->name(),
-            'caretaker_id' => Caretaker::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()->first()->id,
         ];
     }
 }
