@@ -14,11 +14,7 @@
         <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4"> Lista de Cuidadores</h2>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <div class="overflow-x-auto bg-base-200 rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left text-base-content">
@@ -53,4 +49,3 @@
 
     <x-sidebar />
 </div>
-

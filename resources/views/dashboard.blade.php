@@ -33,7 +33,7 @@
                                 <span class="text-gray-800 dark:text-gray-100">{{ $horse->color }}</span>
                             </p>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Nacimiento:
-                                <span class="text-gray-800 dark:text-gray-100">{{ $horse->birth_date }}</span>
+                                <span class="text-gray-800 dark:text-gray-100">{{ \Carbon\Carbon::parse($horse->birth_date)->format('d/m/Y') }}</span>
                             </p>
                            
                         </div>

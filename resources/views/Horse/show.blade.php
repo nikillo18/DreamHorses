@@ -2,7 +2,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-base-100 text-base-content">
+    <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
@@ -15,11 +15,7 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <div class="card bg-base-200 shadow-xl p-6">
                 <div class="flex flex-col md:flex-row gap-6">
@@ -58,7 +54,7 @@
                             {{ $horse->number_microchip }}
                         </p>
                         <p><span class="text-base-content/70 font-semibold">Nacimiento:</span>
-                            {{ $horse->birth_date }}</p>
+                            {{ \Carbon\Carbon::parse($horse->birth_date)->format('d/m/Y') }}</p>
                         <p><span class="text-base-content/70 font-semibold">Padre:</span>
                             {{ $horse->father_name }}</p>
                         <p><span class="text-base-content/70 font-semibold">Madre:</span>
@@ -68,6 +64,10 @@
                             <a href="{{ route('race.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Carreras</a>
                             <a href="{{ route('vet-visits.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Visitas de veterinario</a>
                             <a href="{{ route('training.index', ['horse_id' => $horse->id]) }}" class="btn btn-sm btn-primary">Entrenamientos</a>
+                             <a href="{{ route('expenses.index', ['horse_id' => $horse->id]) }}"
+                            class="btn btn-sm btn-primary">Gastos</a>
+                        <a href="{{ route('blacksmiths.index', ['horse_id' => $horse->id]) }}"
+                            class="btn btn-sm btn-primary">Herrero</a>
                     </div>
                 </div>
             </div>
@@ -98,4 +98,6 @@
     </div>
 
     <x-sidebar />
+
+
 </div>

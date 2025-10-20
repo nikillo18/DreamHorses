@@ -6,7 +6,7 @@ use App\Models\Blacksmith;
 use App\Http\Requests\StoreBlacksmithRequest;
 use App\Http\Requests\UpdateBlacksmithRequest;
 use App\Models\Horse;
-use App\Traits\FiltersByUserRole;
+use Illuminate\Http\Request;
 
 class BlacksmithController extends Controller
 {
