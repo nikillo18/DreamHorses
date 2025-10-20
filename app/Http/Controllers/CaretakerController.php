@@ -51,7 +51,6 @@ $user = Auth::user();
     // Cargamos los caballos del cuidador actual
     $caretaker->load('horsesCaretaker');
 
-    // Si el usuario es jefe, solo puede ver los cuidadores de sus studs contratados
     if ($user->hasRole('boss')) {
         $availableCaretakers = User::whereHas('studs', function ($q) use ($user) {
                 $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
@@ -60,13 +59,11 @@ $user = Auth::user();
             ->role('caretaker')
             ->get();
     }
-    // Si el usuario es admin, ve todos
     elseif ($user->hasRole('admin')) {
         $availableCaretakers = User::role('caretaker')
             ->where('id', '!=', $caretaker->id)
             ->get();
     }
-    // Si es cuidador, no puede reasignar
     else {
         $availableCaretakers = collect();
     }

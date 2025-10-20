@@ -48,13 +48,13 @@ Route::put('/vet-visits/{vetVisit}', [VetVisitController::class, 'update'])->nam
 Route::delete('/vet-visits/{vetVisit}', [VetVisitController::class, 'destroy'])->name('vet-visits.destroy')->middleware('role:caretaker|admin');
 
 /* Horse */
-Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse')->middleware('role:caretaker|boss|admin');
-Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse')->middleware('role:caretaker|boss|admin');
+Route::get('CreateHorse', [HorseController::class, 'create'])->name('CreateHorse')->middleware('role:boss|admin');
+Route::post('StoreHorse', [HorseController::class, 'store'])->name('StoreHorse')->middleware('role:caretaker|boss|admin|');
 Route::get('Horseindex', [HorseController::class, 'index'])->name('Horseindex')->middleware('role:boss|caretaker|admin');
 Route::get('horses/{horse}', [HorseController::class, 'show'])->name('horses.show')->middleware('role:boss|caretaker|admin');
 Route::get('horses/{horse}/edit', [HorseController::class, 'edit'])->name('horses.edit')->middleware('role:boss|caretaker|admin');
 Route::put('horses/{horse}', [HorseController::class, 'update'])->name('horses.update')->middleware('role:boss|caretaker|admin');
-Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy')->middleware('role:boss|caretaker|admin');
+Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy')->middleware('role:boss|admin');
 Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name('photos.destroy')->middleware('role:boss|caretaker|admin');
 
 /* Race */

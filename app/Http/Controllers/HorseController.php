@@ -113,8 +113,28 @@ if ($user->hasRole('admin')) {
      */
     public function edit(Horse $horse)
 {
-       $users = User::all();
-    return view('Horse.edit', compact('horse', 'users'));
+    /** @var \App\Models\User $user */
+     $user = Auth::user();
+
+    // Si el usuario es admin, ve todos los cuidadores
+    if ($user->hasRole('admin')) {
+        $caretakers = User::role('caretaker')->get();
+    }
+    // Si el usuario es boss, ve solo los cuidadores de los studs que contrató
+    elseif ($user->hasRole('boss')) {
+        $caretakers = User::whereHas('studs', function ($q) use ($user) {
+            $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+        })->role('caretaker')->get();
+    }
+    // Si el usuario es caretaker, solo se ve a sí mismo
+    elseif ($user->hasRole('caretaker')) {
+        $caretakers = collect([$user]);
+    }
+    else {
+        $caretakers = collect();
+    }
+
+    return view('Horse.edit', compact('horse', 'caretakers'));
 }
 
 public function update(UpdateHorseRequest $request, Horse $horse)

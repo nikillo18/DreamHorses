@@ -41,7 +41,6 @@ $data = $request->validated();
 
     $stud = Stud::create($data);
 
-    // el dueño automáticamente también trabaja ahí
     $stud->caretakers()->attach(Auth::id());
 
     return redirect()->route('studs.show', $stud)
