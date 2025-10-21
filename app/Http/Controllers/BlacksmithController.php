@@ -6,16 +6,19 @@ use App\Models\Blacksmith;
 use App\Http\Requests\StoreBlacksmithRequest;
 use App\Http\Requests\UpdateBlacksmithRequest;
 use App\Models\Horse;
+use Illuminate\Http\Request;
 
 class BlacksmithController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    use FiltersByUserRole; 
     public function index()
     {
-        $blacksmiths = Blacksmith::all();
-        return view('blacksmiths.index', compact('blacksmiths'));
+     $blacksmiths = $this->filterByUserRole(Blacksmith::with('horse')->latest())->paginate(6);
+
+    return view('blacksmiths.index', compact('blacksmiths'));
     }
 
     /**
@@ -23,7 +26,7 @@ class BlacksmithController extends Controller
      */
     public function create()
     {
-         $horse = Horse::all();
+         $horse = $this->getUserHorses();
 
         return view('blacksmiths.create', compact('horse'));
     }
@@ -53,7 +56,7 @@ class BlacksmithController extends Controller
      */
     public function edit(Blacksmith $blacksmith)
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('blacksmiths.edit', compact('blacksmith', 'horse'));
     }
 

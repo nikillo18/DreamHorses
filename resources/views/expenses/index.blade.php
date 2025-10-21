@@ -15,14 +15,10 @@
         <div class="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4"> Lista de Gastos</h2>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <!-- Buscador -->
-            <div class="mb-4">
+            <div class="mb-2">
                 <form action="{{ route('expenses.index') }}" method="GET">
                     <div class="flex">
                         <input type="text" name="search" placeholder="Buscar por caballo..."
@@ -31,47 +27,81 @@
                     </div>
                 </form>
             </div>
-            <div class="mb-4">
+            <div class="mb-2">
                 <form action="{{ route('expenses.index') }}" method="GET">
-                    <div class="flex flex-col md:flex-row gap-2">
-
-                        <input type="month" name="from_month" value="{{ request('from_month') }}"
-                            class="input input-bordered" />
-
-                        <input type="month" name="to_month" value="{{ request('to_month') }}"
-                            class="input input-bordered" />
-
+                    <div class="flex flex-col md:flex-row gap-2 justify-start items-end">
+                        <div class="form-control">
+                            <label for="from_date" class="label">
+                                <span class="label-text font-semibold">Desde</span>
+                            </label>
+                            <input type="date" name="from_date" value="{{ request('from_date') }}"
+                                class="input input-bordered" />
+                        </div>
+                        <div class="form-control">
+                            <label for="to_date" class="label">
+                                <span class="label-text font-semibold">Hasta</span>
+                            </label>
+                            <input type="date" name="to_date" value="{{ request('to_date') }}"
+                                class="input input-bordered" />
+                        </div>
                         <button type="submit" class="btn btn-primary">Buscar</button>
                     </div>
                 </form>
             </div>
-
-            @role('caretaker|admin')
-                <div class="flex justify-end mb-4">
-                    <a href="{{ route('expenses.create') }}" class="btn btn-success font-bold">
-                        Nuevo Gasto
-                    </a>
+            <div class="flex gap-4 mb-4 justify-end">
+                <div class="flex">
+                    <form action="{{ route('expenses.pdf') }}" method="GET" target="_blank">
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        <input type="hidden" name="from_date" value="{{ request('from_date') }}">
+                        <input type="hidden" name="to_date" value="{{ request('to_date') }}">
+                        <button type="submit" class="btn btn-outline btn-primary">
+                            Descargar PDF
+                        </button>
+                    </form>
                 </div>
-            @endrole
-
+                @role('caretaker|admin')
+                    <div class="flex">
+                        <a href="{{ route('expenses.create') }}" class="btn btn-success font-bold">
+                            Nuevo Gasto
+                        </a>
+                    </div>
+                @endrole
+            </div>
             <div class="overflow-x-auto bg-base-200 rounded-lg shadow-lg">
-                <table class="table-auto w-full text-sm text-left text-base-content">
+                <table id="expenses-table" class="table-auto w-full text-sm text-left text-base-content">
                     <thead class="bg-base-300 text-base-content/80 uppercase">
                         <tr>
-                            <th class="p-4">Fecha</th>
-                            <th class="p-4">Caballo</th>
-                            <th class="p-4">Categoría</th>
-                            <th class="p-4">Descripción</th>
-                            <th class="p-4">Monto</th>
+                            @php
+                                $columns = [
+                                    'date' => ['name' => 'Fecha', 'type' => 'date'],
+                                    'horse' => ['name' => 'Caballo', 'type' => 'string'],
+                                    'category' => ['name' => 'Categoría', 'type' => 'string'],
+                                    'description' => ['name' => 'Descripción', 'type' => 'string'],
+                                    'amount' => ['name' => 'Monto', 'type' => 'number'],
+                                ];
+                                $i = 0;
+                            @endphp
+                            @foreach ($columns as $columnKey => $columnData)
+                                <th class="p-4 cursor-pointer sortable-header" data-column-index="{{ $i }}"
+                                    data-column-name="{{ $columnKey }}"
+                                    data-column-type="{{ $columnData['type'] }}">
+                                    <div class="flex items-center gap-1">
+                                        {{ $columnData['name'] }}
+                                        <span class="sort-icon"></span>
+                                    </div>
+                                </th>
+                                @php $i++; @endphp
+                            @endforeach
+
                             @role('caretaker|admin')
                                 <th class="p-4">Acciones</th>
                             @endrole
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="expenses-tbody">
                         @forelse ($expenses as $expense)
                             <tr class="border-b border-base-300 hover:bg-base-300">
-                                <td class="p-4">{{ $expense->date }}</td>
+                                <td class="p-4">{{ \Carbon\Carbon::parse($expense->date)->format('d/m/Y') }}</td>
                                 <td class="p-4">{{ $expense->horse->name }}</td>
                                 <td class="p-4">{{ $expense->category }}</td>
                                 <td class="p-4">{{ $expense->description }}</td>
@@ -81,12 +111,11 @@
                                     @role('caretaker|admin')
                                         <a href="{{ route('expenses.edit', $expense->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('expenses.destroy', $expense->id) }}" method="POST"
-                                            onsubmit="return confirm('¿Estás seguro de eliminar este gasto?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
+                                        <div>
+                                            <button class="btn btn-xs btn-error"
+                                                onclick="document.getElementById('modal_expense_{{ $expense->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_expense_' . $expense->id" :action="route('expenses.destroy', $expense->id)" />
+                                        </div>
                                     @endrole
                                 </td>
                             </tr>
@@ -105,3 +134,103 @@
     <x-sidebar />
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const table = document.getElementById('expenses-table');
+        if (!table) return;
+
+        const headers = table.querySelectorAll('thead th.sortable-header');
+        const tbody = table.querySelector('tbody');
+        // The initial sort is done by Laravel ('date', 'desc').
+        // We set the state to reflect this and show the correct icon.
+        let currentSort = {
+            columnIndex: 0,
+            sortOrder: 'desc'
+        };
+
+        const ascIcon =
+            `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>`;
+        const descIcon =
+            `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>`;
+
+        // Set initial sort icon
+        updateSortIcons();
+
+        headers.forEach(header => {
+            header.addEventListener('click', () => {
+                const columnIndex = parseInt(header.dataset.columnIndex);
+                const columnType = header.dataset.columnType;
+
+                let sortOrder;
+                if (currentSort.columnIndex === columnIndex) {
+                    sortOrder = currentSort.sortOrder === 'asc' ? 'desc' : 'asc';
+                } else {
+                    sortOrder = 'asc';
+                }
+
+                currentSort = {
+                    columnIndex,
+                    sortOrder
+                };
+
+                updateSortIcons();
+                sortTable(columnIndex, columnType, sortOrder);
+            });
+        });
+
+        function updateSortIcons() {
+            headers.forEach(header => {
+                const iconContainer = header.querySelector('.sort-icon');
+                if (iconContainer && parseInt(header.dataset.columnIndex) === currentSort.columnIndex) {
+                    iconContainer.innerHTML = currentSort.sortOrder === 'asc' ? ascIcon : descIcon;
+                } else if (iconContainer) {
+                    iconContainer.innerHTML = '';
+                }
+            });
+        }
+
+        function sortTable(columnIndex, columnType, sortOrder) {
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+
+            const emptyRow = tbody.querySelector('td[colspan="6"]');
+            if (emptyRow) return;
+
+            rows.sort((a, b) => {
+                let valA = a.cells[columnIndex].textContent.trim();
+                let valB = b.cells[columnIndex].textContent.trim();
+
+                switch (columnType) {
+                    case 'number':
+                        // For currency like "$1,234.56"
+                        valA = parseFloat(valA.replace(/[$,]/g, ''));
+                        valB = parseFloat(valB.replace(/[$,]/g, ''));
+                        break;
+                    case 'date':
+                        // For dates like "dd/mm/YYYY"
+                        const partsA = valA.split('/');
+                        valA = new Date(partsA[2], partsA[1] - 1, partsA[0]);
+                        const partsB = valB.split('/');
+                        valB = new Date(partsB[2], partsB[1] - 1, partsB[0]);
+                        break;
+                    case 'string':
+                    default:
+                        // case-insensitive string comparison
+                        valA = valA.toLowerCase();
+                        valB = valB.toLowerCase();
+                        break;
+                }
+
+                if (valA < valB) {
+                    return sortOrder === 'asc' ? -1 : 1;
+                }
+                if (valA > valB) {
+                    return sortOrder === 'asc' ? 1 : -1;
+                }
+                return 0;
+            });
+
+            // Re-append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+    });
+</script>

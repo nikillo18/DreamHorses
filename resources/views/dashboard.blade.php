@@ -33,12 +33,9 @@
                                 <span class="text-gray-800 dark:text-gray-100">{{ $horse->color }}</span>
                             </p>
                             <p class="text-sm text-gray-500 dark:text-gray-400">Nacimiento:
-                                <span class="text-gray-800 dark:text-gray-100">{{ $horse->birth_date }}</span>
+                                <span class="text-gray-800 dark:text-gray-100">{{ \Carbon\Carbon::parse($horse->birth_date)->format('d/m/Y') }}</span>
                             </p>
-                            <p class="text-sm text-gray-500 dark:text-gray-400">Cuidador:
-                                <span
-                                    class="text-gray-800 dark:text-gray-100">{{ $horse->caretaker->name ?? 'No asignado' }}</span>
-                            </p>
+                           
                         </div>
 
                         <hr class="border-gray-300 dark:border-gray-600" />
@@ -98,9 +95,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="mt-8">
-            {{ $horses->links() }}
-        </div>
+        
     </div>
 
     <x-sidebar />

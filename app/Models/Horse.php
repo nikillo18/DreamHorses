@@ -20,13 +20,11 @@ class Horse extends Model
         'father_name',
         'mother_name',
         'photo_path',
+        'number_microchip',
+        'boss_id',
         'caretaker_id',
-        'number_microchip'
     ];
-    public function caretaker(): BelongsTo
-    {
-        return $this->belongsTo(Caretaker::class);
-    }
+   
 
     public function trainings(): HasMany
     {
@@ -67,4 +65,14 @@ public function photos()
  {
         return $this->hasMany(Blacksmith::class);
 }
+public function boss()
+{
+    return $this->belongsTo(User::class, 'boss_id');
+}
+public function caretaker()
+{
+    return $this->belongsTo(User::class, 'caretaker_id');
+}
+
+
 }

@@ -141,7 +141,6 @@ function previewImages(event) {
     }
 }
 </script>
-
                 <div class="pt-4">
                     <button type="submit" class="btn btn-primary w-full">
                         Guardar Caballo

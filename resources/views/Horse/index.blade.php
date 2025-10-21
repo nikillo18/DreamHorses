@@ -23,7 +23,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            @role('caretaker|boss|admin')
+            @role('|boss|admin')
                 <div class="mb-4">
                     <a href="{{ route('CreateHorse') }}"
                         class="btn btn-success font-bold shadow-sm">Crear

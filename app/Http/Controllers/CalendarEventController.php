@@ -6,17 +6,19 @@ use App\Http\Requests\StoreCalendarEventRequest;
 use App\Http\Requests\UpdateCalendarEventRequest;
 use App\Models\CalendarEvent;
 use App\Models\Horse;
+use App\Traits\FiltersByUserRole;
 
 class CalendarEventController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    use FiltersByUserRole;
     public function index()
     {
-        $events = CalendarEvent::with('horse')->latest()->get();
-        $horse = Horse::all();
-        return view('calendar.index', compact('events', 'horse'));
+    $events = $this->filterByUserRole(CalendarEvent::with('horse')->latest())->get();
+    $horses = $this->getUserHorses();
+    return view('calendar.index', compact('events', 'horses'));
     }
 
     /**
@@ -24,7 +26,7 @@ class CalendarEventController extends Controller
      */
     public function create()
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
 
         return view('calendar.create', compact('horse'));
     }
@@ -52,7 +54,7 @@ class CalendarEventController extends Controller
      */
     public function edit(CalendarEvent $calendarEvent)
     {
-        $horse = Horse::all();
+        $horse = $this->getUserHorses();
         return view('calendar.edit', compact('calendarEvent', 'horse'));
     }
 

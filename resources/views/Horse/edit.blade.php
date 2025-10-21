@@ -62,6 +62,15 @@
                         </select>
                     </fieldset>
 
+                     <fieldset class="fieldset">
+                        <legend class="text-base-content/80">Microchip</legend>
+                        <input type="text" name="number_microchip" value="{{ old('number_microchip', $horse->number_microchip) }}"
+                            placeholder="Número de Microchip"
+                            class="input input-bordered w-full" />
+                    </fieldset>
+
+
+
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Padre</legend>
                         <input type="text" name="father_name" value="{{ old('father_name', $horse->father_name) }}"
@@ -75,21 +84,19 @@
                             placeholder="Madre"
                             class="input input-bordered w-full" />
                     </fieldset>
-
+                    
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Cuidador</legend>
-                        <select name="caretaker_id"
-                            class="select select-bordered w-full">
-                            @foreach ($caretakers as $caretaker)
-                                <option value="{{ $caretaker->id }}"
-                                    {{ $horse->caretaker_id == $caretaker->id ? 'selected' : '' }}>
-                                    {{ $caretaker->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </fieldset>
-                </div>
-
+                        <select name="caretaker_id" class="select select-bordered w-full">
+                         @foreach ($caretakers as $user)
+                          <option value="{{ $user->id }}" {{ $horse->caretaker_id == $user->id ? 'selected' : '' }}>
+                            {{ $user->name }}
+                                 </option>
+                              @endforeach
+                                    </select>
+                                </fieldset>
+                              </div>
+                                
                 <div class="space-y-2 mt-6">
                     <label class="text-base-content/80 font-semibold"> Fotos actuales:</label>
                     @if ($horse->photos->count())
