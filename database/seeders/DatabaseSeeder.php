@@ -16,22 +16,11 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
          $this->call([
         RolePermissionSeeder::class,
-    ]);
+         ]);
 
 
 
-        $this->call([
-            CaretakerSeeder::class,
-            HorseSeeder::class,
-            CalendarEventSeeder::class,
-            TrainingSeeder::class,
-            ExpenseSeeder::class,
-            FoodSeeder::class,
-            RaceSeeder::class,
-            VetVisitSeeder::class,
-            HorseSeeder::class,
-            BlacksmithSeeder::class,
 
-        ]);
+      
     }
 }

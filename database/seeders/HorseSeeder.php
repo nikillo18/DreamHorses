@@ -14,7 +14,7 @@ class HorseSeeder extends Seeder
      */
     public function run(): void
     {
-    DB::table('horses')->insert([
+    /*DB::table('horses')->insert([
             [
                 'name' => fake()->name(),
                 'breed' => fake()->word(),
@@ -63,6 +63,6 @@ class HorseSeeder extends Seeder
                 'mother_name' => fake()->name(),
                 'caretaker_id' => 2,
             ],
-        ]);
+        ]);*/
     }
 }
