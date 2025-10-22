@@ -24,6 +24,12 @@
                     </div>
                 @endrole
             </div>
+             <div class="p-6 md:p-2">
+                @if ($horseId)
+                    <a href="{{ route('horses.show', $horseId) }}" class="btn btn-sm btn-secondary mb-4">⬅ Volver al
+                        caballo</a>
+                @endif
+            </div>
             <div class="overflow-x-auto rounded-lg shadow-lg">
                 <table class="table-auto w-full text-sm text-left bg-base-200 text-base-content">
                     <thead class="bg-base-300 text-base-content">
@@ -41,23 +47,20 @@
                         @foreach ($blacksmiths as $blacksmith)
                             <tr class="border-b border-base-300 hover:bg-base-300">
                                 <td class="p-4 whitespace-nowrap">{{ $blacksmith->horse->name }}</td>
-                                <td class="p-4 whitespace-nowrap">{{ $blacksmith->date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($blacksmith->date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $blacksmith->name }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $blacksmith->horseshoe }}</td>
                                 <td class="p-4 flex flex-col md:flex-row gap-2">
                                     @role('caretaker|admin')
                                         <a href="{{ route('blacksmiths.edit', $blacksmith->id) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('blacksmiths.destroy', $blacksmith->id) }}" method="POST"
-                                            class="w-full">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
-
-                                    </td>
-                                </tr>
-                            @endrole
+                                        <div>
+                                            <button class="btn btn-xs btn-error" onclick="document.getElementById('modal_blacksmith_{{ $blacksmith->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_blacksmith_' . $blacksmith->id" :action="route('blacksmiths.destroy', $blacksmith->id)" />
+                                        </div>
+                                    @endrole
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>

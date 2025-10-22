@@ -7,7 +7,9 @@ use App\Http\Requests\UpdateExpenseRequest;
 use App\Models\Expense;
 use App\Models\Horse;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\DomPDF\PDF as DomPDFPDF;
 use Carbon\Carbon;
+use Illuminate\Container\Attributes\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\FiltersByUserRole;
@@ -21,7 +23,13 @@ class ExpenseController extends Controller
 
     public function index(Request $request)
     {
-        $query = Expense::with('horse')->latest();
+        $query = Expense::with('horse');
+
+        $horseId = null;
+        if ($request->has('horse_id')) {
+            $horseId = $request->input('horse_id');
+            $query->where('horse_id', $horseId);
+        }
 
         $query = $this->filterByUserRole($query);
 
@@ -32,19 +40,21 @@ class ExpenseController extends Controller
             });
         }
 
-        $expenses = $query->get();
-        if ($request->filled('from_month')) {
-            $from = \Carbon\Carbon::createFromFormat('Y-m', $request->input('from_month'))->startOfMonth();
+
+        if ($request->filled('from_date')) {
+            $from = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->startOfDay();
             $query->where('date', '>=', $from);
         }
 
-        if ($request->filled('to_month')) {
-            $to = \Carbon\Carbon::createFromFormat('Y-m', $request->input('to_month'))->endOfMonth();
+        if ($request->filled('to_date')) {
+            $to = \Carbon\Carbon::createFromFormat('Y-m-d', $request->input('to_date'))->endOfDay();
             $query->where('date', '<=', $to);
         }
 
+        $query->orderBy('date', 'desc');
+
         $expenses = $query->get();
-        return view('expenses.index', compact('expenses'));
+        return view('expenses.index', compact('expenses', 'horseId'));
     }
 
     /**
@@ -88,7 +98,7 @@ class ExpenseController extends Controller
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         $expense->update($request->validated());
-        return redirect()->route('expenses.index')->with('success', 'Gastos subidos exitosamente .');
+        return redirect()->route('expenses.index')->with('success', 'Gastos Actualizado exitosamente .');
     }
 
     /**
@@ -254,6 +264,36 @@ class ExpenseController extends Controller
         return view('expenses.summary', compact('monthlyCategorySummary', 'totalGeneral', 'availableMonths'));
     }
 
+    public function downloadPdf(Request $request)
+    {
+        $query = Expense::with('horse');
+
+        if ($request->has('search')) {
+            $searchTerm = $request->input('search');
+            $query->whereHas('horse', function ($q) use ($searchTerm) {
+                $q->where('name', 'like', '%' . $searchTerm . '%');
+            });
+        }
+
+        if ($request->filled('from_date')) {
+            $from = Carbon::createFromFormat('Y-m-d', $request->input('from_date'))->startOfDay();
+            $query->where('date', '>=', $from);
+        }
+
+        if ($request->filled('to_date')) {
+            $to = Carbon::createFromFormat('Y-m-d', $request->input('to_date'))->endOfDay();
+            $query->where('date', '<=', $to);
+        }
+
+        $query->orderBy('date', 'desc');
+
+        $expenses = $query->get();
+
+        $pdf = Pdf::loadView('expenses.pdf', compact('expenses'));
+
+        return $pdf->download('lista_de_gastos.pdf');
+    }
+
     public function downloadSummaryPdf(Request $request)
     {
         $meses = [
@@ -299,6 +339,9 @@ class ExpenseController extends Controller
         $monthlyCategorySummary = $query->get();
         $totalGeneral = $monthlyCategorySummary->sum('total_amount');
 
+        // Recibir la imagen del gráfico enviada desde el cliente
+        $chartImage = $request->input('chart_image');
+
         $pdf = Pdf::loadView('expenses.summary_pdf', [
             'monthlyCategorySummary' => $monthlyCategorySummary,
             'totalGeneral' => $totalGeneral,
@@ -306,6 +349,7 @@ class ExpenseController extends Controller
             'toMonth' => $toMonth,
             'fromMonthFormatted' => $fromMonthFormatted,
             'toMonthFormatted' => $toMonthFormatted,
+            'chartImage' => $chartImage,
         ]);
 
         return $pdf->download('resumen-de-gastos.pdf');

@@ -2,7 +2,7 @@
 
 <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-    <div class="drawer-content bg-base-100 text-base-content">
+    <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
         <label for="my-drawer"
             class="btn btn-primary drawer-button lg:hidden m-4 shadow-md">
@@ -17,6 +17,7 @@
             <h1 class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-6">
                 Lista de Eventos
             </h1>
+            <x-session-alert />
                 <div class="flex justify-start mb-4 gap-2">
                 <form action="{{ route('calendarhorse') }}" method="get">
                     <button type="submit" class="btn btn-success font-bold shadow-sm">
@@ -54,7 +55,7 @@
                                 class="border-b border-base-300 hover:bg-base-300">
                                 <td class="p-4  break-words">{{ $event->title }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $event->horse->name }}</td>
-                                <td class="p-4 whitespace-nowrap">{{ $event->event_date }}</td>
+                                <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($event->event_date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $event->event_time }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $event->category }}</td>
                                 <td class="p-4 max-w-xs break-words">{{ $event->description }}</td>
@@ -62,15 +63,12 @@
                                     @role('caretaker|boss|admin')
                                         <a href="{{ route('calendar.edit', $event) }}"
                                             class="btn btn-xs btn-warning">Editar</a>
-                                        <form action="{{ route('calendar.destroy', $event) }}" method="POST" class="w-full"
-                                            onsubmit="return confirm('¿Estás seguro de que deseas eliminar este evento?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="btn btn-xs btn-error">Eliminar</button>
-                                        </form>
-                                    </td>
-                                @endrole
+                                        <div>
+                                            <button class="btn btn-xs btn-error" onclick="document.getElementById('modal_event_{{ $event->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_event_' . $event->id" :action="route('calendar.destroy', $event)" />
+                                        </div>
+                                    @endrole
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -80,5 +78,7 @@
     </div>
 
     <x-sidebar />
+
+
 </div>
 
