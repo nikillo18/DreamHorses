@@ -7,6 +7,8 @@ use App\Http\Requests\StoreBlacksmithRequest;
 use App\Http\Requests\UpdateBlacksmithRequest;
 use App\Models\Horse;
 use App\Traits\FiltersByUserRole;
+use GuzzleHttp\Psr7\Query;
+use Illuminate\Http\Request;
 
 class BlacksmithController extends Controller
 {
@@ -14,11 +16,22 @@ class BlacksmithController extends Controller
      * Display a listing of the resource.
      */
     use FiltersByUserRole; 
-    public function index()
+    public function index( Request $request)
     {
-     $blacksmiths = $this->filterByUserRole(Blacksmith::with('horse')->latest())->paginate(6);
+    $query = Blacksmith::with(['horse'])->latest();
+     $query = $this->filterByUserRole($query);
 
-    return view('blacksmiths.index', compact('blacksmiths'));
+       $horseId = null;
+    if ($request->has('horse_id')) {
+        $horseId = $request->input('horse_id');
+        $query->where('horse_id', $horseId);
+    }
+
+    $blacksmiths = $query->get();
+
+     
+
+    return view('blacksmiths.index', compact('blacksmiths', 'horseId'));
     }
 
     /**

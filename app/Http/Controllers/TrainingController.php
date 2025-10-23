@@ -14,7 +14,7 @@ class TrainingController extends Controller
     /**
      * Display a listing of the resource.
      */
-    use FiltersByUserRole; // 👈 activa el trait
+    use FiltersByUserRole; 
    public function index(Request $request)
 {
     
