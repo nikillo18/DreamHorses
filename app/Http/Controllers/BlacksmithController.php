@@ -9,7 +9,7 @@ use App\Models\Horse;
 use App\Traits\FiltersByUserRole;
 use GuzzleHttp\Psr7\Query;
 use Illuminate\Http\Request;
-use App\Traits\FiltersByUserRole;
+
 
 
 class BlacksmithController extends Controller
@@ -17,23 +17,23 @@ class BlacksmithController extends Controller
     /**
      * Display a listing of the resource.
      */
-    use FiltersByUserRole; 
-    public function index( Request $request)
+    use FiltersByUserRole;
+    public function index(Request $request)
     {
-    $query = Blacksmith::with(['horse'])->latest();
-     $query = $this->filterByUserRole($query);
+        $query = Blacksmith::with(['horse'])->latest();
+        $query = $this->filterByUserRole($query);
 
-       $horseId = null;
-    if ($request->has('horse_id')) {
-        $horseId = $request->input('horse_id');
-        $query->where('horse_id', $horseId);
-    }
+        $horseId = null;
+        if ($request->has('horse_id')) {
+            $horseId = $request->input('horse_id');
+            $query->where('horse_id', $horseId);
+        }
 
-    $blacksmiths = $query->get();
+        $blacksmiths = $query->get();
 
-     
 
-    return view('blacksmiths.index', compact('blacksmiths', 'horseId'));
+
+        return view('blacksmiths.index', compact('blacksmiths', 'horseId'));
     }
 
     /**
@@ -41,7 +41,7 @@ class BlacksmithController extends Controller
      */
     public function create()
     {
-         $horse = $this->getUserHorses();
+        $horse = $this->getUserHorses();
 
         return view('blacksmiths.create', compact('horse'));
     }
