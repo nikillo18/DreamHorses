@@ -8,7 +8,7 @@ use App\Http\Requests\UpdateStudRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Traits\FiltersByUserRole;
 use Illuminate\Http\Request;
-
+use App\Models\Horse;
 class StudController extends Controller
 {
     /**
@@ -34,19 +34,25 @@ class StudController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-   public function store(StoreStudRequest $request)
+public function store(StoreStudRequest $request)
 {
-$data = $request->validated();
-    $data['owner_id'] = Auth::id();
+    $user = Auth::user();
+
+    if ($user->ownedStud) {
+        return back()->with('error', 'Solo podés crear un stud como propietario.');
+    }
+
+    $data = $request->validated();
+    $data['owner_id'] = $user->id;
 
     $stud = Stud::create($data);
 
-    $stud->caretakers()->attach(Auth::id());
+    $stud->caretakers()->attach($user->id);
 
     return redirect()->route('studs.show', $stud)
                      ->with('success', 'Stud creado correctamente.');
-
 }
+
 
 
     /**
@@ -99,14 +105,24 @@ $data = $request->validated();
         $stud->delete();
         return redirect()->route('studs.index')->with('success', 'Stud eliminado.');
     }
-    public function join(Stud $stud)
-    {
-        $user = Auth::user();
-        if (! $stud->caretakers()->where('user_id', $user->id)->exists()) {
-            $stud->caretakers()->attach($user->id);
-        }
-        return back()->with('success', 'Te uniste al stud.');
+
+  public function join(Stud $stud)
+{
+    /** @var \App\Models\User $user */
+
+    $user = Auth::user();
+
+    if ($user->studs()->count() >= 2) {
+        return back()->with('error', 'Solo podés unirte a un máximo de 2 studs.');
     }
+
+    if (! $stud->caretakers()->where('user_id', $user->id)->exists()) {
+        $stud->caretakers()->attach($user->id);
+    }
+
+    return back()->with('success', 'Te uniste al stud.');
+}
+
 
     public function leave(Stud $stud)
     {
@@ -149,15 +165,21 @@ $data = $request->validated();
 
 public function fire(Stud $stud)
 {
-        /** @var \App\Models\User $user */
-
+    /** @var \App\Models\User $user */
     $user = Auth::user();
     if (! $user->hasRole('boss')) abort(403);
 
+    $caretakerIds = $stud->caretakers->pluck('id');
+
+    Horse::where('boss_id', $user->id)
+        ->whereIn('caretaker_id', $caretakerIds)
+        ->update(['caretaker_id' => null]);
+
     $user->contractedStuds()->detach($stud->id);
 
-    return back()->with('success', 'Has dejado de contratar este stud.');
+    return back()->with('success', 'Has dejado de contratar este stud. Los caballos ahora están sin cuidador.');
 }
+
 
 
 }
