@@ -40,7 +40,7 @@
                                 <span class="label-text">Nombre</span>
                             </label>
                             <input type="text" name="name" id="name" class="input input-bordered w-full"
-                                placeholder="Ej. Relámpago" />
+                                placeholder="Ej. Relámpago" required />
                         </div>
 
                         {{-- Breed --}}
@@ -49,7 +49,7 @@
                                 <span class="label-text">Raza</span>
                             </label>
                             <input type="text" name="breed" id="breed" class="input input-bordered w-full"
-                                placeholder="Ej. Pura Sangre" />
+                                placeholder="Ej. Pura Sangre" required />
                         </div>
 
                         {{-- Color --}}
@@ -58,7 +58,7 @@
                                 <span class="label-text">Color</span>
                             </label>
                             <input type="text" name="color" id="color" class="input input-bordered w-full"
-                                placeholder="Ej. Castaño" />
+                                placeholder="Ej. Castaño" required />
                         </div>
 
                         {{-- Microchip --}}
@@ -75,8 +75,8 @@
                             <label for="birth_date" class="label">
                                 <span class="label-text">Fecha de nacimiento</span>
                             </label>
-                            <input type="date" name="birth_date" id="birth_date"
-                                class="input input-bordered w-full" />
+                            <input type="date" name="birth_date" id="birth_date" class="input input-bordered w-full"
+                                required />
                         </div>
 
                         {{-- Gender --}}
@@ -84,7 +84,7 @@
                             <label for="gender" class="label">
                                 <span class="label-text">Género</span>
                             </label>
-                            <select name="gender" id="gender" class="select select-bordered w-full">
+                            <select name="gender" id="gender" class="select select-bordered w-full" required>
                                 <option disabled selected>Seleccione género</option>
                                 <option value="male">Macho</option>
                                 <option value="female">Hembra</option>
@@ -97,7 +97,7 @@
                                 <span class="label-text">Padre</span>
                             </label>
                             <input type="text" name="father_name" id="father_name"
-                                class="input input-bordered w-full" placeholder="Ej. Viento" />
+                                class="input input-bordered w-full" placeholder="Ej. Viento" required />
                         </div>
 
                         {{-- Mother --}}
@@ -106,7 +106,7 @@
                                 <span class="label-text">Madre</span>
                             </label>
                             <input type="text" name="mother_name" id="mother_name"
-                                class="input input-bordered w-full" placeholder="Ej. Rayo" />
+                                class="input input-bordered w-full" placeholder="Ej. Rayo" required />
                         </div>
 
                         {{-- Caretaker --}}
