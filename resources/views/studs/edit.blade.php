@@ -29,6 +29,8 @@
                 <a href="{{ route('studs.index') }}" class="btn btn-accent shadow-sm">Volver a la Lista</a>
             </div>
 
+            <x-session-alert />
+
             <form action="{{ route('studs.update', $stud->id) }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
                 @csrf
@@ -40,6 +42,7 @@
                     </label>
                     <input type="text" name="name" id="name" value="{{ old('name', $stud->name) }}"
                         class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -48,6 +51,7 @@
                     </label>
                     <input type="text" name="address" id="address" value="{{ old('address', $stud->address) }}"
                         class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -56,6 +60,7 @@
                     </label>
                     <input type="text" name="phone" id="phone" value="{{ old('phone', $stud->phone) }}"
                         class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">

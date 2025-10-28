@@ -27,6 +27,7 @@
                 Detalles del Cuidador: {{ $caretaker->name }}
             </h2>
 
+            <x-session-alert />
 
             <div class="bg-base-200 p-6 rounded-lg shadow">
                 <h3 class="text-xl font-semibold mb-4"> Caballos a su cuidado</h3>
@@ -72,6 +73,7 @@
                           @endforeach
 
                         </select>
+                        <x-input-error :messages="$errors->get('new_caretaker_id')" class="mt-2" />
 
                         <button type="submit" class="btn btn-warning font-bold">
                             Reasignar caballos

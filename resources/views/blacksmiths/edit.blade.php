@@ -30,6 +30,7 @@
                     class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver
                     a la Lista</a>
             </div>
+            <x-session-alert />
             <form action="{{ route('blacksmiths.update', $blacksmith->id) }}" method="post"
                 class="space-y-4 bg-base-200 p-6 rounded-lg shadow-md">
                 @csrf
@@ -47,18 +48,21 @@
                             </option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Fecha del Herrado</legend>
                     <input type="date"
                         class="input input-bordered w-full"
                         name="date" value="{{ $blacksmith->date }}" required />
+                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Nombre del Herrero</legend>
                     <input type="text"
                         class="input input-bordered w-full"
                         name="name" placeholder="Nombre del Herrero" value="{{ $blacksmith->name }}" required />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Tipo de Herradura</legend>
@@ -66,6 +70,7 @@
                         class="input input-bordered w-full"
                         name="horseshoe" placeholder="Tipo de Herradura" value="{{ $blacksmith->horseshoe }}"
                         required />
+                    <x-input-error :messages="$errors->get('horseshoe')" class="mt-2" />
                 </fieldset>
                 <button type="submit"
                     class="btn btn-warning font-bold w-full shadow-sm">Actualizar</button>

@@ -29,6 +29,8 @@
                 Lista de Studs
             </h2>
 
+            <x-session-alert />
+
             @role('caretaker')
                 <div class="mb-4">
                     <a href="{{ route('studs.create') }}" class="btn btn-success font-bold shadow-sm">Crear nuevo Stud</a>

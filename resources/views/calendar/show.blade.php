@@ -21,6 +21,7 @@
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
             </svg>
         </label>
+<x-session-alert />
 <div>
     <div class="p-6 md:p-1">
             <h1 class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-6">

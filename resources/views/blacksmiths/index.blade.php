@@ -27,6 +27,7 @@
                 <h1 class="text-2xl sm:text-3xl font-bold text-base-content text-center sm:text-left mb-2">
                     Lista de Herrado
                 </h1>
+                <x-session-alert />
                 @role('caretaker|admin')
                     <div class="flex justify-start">
                         <a href="{{ route('blacksmiths.create') }}" class="btn btn-success font-bold shadow-sm">Crear

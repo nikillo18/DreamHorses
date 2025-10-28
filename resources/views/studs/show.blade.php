@@ -25,11 +25,7 @@
         <!-- Contenido principal -->
         <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
             
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
 
             <div class="card bg-base-200 shadow-xl p-6">
                 <h1 class="text-3xl font-bold text-primary mb-4">{{ $stud->name }}</h1>

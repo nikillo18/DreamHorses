@@ -32,6 +32,7 @@
                     class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver
                     a la Lista</a>
             </div>
+            <x-session-alert />
             <form action="{{ route('calendar.store') }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-lg shadow-md">
                 @csrf
@@ -39,6 +40,7 @@
                     <legend class="text-base-content/80">Título</legend>
                     <input type="text" name="title" id="title" required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Caballos</legend>
@@ -50,16 +52,19 @@
                             <option value="{{ $horses->id }}">{{ $horses->name }}</option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Fecha del Evento</legend>
                     <input type="date" name="event_date" id="event_date" value="{{ request('event_date') }}" required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('event_date')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Hora del Evento</legend>
                     <input type="time" name="event_time" id="event_time" required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('event_time')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Tipo de Evento</legend>
@@ -70,11 +75,13 @@
                         <option>Visita Veterinario</option>
                         <option>Carrera</option>
                     </select>
+                    <x-input-error :messages="$errors->get('category')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Descripción</legend>
                     <textarea name="description" id="description" rows="3"
                         class="textarea textarea-bordered w-full"></textarea>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </fieldset>
                 <button type="submit"
                     class="btn btn-success font-bold w-full shadow-sm">Crear

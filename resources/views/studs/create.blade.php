@@ -29,6 +29,8 @@
                 <a href="{{ route('studs.index') }}" class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver a la Lista</a>
             </div>
 
+            <x-session-alert />
+
             <form action="{{ route('studs.store') }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
                 @csrf
@@ -38,6 +40,7 @@
                         <span class="label-text">Nombre del Stud</span>
                     </label>
                     <input type="text" name="name" id="name" class="input input-bordered w-full" required />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -45,6 +48,7 @@
                         <span class="label-text">Dirección</span>
                     </label>
                     <input type="text" name="address" id="address" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -52,6 +56,7 @@
                         <span class="label-text">Teléfono</span>
                     </label>
                     <input type="text" name="phone" id="phone" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">

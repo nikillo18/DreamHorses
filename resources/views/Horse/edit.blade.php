@@ -28,6 +28,8 @@
                 <a href="{{ route('Horseindex') }}" class="btn btn-accent ml-2 shadow-sm">Volver
                     a la Lista</a>
 
+                <x-session-alert />
+
                 <form action="{{ route('horses.update', $horse->id) }}" method="POST" enctype="multipart/form-data"
                     class="space-y-4 bg-base-200 p-6 rounded-lg mt-4 shadow-md">
                     @csrf
@@ -38,24 +40,28 @@
                             <legend class="text-base-content/80">Nombre</legend>
                             <input type="text" name="name" value="{{ old('name', $horse->name) }}"
                                 placeholder="Nombre" class="input input-bordered w-full" required />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Raza</legend>
                             <input type="text" name="breed" value="{{ old('breed', $horse->breed) }}"
                                 placeholder="Raza" class="input input-bordered w-full" required />
+                            <x-input-error :messages="$errors->get('breed')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Color</legend>
                             <input type="text" name="color" value="{{ old('color', $horse->color) }}"
                                 placeholder="Color" class="input input-bordered w-full" required />
+                            <x-input-error :messages="$errors->get('color')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Fecha de Nacimiento</legend>
                             <input type="date" name="birth_date" value="{{ old('birth_date', $horse->birth_date) }}"
                                 class="input input-bordered w-full" required />
+                            <x-input-error :messages="$errors->get('birth_date')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
@@ -65,6 +71,7 @@
                                 <option value="female" {{ $horse->gender == 'female' ? 'selected' : '' }}>Hembra
                                 </option>
                             </select>
+                            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
@@ -72,6 +79,7 @@
                             <input type="text" name="number_microchip"
                                 value="{{ old('number_microchip', $horse->number_microchip) }}"
                                 placeholder="Número de Microchip" class="input input-bordered w-full" />
+                            <x-input-error :messages="$errors->get('number_microchip')" class="mt-2" />
                         </fieldset>
 
 
@@ -81,6 +89,7 @@
                             <input type="text" name="father_name"
                                 value="{{ old('father_name', $horse->father_name) }}" placeholder="Padre"
                                 class="input input-bordered w-full" required />
+                            <x-input-error :messages="$errors->get('father_name')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
@@ -88,6 +97,7 @@
                             <input type="text" name="mother_name"
                                 value="{{ old('mother_name', $horse->mother_name) }}" placeholder="Madre"
                                 class="input input-bordered w-full" />
+                            <x-input-error :messages="$errors->get('mother_name')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
@@ -100,6 +110,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('caretaker_id')" class="mt-2" />
                         </fieldset>
                     </div>
 
@@ -123,6 +134,7 @@
                         <input type="file" name="photos[]" id="photos" multiple accept="image/*"
                             class="file-input file-input-bordered w-full" onchange="previewImages(event)" />
                         <div id="preview" class="flex flex-wrap gap-2 mt-2"></div>
+                        <x-input-error :messages="$errors->get('photos')" class="mt-2" />
                     </fieldset>
                     <script>
                         function previewImages(event) {

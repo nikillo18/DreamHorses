@@ -28,12 +28,14 @@
                 <a href="{{ route('race.index') }}" class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver
                     a la Lista</a>
             </div>
+            <x-session-alert />
             <form action="{{ route('race.store') }}" method="post"
                 class="space-y-4 bg-base-200 p-6 rounded-lg shadow-md">
                 @csrf
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Fecha de la Carrera</legend>
                     <input type="date" class="input input-bordered w-full" name="date" required />
+                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Caballos</legend>
@@ -43,35 +45,41 @@
                             <option value="{{ $horses->id }}">{{ $horses->name }}</option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Hipódromo</legend>
                     <input type="text" class="input input-bordered w-full" name="hipodromo" placeholder="Nombre del Hipódromo"
                         required />
+                    <x-input-error :messages="$errors->get('hipodromo')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Video</legend>
                     <input type="url" class="input input-bordered w-full" name="video" placeholder="URL del Video" />
+                    <x-input-error :messages="$errors->get('video')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Posición</legend>
                     <input type="number" class="input input-bordered w-full" name="place"
                         placeholder="Posición del Caballo" />
-
+                    <x-input-error :messages="$errors->get('place')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Distancia Recorrida</legend>
                     <input type="number" class="input input-bordered w-full" name="distance"
                         placeholder="Distancia Recorrida" />
+                    <x-input-error :messages="$errors->get('distance')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Descripcion de la Carrera</legend>
                     <textarea class="textarea textarea-bordered h-24 w-full" name="description" placeholder="Descripcion"></textarea>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Jockey</legend>
                     <input type="text" class="input input-bordered w-full" name="jockey"
                         placeholder="Nombre del Jokey" required />
+                    <x-input-error :messages="$errors->get('jockey')" class="mt-2" />
                 </fieldset>
                 <button type="submit" class="btn btn-success font-bold w-full shadow-sm">Crear</button>
             </form>

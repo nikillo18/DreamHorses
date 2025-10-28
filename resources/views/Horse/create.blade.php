@@ -29,6 +29,8 @@
                         Lista</a>
                 </div>
 
+                <x-session-alert />
+
                 <form action="{{ route('StoreHorse') }}" method="POST" enctype="multipart/form-data"
                     class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
                     @csrf
@@ -41,6 +43,7 @@
                             </label>
                             <input type="text" name="name" id="name" class="input input-bordered w-full"
                                 placeholder="Ej. Relámpago" required />
+                            <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
 
                         {{-- Breed --}}
@@ -50,6 +53,7 @@
                             </label>
                             <input type="text" name="breed" id="breed" class="input input-bordered w-full"
                                 placeholder="Ej. Pura Sangre" required />
+                            <x-input-error :messages="$errors->get('breed')" class="mt-2" />
                         </div>
 
                         {{-- Color --}}
@@ -59,6 +63,7 @@
                             </label>
                             <input type="text" name="color" id="color" class="input input-bordered w-full"
                                 placeholder="Ej. Castaño" required />
+                            <x-input-error :messages="$errors->get('color')" class="mt-2" />
                         </div>
 
                         {{-- Microchip --}}
@@ -68,6 +73,7 @@
                             </label>
                             <input type="text" name="number_microchip" id="number_microchip"
                                 class="input input-bordered w-full" placeholder="Ej. 1234567AJF" />
+                            <x-input-error :messages="$errors->get('number_microchip')" class="mt-2" />
                         </div>
 
                         {{-- Birth Date --}}
@@ -77,6 +83,7 @@
                             </label>
                             <input type="date" name="birth_date" id="birth_date" class="input input-bordered w-full"
                                 required />
+                            <x-input-error :messages="$errors->get('birth_date')" class="mt-2" />
                         </div>
 
                         {{-- Gender --}}
@@ -89,6 +96,7 @@
                                 <option value="male">Macho</option>
                                 <option value="female">Hembra</option>
                             </select>
+                            <x-input-error :messages="$errors->get('gender')" class="mt-2" />
                         </div>
 
                         {{-- Father --}}
@@ -98,6 +106,7 @@
                             </label>
                             <input type="text" name="father_name" id="father_name"
                                 class="input input-bordered w-full" placeholder="Ej. Viento" required />
+                            <x-input-error :messages="$errors->get('father_name')" class="mt-2" />
                         </div>
 
                         {{-- Mother --}}
@@ -107,6 +116,7 @@
                             </label>
                             <input type="text" name="mother_name" id="mother_name"
                                 class="input input-bordered w-full" placeholder="Ej. Rayo" required />
+                            <x-input-error :messages="$errors->get('mother_name')" class="mt-2" />
                         </div>
 
                         {{-- Caretaker --}}
@@ -120,6 +130,7 @@
                                     <option value="{{ $caretaker->id }}">{{ $caretaker->name }}</option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('caretaker_id')" class="mt-2" />
                         </div>
 
                         {{-- Photos --}}
@@ -130,6 +141,7 @@
                             <input type="file" name="photos[]" id="photos" multiple accept="image/*"
                                 class="file-input file-input-bordered w-full" onchange="previewImages(event)" />
                             <div id="preview" class="flex flex-wrap gap-2 mt-2"></div>
+                            <x-input-error :messages="$errors->get('photos')" class="mt-2" />
                         </div>
                     </div>
 

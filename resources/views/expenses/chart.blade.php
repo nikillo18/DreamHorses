@@ -25,6 +25,8 @@
         <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4">Gráficos de Gastos</h2>
 
+            <x-session-alert />
+
             <div class="flex flex-col gap-6">
                 <div class="bg-base-200 p-6 rounded-xl shadow-md">
                     <h3 class="text-xl font-bold text-base-content mb-4">Gastos Mensuales</h3>
@@ -47,6 +49,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('start_month')" class="mt-2" />
                         </div>
                         <div class="form-control">
                             <label for="end_month" class="label">
@@ -59,6 +62,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('end_month')" class="mt-2" />
                         </div>
                         <button type="submit" class="btn btn-primary">Filtrar</button>
                     </form>
