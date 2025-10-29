@@ -26,7 +26,7 @@
                         <div
                             class="bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100 rounded-2xl shadow-xl p-6 w-full max-w-sm flex flex-col gap-4 border border-gray-200 dark:border-gray-700">
                             <div class="w-full h-48 bg-gray-200 dark:bg-gray-700 rounded-md overflow-hidden">
-                                <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('public/images/default.png')) }}"
+                                <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('images/default.png')) }}"
                                     alt="Foto de {{ $horse->name }}" class="object-cover w-full h-full">
                             </div>
                             <div class="space-y-1">
