@@ -47,7 +47,7 @@
                                 @endforeach
                             </div>
                         @else
-                            <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('images/contorno.png') }}"
+                            <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('images/default.png') }}"
                                 class="w-full h-80 object-cover rounded-lg" />
                         @endif
                     </div>
