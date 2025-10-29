@@ -41,7 +41,7 @@
                     <div
                         class="card bg-base-200 shadow-xl">
                         <figure>
-                            <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('storage/images/contorno.png')) }}"
+                            <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('images/contorno.png')) }}"
                                 class="w-full h-48 object-cover" />
                         </figure>
                         <div class="card-body">
