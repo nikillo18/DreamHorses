@@ -41,7 +41,7 @@
                         <span class="label-text">Nombre</span>
                     </label>
                     <input type="text" name="name" id="name" value="{{ old('name', $stud->name) }}"
-                        class="input input-bordered w-full" />
+                        class="input input-bordered w-full" required />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 

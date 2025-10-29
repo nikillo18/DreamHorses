@@ -93,13 +93,12 @@
                         @endrole
 
                         @role('boss|admin')
-                    <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
-                        onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
-                            Eliminar</button>
-                    </form>
+                    <div>
+                        <button class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900" onclick="document.getElementById('modal_horse_{{ $horse->id }}').showModal()">
+                            Eliminar
+                        </button>
+                        <x-delete-modal :id="'modal_horse_' . $horse->id" :action="route('horses.destroy', $horse->id)" body="¿Estás seguro de eliminar este caballo? Esta acción es irreversible y se perderán todos los datos asociados." />
+                    </div>
                        @endrole
                 </div>
                 

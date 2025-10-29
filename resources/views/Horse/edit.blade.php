@@ -96,13 +96,13 @@
                             <legend class="text-base-content/80">Madre</legend>
                             <input type="text" name="mother_name"
                                 value="{{ old('mother_name', $horse->mother_name) }}" placeholder="Madre"
-                                class="input input-bordered w-full" />
+                                class="input input-bordered w-full" required />
                             <x-input-error :messages="$errors->get('mother_name')" class="mt-2" />
                         </fieldset>
 
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Cuidador</legend>
-                            <select name="caretaker_id" class="select select-bordered w-full" required>
+                            <select name="caretaker_id" class="select select-bordered w-full">
                                 @foreach ($caretakers as $user)
                                     <option value="{{ $user->id }}"
                                         {{ $horse->caretaker_id == $user->id ? 'selected' : '' }}>

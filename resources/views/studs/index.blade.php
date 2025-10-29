@@ -52,11 +52,10 @@
                                 @role('caretaker|admin')
                                     @if(auth()->id() === $stud->owner_id)
                                         <a href="{{ route('studs.edit', $stud->id) }}" class="btn btn-sm btn-warning">Editar</a>
-                                        <form action="{{ route('studs.destroy', $stud->id) }}" method="POST" onsubmit="return confirm('¿Eliminar este stud?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-error">Eliminar</button>
-                                        </form>
+                                        <div>
+                                            <button class="btn btn-sm btn-error" onclick="document.getElementById('modal_stud_destroy_{{ $stud->id }}').showModal()">Eliminar</button>
+                                            <x-delete-modal :id="'modal_stud_destroy_' . $stud->id" :action="route('studs.destroy', $stud->id)" body="¿Estás seguro de que deseas eliminar este stud? Esta acción no se puede deshacer." />
+                                        </div>
                                     @endif
                                 @endrole
 
