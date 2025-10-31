@@ -52,24 +52,24 @@
                         <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                     </fieldset>
                     <fieldset class="fieldset">
-                        <legend class="text-gray-700 dark:text-gray-300">Hipódromo</legend>
+                        <legend class="text-base-content/80">Hipódromo</legend>
                         <input type="text"
-                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            class="input input-bordered w-full"
                             name="hipodromo" placeholder="Nombre del Hipódromo" value="{{ $race->hipodromo }}"
                             required />
                         <x-input-error :messages="$errors->get('hipodromo')" class="mt-2" />
                     </fieldset>
                     <fieldset class="fieldset">
-                        <legend class="text-gray-700 dark:text-gray-300">Video (opcional)</legend>
+                        <legend class="text-base-content/80">Video (opcional)</legend>
                         <input type="text"
-                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            class="input input-bordered w-full"
                             name="video" placeholder="URL del Video" value="{{ $race->video }}" />
                         <x-input-error :messages="$errors->get('video')" class="mt-2" />
                     </fieldset>
                     <fieldset class="fieldset">
-                        <legend class="text-gray-700 dark:text-gray-300">Posición</legend>
+                        <legend class="text-base-content/80">Posición</legend>
                         <input type="number"
-                            class="input input-bordered w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-100"
+                            class="input input-bordered w-full"
                             name="place" placeholder="Posición del Caballo" value="{{ $race->place }}" />
                         <x-input-error :messages="$errors->get('place')" class="mt-2" />
                     </fieldset>
