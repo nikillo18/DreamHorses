@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
+use App\Notifications\CustomVerifyEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles ;
@@ -66,6 +67,10 @@ public function studs()
 public function contractedStuds()
 {
     return $this->belongsToMany(Stud::class, 'boss_stud', 'boss_id', 'stud_id');
+}
+public function sendEmailVerificationNotification()
+{
+    $this->notify(new CustomVerifyEmail);
 }
 
 
