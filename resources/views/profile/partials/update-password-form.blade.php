@@ -38,9 +38,7 @@
             <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
             @if (session('status') === 'password-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-base-content/80">{{ __('Saved.') }}</p>
-            @endif
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"\n                    class="text-sm text-base-content/80">{{ __('Guardado.') }}</p>            @endif
         </div>
     </form>
 </section>

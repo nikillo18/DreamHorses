@@ -8,7 +8,7 @@
         <!-- Email Address -->
         <div>
             <label for="email" class="label">{{ __('Correo electrónico') }}</label>
-            <input id="email" class="input input-bordered w-full" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" />
+            <input id="email" class="input input-bordered w-full" type="email" name="email" :value="old('email')" autofocus autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -18,7 +18,7 @@
             <input id="password" class="input input-bordered w-full"
                             type="password"
                             name="password"
-                            required autocomplete="current-password" />
+                            autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 

@@ -72,7 +72,7 @@ class ExpenseController extends Controller
     public function store(StoreExpenseRequest $request)
     {
         $expense = Expense::create($request->validated());
-        return redirect()->route('expenses.index')->with('success', 'Expense creada exitosamente.');
+        return redirect()->route('expenses.index')->with('success', 'Gasto creado exitosamente.');
     }
 
     /**
@@ -98,7 +98,7 @@ class ExpenseController extends Controller
     public function update(UpdateExpenseRequest $request, Expense $expense)
     {
         $expense->update($request->validated());
-        return redirect()->route('expenses.index')->with('success', 'Gastos Actualizado exitosamente .');
+        return redirect()->route('expenses.index')->with('success', 'Gasto actualizado exitosamente.');
     }
 
     /**
@@ -107,7 +107,7 @@ class ExpenseController extends Controller
     public function destroy(Expense $expense)
     {
         $expense->delete();
-        return redirect()->route('expenses.index')->with('success', 'Se borro correctamente.');
+        return redirect()->route('expenses.index')->with('success', 'Gasto eliminado correctamente.');
     }
 
     public function chart(Request $request)

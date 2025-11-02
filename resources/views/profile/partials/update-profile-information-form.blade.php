@@ -54,8 +54,8 @@
             <x-primary-button>{{ __('Guardar') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
-                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-base-content/80">{{ __('Saved.') }}</p>
+<p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-base-content/80">{{ __('Guardado.') }}</p>
             @endif
         </div>
     </form>
