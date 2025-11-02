@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Editar Stud - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -19,6 +29,8 @@
                 <a href="{{ route('studs.index') }}" class="btn btn-accent shadow-sm">Volver a la Lista</a>
             </div>
 
+            <x-session-alert />
+
             <form action="{{ route('studs.update', $stud->id) }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
                 @csrf
@@ -29,7 +41,8 @@
                         <span class="label-text">Nombre</span>
                     </label>
                     <input type="text" name="name" id="name" value="{{ old('name', $stud->name) }}"
-                        class="input input-bordered w-full" />
+                        class="input input-bordered w-full" required />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -38,6 +51,7 @@
                     </label>
                     <input type="text" name="address" id="address" value="{{ old('address', $stud->address) }}"
                         class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -46,6 +60,7 @@
                     </label>
                     <input type="text" name="phone" id="phone" value="{{ old('phone', $stud->phone) }}"
                         class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">
@@ -57,3 +72,6 @@
 
     <x-sidebar />
 </div>
+</body>
+
+</html>

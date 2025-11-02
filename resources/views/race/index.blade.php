@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Carreras - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
@@ -105,4 +115,6 @@
 
 
 </div>
+</body>
 
+</html>

@@ -15,6 +15,7 @@ class CaretakerSeeder extends Seeder
     public function run(): void
     {
 
+        //Caretaker::factory(10)->create();
 
     }
 }

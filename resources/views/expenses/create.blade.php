@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Crear Gasto - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -16,15 +26,7 @@
             <h2 class="text-2xl font-bold text-base-content mb-6"> Registrar Gasto</h2>
             <a href="{{ route('expenses.index') }}" class="btn btn-success font-bold">Volver
                 a la Lista</a>
-            @if ($errors->any())
-                <x-alert type="error">
-                    <ul class="list-disc list-inside text-sm">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </x-alert>
-            @endif
+            <x-session-alert />
 
             <form action="{{ route('expenses.store') }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
@@ -35,6 +37,7 @@
                         Gasto</label>
                     <input type="date" name="date" id="date" class="input input-bordered w-full"
                         value="{{ old('date') }}" required>
+                    <x-input-error :messages="$errors->get('date')" class="mt-2" />
                 </div>
 
                 <div>
@@ -53,11 +56,13 @@
                         <option value="Otros" {{ old('category') == 'Otros' ? 'selected' : '' }}>Otros</option>
 
                     </select>
+                    <x-input-error :messages="$errors->get('category')" class="mt-2" />
                 </div>
 
                 <div>
                     <label for="description" class="block font-semibold mb-1 text-base-content/80">Descripción</label>
                     <textarea name="description" id="description" rows="3" class="textarea textarea-bordered w-full" required>{{ old('description') }}</textarea>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 
                 <div>
@@ -65,6 +70,7 @@
                         ($)</label>
                     <input type="number" name="amount" id="amount" step="0.01"
                         class="input input-bordered w-full" value="{{ old('amount') }}" required>
+                    <x-input-error :messages="$errors->get('amount')" class="mt-2" />
                 </div>
 
                 <div>
@@ -77,6 +83,7 @@
                             </option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">
@@ -90,3 +97,6 @@
 
     <x-sidebar />
 </div>
+</body>
+
+</html>

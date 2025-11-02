@@ -13,6 +13,6 @@ class VetVisitSeeder extends Seeder
      */
     public function run(): void
     {
-        VetVisit::factory(10)->create();
+        //VetVisit::factory(10)->create();
     }
 }

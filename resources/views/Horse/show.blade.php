@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Ver Caballo - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content" x-data>
         <!-- Botón hamburguesa -->
@@ -37,7 +47,7 @@
                                 @endforeach
                             </div>
                         @else
-                            <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('storage/horses/contorno.png') }}"
+                            <img src="{{ $horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('images/default.png') }}"
                                 class="w-full h-80 object-cover rounded-lg" />
                         @endif
                     </div>
@@ -79,17 +89,16 @@
                 <div class="flex gap-2">
                     @role('caretaker|admin|boss')
                     <a href="{{ route('horses.edit', $horse->id) }}"
-                        class="btn btn-sm bg-yellow-300 hover:bg-yellow-400 dark:bg-yellow-500 dark:hover:bg-yellow-400 text-gray-900"> Editar</a>
+                        class="btn btn-sm btn-warning"> Editar</a>
                         @endrole
 
                         @role('boss|admin')
-                    <form action="{{ route('horses.destroy', $horse->id) }}" method="POST"
-                        onsubmit="return confirm('¿Estás seguro de eliminar este caballo?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm bg-red-300 hover:bg-red-400 dark:bg-red-600 dark:hover:bg-red-500 text-gray-900">
-                            Eliminar</button>
-                    </form>
+                    <div>
+                        <button class="btn btn-sm btn-error" onclick="document.getElementById('modal_horse_{{ $horse->id }}').showModal()">
+                            Eliminar
+                        </button>
+                        <x-delete-modal :id="'modal_horse_' . $horse->id" :action="route('horses.destroy', $horse->id)" body="¿Estás seguro de eliminar este caballo? Esta acción es irreversible y se perderán todos los datos asociados." />
+                    </div>
                        @endrole
                 </div>
                 
@@ -101,3 +110,6 @@
 
 
 </div>
+</body>
+
+</html>

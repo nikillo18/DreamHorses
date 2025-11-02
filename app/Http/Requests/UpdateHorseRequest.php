@@ -30,7 +30,7 @@ class UpdateHorseRequest extends FormRequest
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
         'boss_id' => 'nullable|exists:users,id',
-        'caretaker_id' => 'required|exists:users,id',
+        'caretaker_id' => 'nullable|exists:users,id',
         'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         'number_microchip' => 'nullable|string|max:15',
         ];

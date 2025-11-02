@@ -27,13 +27,13 @@ class VetVisitController extends Controller
 
         $visits = $query->paginate(6);
 
-        return view('VetVisit.index', compact('visits', 'horseId'));
+        return view('vetvisit.index', compact('visits', 'horseId'));
     }
 
     public function create()
     {
-      $horses = $this->getUserHorses();        
-     return view('VetVisit.create', compact('horses'));
+        $horses = $this->getUserHorses();
+        return view('vetvisit.create', compact('horses'));
     }
 
     public function store(StoreVetVisitRequest $request)
@@ -44,8 +44,8 @@ class VetVisitController extends Controller
 
     public function edit(VetVisit $vetVisit)
     {
-      $horses = $this->getUserHorses();        
-        return view('VetVisit.edit', compact('vetVisit', 'horses'));
+        $horses = $this->getUserHorses();
+        return view('vetvisit.edit', compact('vetVisit', 'horses'));
     }
 
     public function update(UpdateVetVisitRequest $request, VetVisit $vetVisit)

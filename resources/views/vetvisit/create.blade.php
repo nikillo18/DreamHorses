@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Crear Visita del Veterinario - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -16,6 +26,7 @@
             <h2 class="text-2xl font-bold text-base-content mb-6">Registrar Visita Veterinaria</h2>
             <a href="{{ route('vet-visits.index') }}" class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver
                 a la Lista</a>
+            <x-session-alert />
             <form action="{{ route('vet-visits.store') }}" method="POST"
                 class="bg-base-200 p-6 rounded-xl shadow-md space-y-4">
                 @csrf
@@ -28,6 +39,7 @@
                             <option value="{{ $horse->id }}">{{ $horse->name }}</option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </div>
 
                 <div>
@@ -35,12 +47,14 @@
                         Visita</label>
                     <input type="date" name="visit_date" id="visit_date" class="input input-bordered w-full"
                         required />
+                    <x-input-error :messages="$errors->get('visit_date')" class="mt-2" />
                 </div>
 
                 <div>
                     <label for="vet_name" class="font-semibold text-base-content/80">Veterinario</label>
                     <input type="text" name="vet_name" id="vet_name" placeholder="Ej. Dr. Gómez"
                         class="input input-bordered w-full" required />
+                    <x-input-error :messages="$errors->get('vet_name')" class="mt-2" />
                 </div>
 
                 <div>
@@ -48,24 +62,28 @@
                         Veterinario</label>
                     <input type="text" name="vet_phone" id="vet_phone" placeholder="Ej. 1122334455"
                         class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('vet_phone')" class="mt-2" />
                 </div>
 
                 <div>
                     <label for="diagnosis" class="font-semibold text-base-content/80">Diagnóstico</label>
                     <textarea name="diagnosis" id="diagnosis" rows="3" class="textarea textarea-bordered w-full"
                         placeholder="Ej. Revisión general, sin hallazgos..." required></textarea>
+                    <x-input-error :messages="$errors->get('diagnosis')" class="mt-2" />
                 </div>
 
                 <div>
                     <label for="treatment" class="font-semibold text-base-content/80">Tratamiento</label>
                     <textarea name="treatment" id="treatment" rows="3" class="textarea textarea-bordered w-full"
                         placeholder="Ej. Ninguno necesario" required></textarea>
+                    <x-input-error :messages="$errors->get('treatment')" class="mt-2" />
                 </div>
 
                 <div>
                     <label for="next_visit" class="font-semibold text-base-content/80">Próxima Visita
                         (opcional)</label>
                     <input type="date" name="next_visit" id="next_visit" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('next_visit')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">
@@ -79,3 +97,6 @@
 
     <x-sidebar />
 </div>
+</body>
+
+</html>

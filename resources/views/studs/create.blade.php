@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Crear Stud - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -19,6 +29,8 @@
                 <a href="{{ route('studs.index') }}" class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver a la Lista</a>
             </div>
 
+            <x-session-alert />
+
             <form action="{{ route('studs.store') }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
                 @csrf
@@ -28,6 +40,7 @@
                         <span class="label-text">Nombre del Stud</span>
                     </label>
                     <input type="text" name="name" id="name" class="input input-bordered w-full" required />
+                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -35,6 +48,7 @@
                         <span class="label-text">Dirección</span>
                     </label>
                     <input type="text" name="address" id="address" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
 
                 <div class="form-control">
@@ -42,6 +56,7 @@
                         <span class="label-text">Teléfono</span>
                     </label>
                     <input type="text" name="phone" id="phone" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">
@@ -53,3 +68,6 @@
 
     <x-sidebar />
 </div>
+</body>
+
+</html>

@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Caballos - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -18,11 +28,7 @@
                 Listado de Caballos
             </h2>
 
-            @if (session('success'))
-                <div class="alert alert-success">
-                    {{ session('success') }}
-                </div>
-            @endif
+            <x-session-alert />
             @role('|boss|admin')
                 <div class="mb-4">
                     <a href="{{ route('CreateHorse') }}"
@@ -35,7 +41,7 @@
                     <div
                         class="card bg-base-200 shadow-xl">
                         <figure>
-                            <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('storage/horses/contorno.png')) }}"
+                            <img src="{{ $horse->photos->first() ? asset('storage/' . $horse->photos->first()->path) : ($horse->photo_path ? asset('storage/' . $horse->photo_path) : asset('images/default.png')) }}"
                                 class="w-full h-48 object-cover" />
                         </figure>
                         <div class="card-body">
@@ -62,4 +68,6 @@
 
     <x-sidebar />
 </div>
+</body>
 
+</html>

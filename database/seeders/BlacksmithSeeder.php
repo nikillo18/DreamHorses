@@ -13,7 +13,7 @@ class BlacksmithSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('blacksmiths')->insert([
+        /*DB::table('blacksmiths')->insert([
             [
                 'horse_id' => 1,
                 'date' => '2023-01-15',
@@ -33,6 +33,6 @@ class BlacksmithSeeder extends Seeder
                 'horseshoe' => 'Herradura Ligera',
 
             ],
-        ]);
+        ]);*/
     }
 }

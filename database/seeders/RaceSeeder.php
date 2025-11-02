@@ -15,7 +15,7 @@ class RaceSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('races')->insert([[
+       /* DB::table('races')->insert([[
             'hipodromo' => 'palermo',
             'video' => 'https://www.youtube.com/embed/MvwlKML3HFc/?autoplay=true&rel=0',
             'date' => '2020-05-15',
@@ -34,6 +34,6 @@ class RaceSeeder extends Seeder
             'distance' => 1400,
             'description' => 'Clásico de San Isidro',
             'jockey' => 'Carlos Gomez',
-        ]]);
+        ]]);*/
     }
 }

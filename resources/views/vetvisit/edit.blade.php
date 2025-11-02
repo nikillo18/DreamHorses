@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Editar Visita del Veterinario - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -20,6 +30,7 @@
             <a href="{{ route('vet-visits.index') }}"
                 class="btn btn-accent mt-4 sm:mt-0 shadow-sm">Volver
                 a la Lista</a>
+            <x-session-alert />
             <form action="{{ route('vet-visits.update', $vetVisit->id) }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-xl shadow-md">
                 @csrf
@@ -37,6 +48,7 @@
                             </option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </div>
 
                 <div>
@@ -45,6 +57,7 @@
                     <input type="date" name="visit_date" id="visit_date"
                         class="input input-bordered w-full"
                         value="{{ old('visit_date', $vetVisit->visit_date) }}" required>
+                    <x-input-error :messages="$errors->get('visit_date')" class="mt-2" />
                 </div>
 
                 <div>
@@ -53,6 +66,7 @@
                     <input type="text" name="vet_name" id="vet_name"
                         class="input input-bordered w-full"
                         value="{{ old('vet_name', $vetVisit->vet_name) }}" required>
+                    <x-input-error :messages="$errors->get('vet_name')" class="mt-2" />
                 </div>
 
                 <div>
@@ -60,6 +74,7 @@
                     <input type="text" name="vet_phone" id="vet_phone"
                         class="input input-bordered w-full"
                         value="{{ old('vet_phone', $vetVisit->vet_phone) }}">
+                    <x-input-error :messages="$errors->get('vet_phone')" class="mt-2" />
                 </div>
 
                 <div>
@@ -67,6 +82,7 @@
                     <textarea name="diagnosis" id="diagnosis"
                         class="textarea textarea-bordered w-full"
                         required>{{ old('diagnosis', $vetVisit->diagnosis) }}</textarea>
+                    <x-input-error :messages="$errors->get('diagnosis')" class="mt-2" />
                 </div>
 
                 <div>
@@ -74,6 +90,7 @@
                     <textarea name="treatment" id="treatment"
                         class="textarea textarea-bordered w-full"
                         required>{{ old('treatment', $vetVisit->treatment) }}</textarea>
+                    <x-input-error :messages="$errors->get('treatment')" class="mt-2" />
                 </div>
 
                 <div>
@@ -82,6 +99,7 @@
                     <input type="date" name="next_visit" id="next_visit"
                         class="input input-bordered w-full"
                         value="{{ old('next_visit', $vetVisit->next_visit) }}">
+                    <x-input-error :messages="$errors->get('next_visit')" class="mt-2" />
                 </div>
 
                 <div class="pt-4">
@@ -95,3 +113,6 @@
 
     <x-sidebar />
 </div>
+</body>
+
+</html>

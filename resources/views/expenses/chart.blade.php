@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Gráfico de Gastos - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Hamburger button -->
@@ -14,6 +24,8 @@
         <!-- Main content -->
         <div class="p-6 md:p-8 max-w-4xl mx-auto space-y-6">
             <h2 class="text-3xl font-bold text-base-content mb-4">Gráficos de Gastos</h2>
+
+            <x-session-alert />
 
             <div class="flex flex-col gap-6">
                 <div class="bg-base-200 p-6 rounded-xl shadow-md">
@@ -37,6 +49,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('start_month')" class="mt-2" />
                         </div>
                         <div class="form-control">
                             <label for="end_month" class="label">
@@ -49,6 +62,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            <x-input-error :messages="$errors->get('end_month')" class="mt-2" />
                         </div>
                         <button type="submit" class="btn btn-primary">Filtrar</button>
                     </form>
@@ -175,3 +189,6 @@
         }
     });
 </script>
+</body>
+
+</html>

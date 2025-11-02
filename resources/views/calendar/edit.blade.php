@@ -1,6 +1,16 @@
-@vite('resources/css/app.css', 'resources/js/app.js')
+<!DOCTYPE html>
+<html lang="es">
 
-<div class="drawer lg:drawer-open">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Editar Evento - DreamHorses</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+
+<body>
+    <div class="drawer lg:drawer-open">
     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
     <div class="drawer-content bg-base-100 text-base-content">
         <!-- Botón hamburguesa -->
@@ -23,6 +33,8 @@
                     a la Lista</a>
             </div>
 
+            <x-session-alert />
+
             <form action="{{ route('calendar.update', $calendarEvent->id) }}" method="POST"
                 class="space-y-4 bg-base-200 p-6 rounded-lg shadow-md">
                 @csrf
@@ -31,6 +43,7 @@
                     <legend class="text-base-content/80">Título</legend>
                     <input type="text" name="title" id="title" value="{{ $calendarEvent->title }}" required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Caballos</legend>
@@ -44,28 +57,33 @@
                             </option>
                         @endforeach
                     </select>
+                    <x-input-error :messages="$errors->get('horse_id')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Fecha del Evento</legend>
                     <input type="date" name="event_date" id="event_date" value="{{ $calendarEvent->event_date }}"
                         required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('event_date')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Hora del Evento</legend>
                     <input type="time" name="event_time" id="event_time"
                         value="{{ \Carbon\Carbon::parse($calendarEvent->event_time)->format('H:i') }}" required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('event_time')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Tipo de Evento</legend>
                     <input type="text" name="category" id="category" value="{{ $calendarEvent->category }}" required
                         class="input input-bordered w-full">
+                    <x-input-error :messages="$errors->get('category')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Descripción</legend>
                     <textarea name="description" id="description" rows="3"
                         class="textarea textarea-bordered w-full">{{ $calendarEvent->description }}</textarea>
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </fieldset>
                 <button type="submit"
                     class="btn btn-warning font-bold w-full shadow-sm">Actualizar
@@ -76,3 +94,6 @@
 
     <x-sidebar />
 </div>
+</body>
+
+</html>
