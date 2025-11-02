@@ -41,6 +41,15 @@ class RegisteredUserController extends Controller
             'phone' => ['required', 'string', 'max:20'],
             'address' => ['required', 'string', 'max:255']
 
+        ], [
+            'name.required' => 'El campo de nombre es obligatorio.',
+            'email.required' => 'El campo de correo electrónico es obligatorio.',
+            'email.email' => 'Por favor, introduce una dirección de correo electrónico válida.',
+            'email.unique' => 'Esta dirección de correo electrónico ya está en uso.',
+            'password.required' => 'El campo de contraseña es obligatorio.',
+            'password.confirmed' => 'La confirmación de la contraseña no coincide.',
+            'phone.required' => 'El campo de teléfono es obligatorio.',
+            'address.required' => 'El campo de dirección es obligatorio.',
         ]);
 
         $user = User::create([
