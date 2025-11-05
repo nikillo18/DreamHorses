@@ -56,14 +56,71 @@
             </li>
         </div>
 
-        <div class="mt-auto space-y-2">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-error w-full">Cerrar sesión</button>
-            </form>
-            <form method="GET" action="{{ route('profile.edit') }}">
-                <button type="submit" class="btn btn-info w-full">Ver perfil</button>
-            </form>
-        </div>
+        @auth
+            @php
+                $user = Auth::user();
+                $name = trim($user->name ?? '');
+
+                $initials = '';
+                if ($name !== '') {
+                    $parts = preg_split('/\s+/', $name);
+                    if (count($parts) >= 2) {
+                        $first = mb_substr($parts[0], 0, 1);
+                        $second = mb_substr($parts[1], 0, 1);
+                        $initials = mb_strtoupper($first) . mb_strtolower($second);
+                    } else {
+                        $first = mb_substr($name, 0, 1);
+                        $second = mb_substr($name, 1, 1);
+                        if ($second !== '') {
+                            $initials = mb_strtoupper($first) . mb_strtolower($second);
+                        } else {
+                            $initials = mb_strtoupper($first);
+                        }
+                    }
+                }
+
+                $role = method_exists($user, 'getRoleNames')
+                    ? $user->getRoleNames()->first() ?? ''
+                    : $user->roles->pluck('name')->first() ?? '';
+            @endphp
+
+            <div class="mt-auto flex justify-end">
+                <div class="dropdown dropdown-end">
+                    <label tabindex="0" class="btn btn-ghost btn-circle avatar avatar-placeholder">
+                        <div
+                            class="bg-neutral text-neutral-content w-12 h-12 rounded-full flex items-center justify-center">
+                            <span class="text-lg font-semibold">{{ $initials ?: 'U' }}</span>
+                        </div>
+                    </label>
+                    <ul tabindex="-1"
+                        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-56 p-2 shadow">
+                        <li class="px-3 py-2">
+                            <div class="flex flex-col">
+                                <span class="font-medium">Nombre: {{ $user->name }}</span>
+                                @if ($role)
+                                    <span class="text-xs text-base-content/60">Role: {{ ucfirst($role) }}</span>
+                                @endif
+                            </div>
+                        </li>
+                        <li>
+                            <a href="{{ route('profile.edit') }}" class="w-full inline-block">
+                                Ver perfil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="w-full inline-block text-left"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Cerrar sesión
+                            </a>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                                @csrf
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        @endauth
+
+
     </ul>
 </div>
