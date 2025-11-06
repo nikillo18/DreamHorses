@@ -95,9 +95,19 @@
                         </div>
                         <div class="flex flex-col items-start flex-1 min-w-0">
                             <span class="font-semibold text-sm truncate w-full text-left">{{ $user->name }}</span>
+                            @php
+                                $roles = [
+                                    'caretaker' => 'Cuidador',
+                                    'boss' => 'Jefe',
+                                ];
+
+                                $roleTranslated = $roles[$role] ?? ucfirst($role);
+                            @endphp
+
                             @if ($role)
-                                <span class="text-xs opacity-60 truncate w-full text-left">{{ ucfirst($role) }}</span>
+                                <span class="text-xs opacity-60 truncate w-full text-left">{{ $roleTranslated }}</span>
                             @endif
+
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 opacity-60 flex-shrink-0" fill="none"
                             viewBox="0 0 24 24" stroke="currentColor">
@@ -112,10 +122,21 @@
                         <li class="px-3 py-2 mb-1 pointer-events-none">
                             <div class="flex flex-col gap-1">
                                 <span class="font-bold text-sm">{{ $user->name }}</span>
+
+                                @php
+                                    $roles = [
+                                        'caretaker' => 'Cuidador',
+                                        'boss' => 'Jefe',
+                                    ];
+
+                                    $roleTranslated = $roles[$role] ?? ucfirst($role);
+                                @endphp
+
                                 @if ($role)
                                     <span
-                                        class="badge badge-primary badge-xs mt-1 self-center ">{{ ucfirst($role) }}</span>
+                                        class="badge badge-primary badge-xs mt-1 self-center "">{{ $roleTranslated }}</span>
                                 @endif
+
                                 <span class="text-xs opacity-60 truncate">{{ $user->email }}</span>
                             </div>
                         </li>
@@ -158,3 +179,4 @@
         @endauth
     </ul>
 </div>
+
