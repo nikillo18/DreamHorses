@@ -27,15 +27,16 @@ class RolePermissionSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@example.com',
             'password' => Hash::make('admin123'),
-        'phone' => '123456789',
-        'address' => 'Admin Address'
+            'phone' => '123456789',
+            'address' => 'Admin Address',
+            'email_verified_at' => now(),
         ]);
 
 
         $adminUser->assignRole($adminRole);
 
         // horse permissions
-       /* $createHorsePermission = Permission::create(['name' => 'create horse']);
+        /* $createHorsePermission = Permission::create(['name' => 'create horse']);
         $editHorsePermission = Permission::create(['name' => 'edit horse']);
         $deleteHorsePermission = Permission::create(['name' => 'delete horse']);
         $viewHorsePermission = Permission::create(['name' => 'view horse']);
@@ -122,6 +123,5 @@ class RolePermissionSeeder extends Seeder
             $viewTrainingPermission,
 
         ]);*/
-
     }
 }

@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="forest">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8" />
     <title>{{ config('app.name', 'Laravel') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script>
+        // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+        if (localStorage.getItem('theme') === 'cupcake') {
+            document.documentElement.setAttribute('data-theme', 'cupcake');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'forest');
+        }
+    </script>
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/theme.js'])
 </head>
 
 <body class="bg-base-100 min-h-screen flex flex-col transition-colors duration-300">
