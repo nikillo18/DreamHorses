@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('date');
             $table->integer('distance');
             $table->string('type_training');
-            $table->integer('duration_minutes');
+            $table->decimal('duration_minutes', 5, 2)->default(0);
             $table->string('comments')->nullable();
             $table->timestamps();
         });

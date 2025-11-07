@@ -61,12 +61,16 @@
                         placeholder="Distancia Recorrida" required />
                     <x-input-error :messages="$errors->get('distance')" class="mt-2" />
                 </fieldset>
-                <fieldset class="fieldset">
-                    <legend class="text-base-content/80">Tiempo</legend>
-                    <input type="number" class="input input-bordered w-full" name="duration_minutes"
-                        placeholder="Tiempo" required />
-                    <x-input-error :messages="$errors->get('duration_minutes')" class="mt-2" />
-                </fieldset>
+               <fieldset class="fieldset">
+                <legend class="text-base-content/80">Tiempo</legend>
+                  <div class="grid grid-cols-2 gap-2">
+                   <input type="number" name="minutes" min="0" class="input input-bordered" placeholder="Minutos" >
+                 <input type="number" name="seconds" min="0" max="59" class="input input-bordered" placeholder="Segundos" >
+                   </div>
+                   <x-input-error :messages="$errors->get('minutes')" class="mt-2" />
+                   <x-input-error :messages="$errors->get('seconds')" class="mt-2" />
+                    </fieldset>
+
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Tipo de Entrenamiento</legend>
                     <input type="text" class="input input-bordered w-full" name="type_training"

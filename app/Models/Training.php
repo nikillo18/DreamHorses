@@ -16,4 +16,14 @@ class Training extends Model
     {
         return $this->belongsTo(Horse::class);
     }
+    public function getFormattedDurationAttribute()
+{
+    $minutes = floor($this->duration_minutes);
+    $seconds = round(($this->duration_minutes - $minutes) * 60);
+
+    return $minutes > 0 
+        ? "{$minutes} min {$seconds} seg"
+        : "{$seconds} seg";
+}
+
 }

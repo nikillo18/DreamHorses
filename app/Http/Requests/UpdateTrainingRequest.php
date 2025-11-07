@@ -25,7 +25,8 @@ class UpdateTrainingRequest extends FormRequest
             'horse_id' => 'required|exists:horses,id',
             'date' => 'required|date',
             'distance' => 'required|integer|min:0',
-            'duration_minutes' => 'required|integer|min:0',
+            'minutes' => 'nullable|integer|min:0',
+            'seconds' => 'nullable|integer|min:0|max:59',
             'type_training' => 'required|string|max:100',
             'comments' => 'nullable|string|max:100',
         ];

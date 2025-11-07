@@ -48,11 +48,18 @@ class TrainingController extends Controller
      */
     public function store(StoreTrainingRequest $request)
     {
-        $validatedData = $request->validated();
+        $data = $request->validated();
 
-        Training::create($validatedData);
+        $minutes = (int) $data['minutes'];
+        $seconds = (int) $data['seconds'];
 
-        return redirect()->route('training.index')->with('success', 'Entrenamiento Creado con Exito');
+        $data['duration_minutes'] = $minutes + ($seconds / 60);
+
+        unset($data['minutes'], $data['seconds']);
+
+        Training::create($data);
+
+        return redirect()->route('training.index')->with('success', 'Entrenamiento creado con éxito');
     }
 
     /**
@@ -78,11 +85,18 @@ class TrainingController extends Controller
      */
     public function update(UpdateTrainingRequest $request, Training $training)
     {
-        $validatedData = $request->validated();
+      $data = $request->validated();
 
-        $training->update($validatedData);
+        $minutes = (int) $data['minutes'];
+        $seconds = (int) $data['seconds'];
 
-        return redirect()->route('training.index')->with('success', 'Entrenamiento Actualizado con Exito');
+        $data['duration_minutes'] = $minutes + ($seconds / 60);
+
+        unset($data['minutes'], $data['seconds']);
+
+        $training->update($data);
+
+        return redirect()->route('training.index')->with('success', 'Entrenamiento actualizado con éxito');
     }
 
     /**
