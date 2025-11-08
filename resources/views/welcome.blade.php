@@ -25,7 +25,7 @@
             <img src="{{ asset('logo/logo1.png') }}" alt="DreamHorse Logo" class="w-64 mx-auto mb-8" />
 
             <h1 class="text-5xl font-bold mb-4">
-                Bienvenido a <span class="text-primary">DreamHorse</span>
+                Bienvenido a <span class="text-primary">DreamHorses</span>
             </h1>
 
             <p class="text-lg text-base-content/80 mb-8">

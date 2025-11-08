@@ -7,11 +7,11 @@ use App\Http\Requests\UpdateVetVisitRequest;
 use App\Models\Horse;
 use App\Models\VetVisit;
 use Illuminate\Http\Request;
-use App\Traits\FiltersByUserRole; // 👈 Importante
+use App\Traits\FiltersByUserRole; 
 
 class VetVisitController extends Controller
 {
-    use FiltersByUserRole; // 👈 activa el trait
+    use FiltersByUserRole; 
 
     public function index(Request $request)
     {

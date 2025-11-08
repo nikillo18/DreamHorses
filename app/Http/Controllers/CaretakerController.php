@@ -48,7 +48,6 @@ $user = Auth::user();
     /** @var \App\Models\User $user */
     $user = Auth::user();
 
-    // Cargamos los caballos del cuidador actual
     $caretaker->load('horsesCaretaker');
 
     if ($user->hasRole('boss')) {
