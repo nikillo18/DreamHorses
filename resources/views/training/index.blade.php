@@ -55,7 +55,7 @@
                         <tr>
                             <th class="p-4">Caballo</th>
                             <th class="p-4">Distancia</th>
-                            <th class="p-4">Duración</th>
+                            <th class="p-4">Tiempo</th>
                             <th class="p-4">Fecha</th>
                             <th class="p-4">Entrenamiento</th>
                             <th class="p-4">Comentarios</th>
@@ -68,7 +68,7 @@
                         @foreach ($training as $training)
                             <tr class="border-b border-base-300 hover:bg-base-300">
                                 <td class="p-4 whitespace-nowrap">{{ $training->horse->name }}</td>
-                                <td class="p-4 whitespace-nowrap">{{ $training->distance }} km</td>
+                                <td class="p-4 whitespace-nowrap">{{ $training->distance }} m</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->formatted_duration }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ \Carbon\Carbon::parse($training->date)->format('d/m/Y') }}</td>
                                 <td class="p-4 whitespace-nowrap">{{ $training->type_training }}</td>
