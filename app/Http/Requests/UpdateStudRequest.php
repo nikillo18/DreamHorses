@@ -25,7 +25,7 @@ class UpdateStudRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
-            'owner_id' => 'required|exists:users,id',
+            'owner_id' => 'nullable|exists:users,id',
         ];
     }
 }
