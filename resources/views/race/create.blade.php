@@ -57,7 +57,7 @@
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Hipódromo</legend>
-                        <input type="text" class="input input-bordered w-full" name="hipodromo"
+                        <input type="text" maxlength="50" class="input input-bordered w-full" name="hipodromo"
                             placeholder="Nombre del Hipódromo" required />
                         <x-input-error :messages="$errors->get('hipodromo')" class="mt-2" />
                     </fieldset>
@@ -86,7 +86,7 @@
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Jockey</legend>
-                        <input type="text" class="input input-bordered w-full" name="jockey"
+                        <input type="text" maxlength="50" class="input input-bordered w-full" name="jockey"
                             placeholder="Nombre del Jokey" required />
                         <x-input-error :messages="$errors->get('jockey')" class="mt-2" />
                     </fieldset>

@@ -6,19 +6,19 @@
 
         <div>
             <label for="name" class="label">{{ __('Nombre') }}</label>
-            <input id="name" class="input input-bordered w-full" type="text" name="name" :value="old('name')" required autofocus />
+            <input id="name" maxlength="50"  class="input input-bordered w-full" type="text" name="name" :value="old('name')" required autofocus />
             <x-input-error :messages="$errors->get('name')" class="mt-2" />
         </div>
 
             <div class="mt-4">
                 <label for="phone" class="label">{{ __('Teléfono') }}</label>
-                <input id="phone" class="input input-bordered w-full" type="text" name="phone" :value="old('phone')" required />
+                <input id="phone" maxlength="20" class="input input-bordered w-full" type="text" name="phone" :value="old('phone')" required />
                 <x-input-error :messages="$errors->get('phone')" class="mt-2" />
             </div>
 
             <div class="mt-4">
                 <label for="address" class="label">{{ __('Dirección') }}</label>
-                <input id="address" class="input input-bordered w-full" type="text" name="address" :value="old('address')" required />
+                <input id="address" maxlength="50" class="input input-bordered w-full" type="text" name="address" :value="old('address')" required />
                 <x-input-error :messages="$errors->get('address')" class="mt-2" />
             </div>
         

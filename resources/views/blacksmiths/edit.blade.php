@@ -68,13 +68,13 @@
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Nombre del Herrero</legend>
                     <input type="text"
-                        class="input input-bordered w-full"
+                        class="input input-bordered w-full" maxlength="50"
                         name="name" placeholder="Nombre del Herrero" value="{{ $blacksmith->name }}" required />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </fieldset>
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Tipo de Herradura</legend>
-                    <input type="text"
+                    <input type="text" maxlength="50"
                         class="input input-bordered w-full"
                         name="horseshoe" placeholder="Tipo de Herradura" value="{{ $blacksmith->horseshoe }}"
                         required />

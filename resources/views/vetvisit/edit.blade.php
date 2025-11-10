@@ -71,7 +71,7 @@
                 <div>
                     <label for="vet_name" class="font-semibold text-base-content/80">Nombre del
                         Veterinario</label>
-                    <input type="text" name="vet_name" id="vet_name"
+                    <input type="text" maxlength="50"  name="vet_name" id="vet_name"
                         class="input input-bordered w-full"
                         value="{{ old('vet_name', $vetVisit->vet_name) }}" required>
                     <x-input-error :messages="$errors->get('vet_name')" class="mt-2" />

@@ -49,7 +49,7 @@
                             <label for="name" class="label">
                                 <span class="label-text">Nombre</span>
                             </label>
-                            <input type="text" name="name" id="name" class="input input-bordered w-full"
+                            <input type="text" maxlength="50" name="name" id="name" class="input input-bordered w-full"
                                 placeholder="Ej. Relámpago" required />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </div>
@@ -112,7 +112,7 @@
                             <label for="father_name" class="label">
                                 <span class="label-text">Padre</span>
                             </label>
-                            <input type="text" name="father_name" id="father_name"
+                            <input type="text"  maxlength="50" name="father_name" id="father_name"
                                 class="input input-bordered w-full" placeholder="Ej. Viento" required />
                             <x-input-error :messages="$errors->get('father_name')" class="mt-2" />
                         </div>
@@ -122,7 +122,7 @@
                             <label for="mother_name" class="label">
                                 <span class="label-text">Madre</span>
                             </label>
-                            <input type="text" name="mother_name" id="mother_name"
+                            <input type="text" maxlength="50" name="mother_name" id="mother_name"
                                 class="input input-bordered w-full" placeholder="Ej. Rayo" required />
                             <x-input-error :messages="$errors->get('mother_name')" class="mt-2" />
                         </div>

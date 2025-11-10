@@ -46,7 +46,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Nombre</legend>
-                            <input type="text" name="name" value="{{ old('name', $horse->name) }}"
+                            <input type="text" maxlength="50" name="name" value="{{ old('name', $horse->name) }}"
                                 placeholder="Nombre" class="input input-bordered w-full" required />
                             <x-input-error :messages="$errors->get('name')" class="mt-2" />
                         </fieldset>
@@ -94,7 +94,7 @@
 
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Padre</legend>
-                            <input type="text" name="father_name"
+                            <input type="text" maxlength="50" name="father_name"
                                 value="{{ old('father_name', $horse->father_name) }}" placeholder="Padre"
                                 class="input input-bordered w-full" required />
                             <x-input-error :messages="$errors->get('father_name')" class="mt-2" />
@@ -102,7 +102,7 @@
 
                         <fieldset class="fieldset">
                             <legend class="text-base-content/80">Madre</legend>
-                            <input type="text" name="mother_name"
+                            <input type="text" maxlength="50" name="mother_name"
                                 value="{{ old('mother_name', $horse->mother_name) }}" placeholder="Madre"
                                 class="input input-bordered w-full" required />
                             <x-input-error :messages="$errors->get('mother_name')" class="mt-2" />

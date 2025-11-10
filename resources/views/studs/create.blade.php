@@ -47,7 +47,7 @@
                     <label for="name" class="label">
                         <span class="label-text">Nombre del Stud</span>
                     </label>
-                    <input type="text" name="name" id="name" class="input input-bordered w-full" required />
+                    <input type="text" maxlength="50"  name="name" id="name" class="input input-bordered w-full" required />
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
@@ -61,9 +61,9 @@
 
                 <div class="form-control">
                     <label for="phone" class="label">
-                        <span class="label-text">Teléfono</span>
+                        <span class="label-text">Numero de Teléfono</span>
                     </label>
-                    <input type="text" name="phone" id="phone" class="input input-bordered w-full" />
+                    <input type="text" maxlength="50" name="phone" id="phone" class="input input-bordered w-full" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 

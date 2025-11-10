@@ -42,7 +42,7 @@
                         Calendario
                     </button>
                 </form>
-                @role('caretaker|boss|admin')
+                @role('caretaker|admin')
                 <form action="{{ route('calendar.create') }}" method="get">
                     <button type="submit" class="btn btn-success font-bold shadow-sm">
                         Crear Evento

@@ -61,7 +61,7 @@
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Hipódromo</legend>
-                        <input type="text"
+                        <input type="text" maxlength="50"
                             class="input input-bordered w-full"
                             name="hipodromo" placeholder="Nombre del Hipódromo" value="{{ $race->hipodromo }}"
                             required />
@@ -94,7 +94,7 @@
                     </fieldset>
                     <fieldset class="fieldset">
                         <legend class="text-base-content/80">Jockey</legend>
-                        <input type="text" class="input input-bordered w-full" name="jockey"
+                        <input type="text" maxlength="50" class="input input-bordered w-full" name="jockey"
                             placeholder="Nombre del Jokey" value="{{ $race->jockey }}" required />
                         <x-input-error :messages="$errors->get('jockey')" class="mt-2" />
                     </fieldset>

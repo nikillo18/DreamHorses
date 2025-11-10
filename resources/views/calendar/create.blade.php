@@ -46,7 +46,7 @@
                 @csrf
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Título</legend>
-                    <input type="text" name="title" id="title" required
+                    <input type="text" maxlength="50" name="title" id="title" required
                         class="input input-bordered w-full">
                     <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </fieldset>
@@ -82,6 +82,9 @@
                         <option disabled selected>Elija evento</option>
                         <option>Visita Veterinario</option>
                         <option>Carrera</option>
+                        <option>Entrenamiento</option>
+                        <option>Herreria</option>
+
                     </select>
                     <x-input-error :messages="$errors->get('category')" class="mt-2" />
                 </fieldset>

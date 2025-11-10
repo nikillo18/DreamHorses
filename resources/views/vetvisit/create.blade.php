@@ -60,7 +60,7 @@
 
                 <div>
                     <label for="vet_name" class="font-semibold text-base-content/80">Veterinario</label>
-                    <input type="text" name="vet_name" id="vet_name" placeholder="Ej. Dr. Gómez"
+                    <input type="text" maxlength="50" name="vet_name" id="vet_name" placeholder="Ej. Dr. Gómez"
                         class="input input-bordered w-full" required />
                     <x-input-error :messages="$errors->get('vet_name')" class="mt-2" />
                 </div>

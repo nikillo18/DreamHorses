@@ -49,7 +49,7 @@
                 @method('PUT')
                 <fieldset class="fieldset">
                     <legend class="text-base-content/80">Título</legend>
-                    <input type="text" name="title" id="title" value="{{ $calendarEvent->title }}" required
+                    <input type="text" maxlength="50" name="title" id="title" value="{{ $calendarEvent->title }}" required
                         class="input input-bordered w-full">
                     <x-input-error :messages="$errors->get('title')" class="mt-2" />
                 </fieldset>

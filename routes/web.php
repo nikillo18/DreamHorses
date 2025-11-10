@@ -111,11 +111,11 @@ Route::delete('/blacksmiths/{blacksmith}', [BlacksmithController::class, 'destro
 /* Calendar */
 
 Route::get('/calendar', [CalendarEventController::class, 'index'])->name('calendar.index')->middleware('role:boss|caretaker|admin');
-Route::get('/calendar/create', [CalendarEventController::class, 'create'])->name('calendar.create')->middleware('role:boss|caretaker|admin');
-Route::post('/calendar', [CalendarEventController::class, 'store'])->name('calendar.store')->middleware('role:boss|caretaker|admin');
-Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'edit'])->name('calendar.edit')->middleware('role:boss|caretaker|admin');
-Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update')->middleware('role:boss|caretaker|admin');
-Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:boss|caretaker|admin');
+Route::get('/calendar/create', [CalendarEventController::class, 'create'])->name('calendar.create')->middleware('role:caretaker|admin');
+Route::post('/calendar', [CalendarEventController::class, 'store'])->name('calendar.store')->middleware('role:caretaker|admin');
+Route::get('/calendar/{calendarEvent}/edit', [CalendarEventController::class, 'edit'])->name('calendar.edit')->middleware('role:caretaker|admin');
+Route::put('/calendar/{calendarEvent}', [CalendarEventController::class, 'update'])->name('calendar.update')->middleware('role:caretaker|admin');
+Route::delete('/calendar/{calendarEvent}', [CalendarEventController::class, 'destroy'])->name('calendar.destroy')->middleware('role:caretaker|admin');
 
 Route::get('/calendarhorse', [CalendarEventController::class, 'calendar'])->name('calendarhorse')->middleware('role:boss|caretaker|admin');
 
