@@ -43,8 +43,8 @@ DreamHorses es una plataforma web desarrollada para permitir la gestión complet
 - Gráficos interactivos de rendimiento y uso de recursos.
 
 # Tecnologías Utilizadas:
-- Backend: PHP >= 8.1  con Laravel 10
-- Frontend: Tailwind CSS, Blade Templates,DaisyUI,Alpine.js,     Chart.js,FullCalendar
+- Backend: PHP >= 8.2  con Laravel 12
+- Frontend: Tailwind CSS, Blade Templates,DaisyUI,Alpine.js,Chart.js,FullCalendar
 - Base de Datos: MySQL
 - Autenticación: Laravel Breeze 
 ## Instalacion
@@ -57,10 +57,10 @@ Siga estos pasos para configurar y ejecutar el proyecto localmente:
 ```bash
 git clone [URL del repositorio]
 ```
-2. Antes de ejecutar cualquier comando, dirigirse a la carpeta ap,
+2. Antes de ejecutar cualquier comando, dirigirse a la carpeta app,
    que se encuentra en el directorio principal del proyecto
 ```bash
-cd [/ruta/a/mi/proyecto/app/]
+cd [/ruta/a/mi/proyecto/]
 ```
 3. Copie el archivo .env.example y renómbrelo a .env:
 ```bash

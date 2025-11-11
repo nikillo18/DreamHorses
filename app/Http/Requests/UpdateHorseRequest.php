@@ -25,7 +25,7 @@ class UpdateHorseRequest extends FormRequest
         'name' => 'required|string|max:100',
         'breed' => 'required|string|max:100',
         'color' => 'required|string|max:50',
-        'birth_date' => 'required|date',
+        'birth_date' => 'required|date|before_or_equal:today',
         'gender' => 'required|in:male,female',
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
@@ -35,4 +35,10 @@ class UpdateHorseRequest extends FormRequest
         'number_microchip' => 'nullable|string|max:15',
         ];
     }
+    public function messages(): array
+{
+    return [
+        'birth_date.before_or_equal' => 'La fecha de nacimiento  debe ser anterior o igual a hoy.',
+    ];
+}
 }

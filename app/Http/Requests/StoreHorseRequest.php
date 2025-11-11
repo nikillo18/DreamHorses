@@ -25,7 +25,7 @@ class StoreHorseRequest extends FormRequest
         'name' => 'required|string|max:100',
         'breed' => 'required|string|max:100',
         'color' => 'required|string|max:50',
-        'birth_date' => 'required|date',
+        'birth_date' => 'required|date|before_or_equal:today',
         'gender' => 'required|in:male,female',
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
@@ -33,6 +33,12 @@ class StoreHorseRequest extends FormRequest
         'number_microchip' => 'nullable|string|max:15',
         'boss_id' => 'nullable|exists:users,id',
         'caretaker_id' => 'nullable|exists:users,id',
+    ];
+    }
+    public function messages(): array
+    {
+    return [
+        'birth_date.before_or_equal' => 'La fecha de nacimiento  debe ser anterior o igual a hoy.',
     ];
     }
 }

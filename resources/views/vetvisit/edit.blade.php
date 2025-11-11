@@ -112,7 +112,7 @@
 
                 <div class="pt-4">
                     <button type="submit"
-                        class="btn btn-warning font-bold w-full shadow-sm">💾
+                        class="btn btn-warning font-bold w-full shadow-sm">
                         Actualizar Visita</button>
                 </div>
             </form>

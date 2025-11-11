@@ -32,4 +32,11 @@ class UpdateVetVisitRequest extends FormRequest
 
         ];
     }
+       public function messages(): array
+    {
+    return [
+        'visit_date.before_or_equal' => 'La fecha de la visita veterinaria debe ser anterior o igual a hoy.',
+    ];
+    }
+
 }

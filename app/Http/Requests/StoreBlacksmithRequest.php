@@ -23,9 +23,15 @@ class StoreBlacksmithRequest extends FormRequest
     {
         return [
             'horse_id' => 'required|exists:horses,id',
-            'date' => 'required|date',
+            'date' => 'required|date|before_or_equal:today',
             'name' => 'required|string|max:255',
             'horseshoe' => 'required|string|max:255',
         ];
+    }
+       public function messages(): array
+    {
+    return [
+        'date.before_or_equal' => 'La fecha de la herrería debe ser anterior o igual a hoy.',
+    ];
     }
 }

@@ -32,4 +32,12 @@ class UpdateRaceRequest extends FormRequest
             'video' => 'nullable|url',
         ];
     }
+     public function messages(): array
+    {
+    return [
+        'date.before_or_equal' => 'La fecha de la carrera debe ser anterior o igual a hoy.',
+    ];
+    }
+
+
 }

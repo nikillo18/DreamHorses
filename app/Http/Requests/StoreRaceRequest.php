@@ -23,7 +23,7 @@ class StoreRaceRequest extends FormRequest
     {
         return [
             'horse_id' => 'required|exists:horses,id',
-            'date' => 'required|date',
+            'date' => 'required|date|before_or_equal:today',
             'place' => 'nullable|integer|min:1',
             'distance' => 'nullable|numeric|min:0',
             'description' => 'nullable|string',
@@ -32,4 +32,11 @@ class StoreRaceRequest extends FormRequest
             'video' => 'nullable|url',
         ];
     }
+    public function messages(): array
+    {
+    return [
+        'date.before_or_equal' => 'La fecha de la carrera debe ser anterior o igual a hoy.',
+    ];
+    }
+
 }

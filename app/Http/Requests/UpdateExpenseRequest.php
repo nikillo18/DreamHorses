@@ -24,9 +24,16 @@ class UpdateExpenseRequest extends FormRequest
         return [
             'amount' => 'required|numeric|min:0',
             'description' => 'nullable|string|max:150',
-            'date' => 'required|date',
+            'date' => 'required|date|before_or_equal:today',
             'category' => 'required|string|max:50',
             'horse_id' => 'required|exists:horses,id',
         ];
     }
+        public function messages(): array
+    {
+    return [
+        'date.before_or_equal' => 'La fecha del gasto debe ser anterior o igual a hoy.',
+    ];
+    }
+
 }

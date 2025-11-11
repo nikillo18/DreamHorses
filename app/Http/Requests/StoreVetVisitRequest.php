@@ -23,7 +23,7 @@ class StoreVetVisitRequest extends FormRequest
     {
         return [
             'horse_id'     => 'required|exists:horses,id',
-            'visit_date'   => 'required|date',
+            'visit_date'   => 'required|date|before_or_equal:today',
             'vet_name'     => 'required|string|max:100',
             'vet_phone'    => 'nullable|string|max:20',
             'diagnosis'    => 'required|string|max:120',
@@ -32,4 +32,11 @@ class StoreVetVisitRequest extends FormRequest
 
         ];
     }
+     public function messages(): array
+    {
+    return [
+        'visit_date.before_or_equal' => 'La fecha de la visita veterinaria debe ser anterior o igual a hoy.',
+    ];
+    }
+
 }
