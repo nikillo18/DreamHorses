@@ -55,6 +55,7 @@ Route::get('horses/{horse}', [HorseController::class, 'show'])->name('horses.sho
 Route::get('horses/{horse}/edit', [HorseController::class, 'edit'])->name('horses.edit')->middleware('role:boss|caretaker|admin');
 Route::put('horses/{horse}', [HorseController::class, 'update'])->name('horses.update')->middleware('role:boss|caretaker|admin');
 Route::delete('horses/{horse}', [HorseController::class, 'destroy'])->name('horses.destroy')->middleware('role:boss|admin');
+Route::get('horses/{horse}/pdf', [HorseController::class, 'downloadPDF'])->name('horses.pdf')->middleware('role:boss|caretaker|admin');
 Route::delete('/photos/{photo}', [HorsePhotoController::class, 'destroy'])->name('photos.destroy')->middleware('role:boss|caretaker|admin');
 
 /* Race */

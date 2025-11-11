@@ -93,6 +93,12 @@
                                     @endforelse
                                 </ul>
                             </div>
+                            <div class="card-actions justify-end pt-2">
+                                <a href="{{ route('horses.pdf', $horse->id) }}"
+                                    class="btn btn-sm btn-outline btn-primary">
+                                    Descargar PDF
+                                </a>
+                            </div>
                         </div>
                     @endforeach
                 </div>

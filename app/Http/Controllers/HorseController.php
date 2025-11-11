@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Race;
+use App\Models\VetVisit;
+use App\Models\CalendarEvent;
+use App\Models\Expense;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class HorseController extends Controller
 {
@@ -170,5 +175,52 @@ public function destroy(Horse $horse)
 
     $horse->delete();
     return redirect()->route('Horseindex')->with('error', 'Caballo eliminado correctamente ');
+}
+
+public function downloadPDF(Horse $horse)
+{
+    $horse->load('photos');
+
+    $nextRaces = Race::where('horse_id', $horse->id)
+        ->where('date', '>=', now())
+        ->orderBy('date')->get();
+
+    $nextVetVisits = VetVisit::where('horse_id', $horse->id)
+        ->where('visit_date', '>=', now())
+        ->orderBy('visit_date')->get();
+
+    $nextCalendarEvents = CalendarEvent::where('horse_id', $horse->id)
+        ->where('event_date', '>=', now())
+        ->orderBy('event_date')->get();
+
+    $events = $nextRaces->map(fn($r) => (object)[
+        'horse_id' => $r->horse_id,
+        'event_date' => $r->date,
+        'title' => 'Carrera en ' . $r->hipodromo,
+        'category' => 'Carrera',
+    ])->concat(
+        $nextVetVisits->map(fn($v) => (object)[
+            'horse_id' => $v->horse_id,
+            'event_date' => $v->visit_date,
+            'title' => $v->diagnosis,
+            'category' => 'Visita Veterinaria',
+        ])
+    )->concat(
+        $nextCalendarEvents->map(fn($e) => (object)[
+            'horse_id' => $e->horse_id,
+            'event_date' => $e->event_date,
+            'title' => $e->title,
+            'category' => $e->category,
+        ])
+    )->sortBy('event_date');
+
+    $alerts = $events->filter(fn($e) => $e->event_date <= now()->addDays(7));
+
+    $totalExpenses = Expense::where('horse_id', $horse->id)
+        ->sum('amount');
+
+    $pdf = Pdf::loadView('Horse.pdf', compact('horse', 'events', 'totalExpenses', 'alerts'));
+
+    return $pdf->download('dreamhorses-' . $horse->name . '.pdf');
 }
 }
