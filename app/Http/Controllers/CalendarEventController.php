@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateCalendarEventRequest;
 use App\Models\CalendarEvent;
 use App\Models\Horse;
 use App\Traits\FiltersByUserRole;
+use Illuminate\Support\Facades\Auth;
+
 
 class CalendarEventController extends Controller
 {
@@ -78,11 +80,30 @@ class CalendarEventController extends Controller
     }
 public function calendar()
 {
-    $events = CalendarEvent::with('horse')->get()->map(function($event) {
+    /** @var \App\Models\User $user */
+
+    $user = Auth::user();
+
+    $query = CalendarEvent::with('horse');
+
+    if ($user->hasRole('caretaker')) {
+        $query->whereHas('horse', function ($q) use ($user) {
+            $q->where('caretaker_id', $user->id);
+        });
+    }
+
+    elseif ($user->hasRole('boss')) {
+        $query->whereHas('horse', function ($q) use ($user) {
+            $q->where('boss_id', $user->id);
+        });
+    }
+
+
+    $events = $query->get()->map(function($event) {
         return [
             'title' => $event->category,
             'horse' => $event->horse->name,
-            'time' => substr($event->event_time, 0, 5), 
+            'time' => substr($event->event_time, 0, 5),
             'start' => $event->event_date . 'T' . $event->event_time,
         ];
     });

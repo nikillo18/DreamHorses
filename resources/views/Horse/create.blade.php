@@ -144,7 +144,7 @@
                         {{-- Photos --}}
                         <div class="form-control md:col-span-2">
                             <label for="photos" class="label">
-                                <span class="label-text">Fotos del Caballo</span>
+                                <span class="label-text">Fotos del Caballo (Maximo 1MB)</span>
                             </label>
                             <input type="file" name="photos[]" id="photos" multiple accept="image/*"
                                 class="file-input file-input-bordered w-full" onchange="previewImages(event)" />

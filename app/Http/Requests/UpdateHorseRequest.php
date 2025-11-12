@@ -31,7 +31,7 @@ class UpdateHorseRequest extends FormRequest
         'mother_name' => 'nullable|string|max:100',
         'boss_id' => 'nullable|exists:users,id',
         'caretaker_id' => 'nullable|exists:users,id',
-        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
         'number_microchip' => 'nullable|string|max:15',
         ];
     }
@@ -39,6 +39,9 @@ class UpdateHorseRequest extends FormRequest
 {
     return [
         'birth_date.before_or_equal' => 'La fecha de nacimiento  debe ser anterior o igual a hoy.',
+        'photos.*.image' => 'Cada archivo debe ser una imagen.',
+        'photos.*.mimes' => 'Las imágenes deben ser de tipo jpeg, png, jpg o gif.',
+        'photos.*.max' => 'Cada imagen no debe superar los 1MB.',
     ];
 }
 }

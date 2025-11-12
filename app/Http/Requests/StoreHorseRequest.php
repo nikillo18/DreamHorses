@@ -29,7 +29,7 @@ class StoreHorseRequest extends FormRequest
         'gender' => 'required|in:male,female',
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
-        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
         'number_microchip' => 'nullable|string|max:15',
         'boss_id' => 'nullable|exists:users,id',
         'caretaker_id' => 'nullable|exists:users,id',
@@ -39,6 +39,9 @@ class StoreHorseRequest extends FormRequest
     {
     return [
         'birth_date.before_or_equal' => 'La fecha de nacimiento  debe ser anterior o igual a hoy.',
+        'photos.*.max' => 'Cada imagen no puede superar 1 MB.',
+        'photos.*.mimes' => 'Solo se permiten imágenes con formato JPEG, PNG, JPG o GIF.',
+        'photos.*.image' => 'El archivo seleccionado debe ser una imagen válida.',
     ];
     }
 }
