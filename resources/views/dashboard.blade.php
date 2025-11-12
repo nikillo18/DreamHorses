@@ -79,7 +79,8 @@
                                     ${{ number_format($expenses->get($horse->id)?->total ?? 0, 2) }}</p>
                             </div>
                             <hr class="border-base-300" />
-                            <div>
+                            
+                           {{--  <div>
                                 <h3 class="text-error text-sm font-semibold">⚠️ Alertas</h3>
                                 <ul class="text-sm text-base-content list-disc ml-4">
                                     @forelse ($alerts->where('horse_id', $horse->id)->sortBy('event_date') as $alert)
@@ -92,7 +93,7 @@
                                         <li>No hay alertas.</li>
                                     @endforelse
                                 </ul>
-                            </div>
+                            </div> --}}
                             <div class="card-actions justify-end pt-2">
                                 <a href="{{ route('horses.pdf', $horse->id) }}"
                                     class="btn btn-sm btn-outline btn-primary">
