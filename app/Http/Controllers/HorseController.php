@@ -52,7 +52,7 @@ if ($user->hasRole('admin')) {
     $caretakers = User::role('caretaker')->get();
 } elseif ($user->hasRole('boss')) {
     $caretakers = User::whereHas('studs', function ($q) use ($user) {
-        $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+        $q->whereIn('stud_id', $user->acceptedContractedStuds->pluck('id'));
     })->role('caretaker')->get();
 } else {
     $caretakers = collect(); 
@@ -121,7 +121,7 @@ if ($user->hasRole('admin')) {
     }
     elseif ($user->hasRole('boss')) {
         $caretakers = User::whereHas('studs', function ($q) use ($user) {
-            $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+            $q->whereIn('stud_id', $user->acceptedContractedStuds->pluck('id'));
         })->role('caretaker')->get();
     }
     elseif ($user->hasRole('caretaker')) {

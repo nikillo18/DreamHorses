@@ -108,6 +108,32 @@
                     @endforelse
                 </div>
 
+                @if(Auth::id() === $stud->owner_id)
+                <div class="card bg-base-200 shadow-xl p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-base-content">Solicitudes de Contrato Pendientes</h2>
+
+                    @forelse($stud->pendingBosses as $boss)
+                        <div class="flex justify-between items-center bg-base-100 p-3 rounded-lg shadow-sm mb-2">
+                            <span>El jefe <strong>{{ $boss->name }}</strong> quiere contratar tu stud.</span>
+                            <div class="flex gap-2">
+                                <form action="{{ route('studs.hire.respond', ['stud' => $stud->id, 'boss' => $boss->id]) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="status" value="accepted">
+                                    <button type="submit" class="btn btn-xs btn-success">Aceptar</button>
+                                </form>
+                                <form action="{{ route('studs.hire.respond', ['stud' => $stud->id, 'boss' => $boss->id]) }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="status" value="rejected">
+                                    <button type="submit" class="btn btn-xs btn-error">Rechazar</button>
+                                </form>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="text-sm text-base-content/70">No hay solicitudes de contrato pendientes.</p>
+                    @endforelse
+                </div>
+                @endif
+
                 <div class="flex justify-between">
                     <a href="{{ route('studs.index') }}" class="btn btn-sm btn-ghost">← Volver</a>
                 </div>
