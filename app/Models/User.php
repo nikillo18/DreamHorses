@@ -67,7 +67,17 @@ public function studs()
 }
 public function contractedStuds()
 {
-    return $this->belongsToMany(Stud::class, 'boss_stud', 'boss_id', 'stud_id');
+    return $this->belongsToMany(Stud::class, 'boss_stud', 'boss_id', 'stud_id')->withPivot('status')->withTimestamps();
+}
+
+public function acceptedContractedStuds()
+{
+    return $this->contractedStuds()->wherePivot('status', 'accepted');
+}
+
+public function pendingContractedStuds()
+{
+    return $this->contractedStuds()->wherePivot('status', 'pending');
 }
 public function sendEmailVerificationNotification()
 {

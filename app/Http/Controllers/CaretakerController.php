@@ -22,7 +22,7 @@ $user = Auth::user();
         }
         elseif ($user->hasRole('boss')) {
             $caretakers = User::whereHas('studs', function ($q) use ($user) {
-                $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+                $q->whereIn('stud_id', $user->acceptedContractedStuds->pluck('id'));
             })
             ->role('caretaker')
             ->get();
@@ -52,7 +52,7 @@ $user = Auth::user();
 
     if ($user->hasRole('boss')) {
         $availableCaretakers = User::whereHas('studs', function ($q) use ($user) {
-                $q->whereIn('stud_id', $user->contractedStuds->pluck('id'));
+                $q->whereIn('stud_id', $user->acceptedContractedStuds->pluck('id'));
             })
             ->where('id', '!=', $caretaker->id)
             ->role('caretaker')
