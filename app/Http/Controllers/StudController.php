@@ -10,6 +10,8 @@ use App\Traits\FiltersByUserRole;
 use Illuminate\Http\Request;
 use App\Models\Horse;
 use App\Models\User;
+use App\Notifications\HireRequestResponseNotification;
+use App\Notifications\StudHireRequestNotification;
 
 class StudController extends Controller
 {
@@ -171,7 +173,7 @@ public function store(StoreStudRequest $request)
             } elseif ($status === 'rejected') {
                 // If rejected, allow sending a new request by updating the status to pending
                 $user->contractedStuds()->updateExistingPivot($stud->id, ['status' => 'pending']);
-                // TODO: Notify stud owner
+                $stud->owner->notify(new StudHireRequestNotification($user, $stud));
                 return back()->with('success', 'Tu solicitud de contrato ha sido enviada nuevamente.');
             }
         }
@@ -179,7 +181,7 @@ public function store(StoreStudRequest $request)
         // If no relationship exists, create a new one
         $user->contractedStuds()->attach($stud->id, ['status' => 'pending']);
 
-        // TODO: Notify stud owner: $stud->owner->notify(new StudHireRequest($user, $stud));
+        $stud->owner->notify(new StudHireRequestNotification($user, $stud));
 
         return back()->with('success', 'Tu solicitud de contrato ha sido enviada al dueño del stud.');
     }
@@ -215,7 +217,7 @@ public function respondToHireRequest(Request $request, Stud $stud, User $boss)
             'status' => $request->status,
         ]);
 
-        // TODO: Notify boss: $boss->notify(new HireRequestResponse($stud, $request->status));
+        $boss->notify(new HireRequestResponseNotification($stud, $request->status));
 
         if ($request->status === 'accepted') {
             return back()->with('success', 'Has aceptado la solicitud de contrato.');

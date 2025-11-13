@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\App;
 use Carbon\Carbon;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -21,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Carbon::setLocale(App::getLocale());
+        View::composer('components.sidebar', function ($view) {
+            if (Auth::check()) {
+                $view->with('unreadNotifications', Auth::user()->unreadNotifications);
+            } else {
+                $view->with('unreadNotifications', collect());
+            }
+        });
     }
 }
