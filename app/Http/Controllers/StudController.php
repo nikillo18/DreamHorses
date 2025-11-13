@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Traits\FiltersByUserRole;
 use Illuminate\Http\Request;
 use App\Models\Horse;
+use App\Models\User;
+
 class StudController extends Controller
 {
     /**
@@ -60,7 +62,7 @@ public function store(StoreStudRequest $request)
      */
     public function show(Stud $stud)
     {
-    $stud->load('caretakers', 'owner');
+        $stud->load('caretakers', 'owner', 'pendingBosses');
         return view('studs.show', compact('stud'));
     }
 
@@ -150,18 +152,37 @@ public function store(StoreStudRequest $request)
         return back()->with('success', 'Cuidador despedido.');
     }
     public function hire(Stud $stud)
-{
+    {
         /** @var \App\Models\User $user */
+        $user = Auth::user();
+        if (!$user->hasRole('boss')) {
+            abort(403);
+        }
 
-    $user = Auth::user();
-    if (! $user->hasRole('boss')) abort(403);
+        // Check if a relationship already exists
+        $existingContract = $user->contractedStuds()->where('stud_id', $stud->id)->first();
 
-    if (! $user->contractedStuds()->where('stud_id', $stud->id)->exists()) {
-        $user->contractedStuds()->attach($stud->id);
+        if ($existingContract) {
+            $status = $existingContract->pivot->status;
+            if ($status === 'pending') {
+                return back()->with('info', 'Ya tienes una solicitud de contrato pendiente para este stud.');
+            } elseif ($status === 'accepted') {
+                return back()->with('info', 'Ya has contratado este stud.');
+            } elseif ($status === 'rejected') {
+                // If rejected, allow sending a new request by updating the status to pending
+                $user->contractedStuds()->updateExistingPivot($stud->id, ['status' => 'pending']);
+                // TODO: Notify stud owner
+                return back()->with('success', 'Tu solicitud de contrato ha sido enviada nuevamente.');
+            }
+        }
+
+        // If no relationship exists, create a new one
+        $user->contractedStuds()->attach($stud->id, ['status' => 'pending']);
+
+        // TODO: Notify stud owner: $stud->owner->notify(new StudHireRequest($user, $stud));
+
+        return back()->with('success', 'Tu solicitud de contrato ha sido enviada al dueño del stud.');
     }
-
-    return back()->with('success', 'Has contratado este stud.');
-}
 
 public function fire(Stud $stud)
 {
@@ -180,6 +201,30 @@ public function fire(Stud $stud)
     return back()->with('success', 'Has dejado de contratar este stud. Los caballos ahora están sin cuidador.');
 }
 
+public function respondToHireRequest(Request $request, Stud $stud, User $boss)
+    {
+        if (Auth::id() !== $stud->owner_id) {
+            abort(403, 'No tienes permiso para realizar esta acción.');
+        }
+
+        $request->validate([
+            'status' => 'required|in:accepted,rejected',
+        ]);
+
+        $stud->bosses()->updateExistingPivot($boss->id, [
+            'status' => $request->status,
+        ]);
+
+        // TODO: Notify boss: $boss->notify(new HireRequestResponse($stud, $request->status));
+
+        if ($request->status === 'accepted') {
+            return back()->with('success', 'Has aceptado la solicitud de contrato.');
+        } else {
+            return back()->with('info', 'Has rechazado la solicitud de contrato.');
+        }
+    }
+
 
 
 }
+

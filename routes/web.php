@@ -134,6 +134,7 @@ Route::get('/calendarhorse', [CalendarEventController::class, 'calendar'])->name
     
     Route::post('/studs/{stud}/hire', [StudController::class, 'hire'])->name('studs.hire');
 Route::post('/studs/{stud}/fire', [StudController::class, 'fire'])->name('studs.fire');
+Route::post('/studs/{stud}/hire-respond/{boss}', [StudController::class, 'respondToHireRequest'])->name('studs.hire.respond')->middleware(['auth']);
 
 
 require __DIR__ . '/auth.php';

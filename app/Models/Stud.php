@@ -36,6 +36,15 @@ class Stud extends Model
     }
     public function bosses()
 {
-    return $this->belongsToMany(User::class, 'boss_stud', 'stud_id', 'boss_id');
+    return $this->belongsToMany(User::class, 'boss_stud', 'stud_id', 'boss_id')->withPivot('status')->withTimestamps();
 }
+public function acceptedBosses()
+    {
+        return $this->bosses()->wherePivot('status', 'accepted');
+    }
+
+    public function pendingBosses()
+    {
+        return $this->bosses()->wherePivot('status', 'pending');
+    }
 }

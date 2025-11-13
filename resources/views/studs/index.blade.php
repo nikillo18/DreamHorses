@@ -84,18 +84,25 @@
 
                                 @if(auth()->user()->hasRole('boss'))
                                     @php
-                                        $isHired = auth()->user()->contractedStuds->contains($stud->id);
+                                        $contract = auth()->user()->contractedStuds()->where('stud_id', $stud->id)->first();
                                     @endphp
 
-                                    @if(!$isHired)
+                                    @if(!$contract)
                                         <form action="{{ route('studs.hire', $stud->id) }}" method="POST">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-success">Contratar</button>
+                                            <button type="submit" class="btn btn-sm btn-success">Solicitar Contrato</button>
                                         </form>
-                                    @else
+                                    @elseif($contract->pivot->status === 'pending')
+                                        <button class="btn btn-sm btn-disabled">Solicitud Pendiente</button>
+                                    @elseif($contract->pivot->status === 'accepted')
                                         <form action="{{ route('studs.fire', $stud->id) }}" method="POST">
                                             @csrf
-                                            <button type="submit" class="btn btn-sm btn-error">Cancelar contrato</button>
+                                            <button type="submit" class="btn btn-sm btn-error">Cancelar Contrato</button>
+                                        </form>
+                                    @elseif($contract->pivot->status === 'rejected')
+                                        <form action="{{ route('studs.hire', $stud->id) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-sm btn-warning">Reenviar Solicitud</button>
                                         </form>
                                     @endif
                                 @endif
