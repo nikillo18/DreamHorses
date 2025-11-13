@@ -70,6 +70,23 @@
                         class="input input-bordered w-full" />
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
+                 <div class="form-control">
+                    <label for="amount" class="label">
+                        <span class="label-text">Costo por mes</span>
+                    </label>
+                    <input type="number" name="amount" id="amount" value="{{ old('amount', $stud->amount) }}"
+                        class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('amount')" class="mt-2" />
+                </div>
+                 <div class="form-control">
+                    <label for="description" class="label">
+                        <span class="label-text">Descripción</span>
+                    </label>
+                    <input type="text" name="description" id="description" value="{{ old('description', $stud->description) }}"
+                        class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                </div>
+
 
                 <div class="pt-4">
                     <button type="submit" class="btn btn-warning w-full shadow-sm">Actualizar Stud</button>

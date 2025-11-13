@@ -3,7 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
+use Illuminate\Validation\Rule; 
 class UpdateHorseRequest extends FormRequest
 {
     /**
@@ -32,8 +32,13 @@ class UpdateHorseRequest extends FormRequest
         'boss_id' => 'nullable|exists:users,id',
         'caretaker_id' => 'nullable|exists:users,id',
         'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
-        'number_microchip' => 'nullable|string|max:15',
-        ];
+        'number_microchip' => [
+            'nullable',
+            'string',
+            'max:15',
+            Rule::unique('horses', 'number_microchip')->ignore($this->horse),
+            ]
+    ];
     }
     public function messages(): array
 {
@@ -42,6 +47,8 @@ class UpdateHorseRequest extends FormRequest
         'photos.*.image' => 'Cada archivo debe ser una imagen.',
         'photos.*.mimes' => 'Las imágenes deben ser de tipo jpeg, png, jpg o gif.',
         'photos.*.max' => 'Cada imagen no debe superar los 1MB.',
+        'number_microchip.unique' => 'El número de microchip ya está registrado para otro caballo.',
+
     ];
 }
 }

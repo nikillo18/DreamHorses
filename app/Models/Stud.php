@@ -14,6 +14,8 @@ class Stud extends Model
         'address',
         'phone',
         'owner_id',
+        'amount',
+        'description',
     ];
 
     // dueño del stud 

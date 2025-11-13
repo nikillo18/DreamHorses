@@ -30,7 +30,7 @@ class StoreHorseRequest extends FormRequest
         'father_name' => 'nullable|string|max:100',
         'mother_name' => 'nullable|string|max:100',
         'photos.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:1024',
-        'number_microchip' => 'nullable|string|max:15',
+        'number_microchip' => 'nullable|string|max:15|unique:horses,number_microchip',        
         'boss_id' => 'nullable|exists:users,id',
         'caretaker_id' => 'nullable|exists:users,id',
     ];
@@ -42,6 +42,7 @@ class StoreHorseRequest extends FormRequest
         'photos.*.max' => 'Cada imagen no puede superar 1 MB.',
         'photos.*.mimes' => 'Solo se permiten imágenes con formato JPEG, PNG, JPG o GIF.',
         'photos.*.image' => 'El archivo seleccionado debe ser una imagen válida.',
+        'number_microchip.unique' => 'El número de microchip ya está registrado para otro caballo.',
     ];
     }
 }

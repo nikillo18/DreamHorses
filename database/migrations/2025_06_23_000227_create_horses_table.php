@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('father_name');
             $table->string('mother_name');
             $table->string('photo_path')->nullable();
-            $table->string('number_microchip')->nullable();
+            $table->string('number_microchip')->nullable()->unique();
             $table->foreignId('boss_id')->nullable()->constrained('users')->onDelete('set null');
             $table->foreignId('caretaker_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();

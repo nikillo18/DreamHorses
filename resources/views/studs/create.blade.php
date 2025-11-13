@@ -67,6 +67,24 @@
                     <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
 
+                    <div class="form-control">
+                    <label for="amount" class="label">
+                        <span class="label-text">Costo por mes</span>
+                    </label>
+                    <input type="number" step="0.01" name="amount" id="amount" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('amount')" class="mt-2" />
+                </div>
+
+                    <div class="form-control">
+                    <label for="description" class="label">
+                        <span class="label-text">Breve Descripción</span>
+                    </label>
+                    <input type="text" maxlength="50" name="description" id="description" class="input input-bordered w-full" />
+                    <x-input-error :messages="$errors->get('description')" class="mt-2" />
+                </div>
+
+
+
                 <div class="pt-4">
                     <button type="submit" class="btn btn-success w-full">Guardar Stud</button>
                 </div>

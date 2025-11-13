@@ -25,6 +25,8 @@ class StoreStudRequest extends FormRequest
             'name' => 'required|string|max:255',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
+            'amount' => 'required|numeric|min:0',
+            'description' => 'nullable|string|max:500',
         ];
     }
 }

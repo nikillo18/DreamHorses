@@ -53,6 +53,9 @@
                             <p><strong>Dirección:</strong> {{ $stud->address }}</p>
                             <p><strong>Teléfono:</strong> {{ $stud->phone }}</p>
                             <p><strong>Propietario:</strong> {{ $stud->owner->name }}</p>
+                            <p><strong>Precio de Contratación:</strong> ${{ number_format($stud->amount) }}</p>
+                            <p><strong>Descripción:</strong> {{ $stud->description }}</p>
+                         
 
                             <div class="card-actions justify-end mt-4 flex flex-wrap gap-2">
                                 <a href="{{ route('studs.show', $stud->id) }}" class="btn btn-sm btn-info">Ver</a>
